@@ -1,6 +1,5 @@
-#
-# $Id: rolo.spec.in,v 1.6 2003/04/27 08:23:03 ahsu Exp $
-#
+# RPM spec file for Red Hat Linux
+# $Id: rolo.spec.in,v 1.7 2003/05/04 12:09:28 ahsu Rel $
 Summary: Text-based contact management software.
 Name: @PACKAGE@
 Version: @VERSION@
@@ -37,6 +36,5 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(-,root,root)
 %{_bindir}/rolo
-%{_bindir}/mutt_vc_query
 %{_mandir}/man1/rolo.1*
-%doc AUTHORS COPYING INSTALL NEWS README THANKS TODO test/contacts.vcf
+%doc AUTHORS ChangeLog COPYING INSTALL NEWS README THANKS TODO test/contacts.vcf doc/rfc2426.txt
