@@ -17,7 +17,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  *
- * $Id: index.c,v 1.6 2003/02/20 21:02:24 ahsu Exp $
+ * $Id: index.c,v 1.7 2003/02/21 11:22:10 ahsu Rel $
  */
 
 #include "index.h"
@@ -306,18 +306,22 @@ process_index_commands()
     switch (ch) {
     case KEY_HOME:
     case 'g':
+    case KEY_A1:
       menu_driver(menu, REQ_FIRST_ITEM);
       break;
     case KEY_END:
     case 'G':
+    case KEY_C1:
       menu_driver(menu, REQ_LAST_ITEM);
       break;
     case KEY_NPAGE:
     case ' ':
+    case KEY_C3:
       menu_driver(menu, REQ_SCR_DPAGE);
       break;
     case KEY_PPAGE:
     case 'b':
+    case KEY_A3:
       menu_driver(menu, REQ_SCR_UPAGE);
       break;
     case KEY_DOWN:
