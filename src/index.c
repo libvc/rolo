@@ -17,7 +17,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  *
- * $Id: index.c,v 1.3 2003/03/02 19:32:52 ahsu Exp $
+ * $Id: index.c,v 1.4 2003/03/05 07:13:34 ahsu Exp $
  */
 
 #include "index.h"
@@ -78,6 +78,7 @@ static WINDOW *sub = NULL;
 static const char *datafile = NULL;
 static char *filter_string = NULL;
 static ITEM **items = NULL;
+static g_sort_by = -1;
 
 /***************************************************************************
  */
@@ -90,6 +91,151 @@ finish_index ()
   menu = NULL;
   free_items (items);
   items = NULL;
+}
+
+/***************************************************************************
+ */
+
+static int
+cmp_tel (const char *desc_a, const char *desc_b)
+{
+  int i = 0;
+  int n = 0;
+  int ret_val = 0;
+
+  for (i = 57, n = 74; i < n; i++)
+    {
+      if (tolower (desc_a[i]) > tolower (desc_b[i]))
+        {
+          ret_val = 1;
+          break;
+        }
+      else if (tolower (desc_a[i]) < tolower (desc_b[i]))
+        {
+          ret_val = -1;
+          break;
+        }
+    }
+  return ret_val;
+}
+
+/***************************************************************************
+ */
+
+static int
+cmp_email (const char *desc_a, const char *desc_b)
+{
+  int i = 0;
+  int n = 0;
+  int ret_val = 0;
+
+  for (i = 26, n = 56; i < n; i++)
+    {
+      if (tolower (desc_a[i]) > tolower (desc_b[i]))
+        {
+          ret_val = 1;
+          break;
+        }
+      else if (tolower (desc_a[i]) < tolower (desc_b[i]))
+        {
+          ret_val = -1;
+          break;
+        }
+    }
+  return ret_val;
+}
+
+/***************************************************************************
+ */
+
+static int
+cmp_given_n (const char *desc_a, const char *desc_b)
+{
+  int i = 0;
+  int n = 0;
+  int ret_val = 0;
+
+  for (i = 13, n = 25; i < n; i++)
+    {
+      if (tolower (desc_a[i]) > tolower (desc_b[i]))
+        {
+          ret_val = 1;
+          break;
+        }
+      else if (tolower (desc_a[i]) < tolower (desc_b[i]))
+        {
+          ret_val = -1;
+          break;
+        }
+    }
+  return ret_val;
+}
+
+/***************************************************************************
+ */
+
+static int
+cmp_desc_by_tel (const void *a, const void *b)
+{
+  int ret_val = 0;
+  entry_node **ena = NULL;
+  entry_node **enb = NULL;
+
+  ena = (entry_node **) a;
+  enb = (entry_node **) b;
+
+  ret_val = cmp_tel ((*ena)->description, (*enb)->description);
+
+  if (0 == ret_val)
+    {
+      ret_val = strcmp ((*ena)->description, (*enb)->description);
+    }
+
+  return ret_val;
+}
+
+/***************************************************************************
+ */
+
+static int
+cmp_desc_by_email (const void *a, const void *b)
+{
+  int ret_val = 0;
+  entry_node **ena = NULL;
+  entry_node **enb = NULL;
+
+  ena = (entry_node **) a;
+  enb = (entry_node **) b;
+
+  ret_val = cmp_email ((*ena)->description, (*enb)->description);
+  if (0 == ret_val)
+    {
+      ret_val = strcmp ((*ena)->description, (*enb)->description);
+    }
+
+  return ret_val;
+}
+
+/***************************************************************************
+ */
+
+static int
+cmp_desc_by_given_n (const void *a, const void *b)
+{
+  int ret_val = 0;
+  entry_node **ena = NULL;
+  entry_node **enb = NULL;
+
+  ena = (entry_node **) a;
+  enb = (entry_node **) b;
+
+  ret_val = cmp_given_n ((*ena)->description, (*enb)->description);
+  if (0 == ret_val)
+    {
+      ret_val = strcmp ((*ena)->description, (*enb)->description);
+    }
+
+  return ret_val;
 }
 
 /***************************************************************************
@@ -111,7 +257,7 @@ cmp_desc_by_family_n (const void *a, const void *b)
 }
 
 /***************************************************************************
-    FIXME: Implement the rest of the sort_by types.
+    Sorts the array of entries using the quick sort algorithm.
  */
 
 static void
@@ -123,10 +269,13 @@ sort_entries (entry_node ** entries, int count, int sort_by)
       qsort (entries, count, sizeof (entry_node *), cmp_desc_by_family_n);
       break;
     case SORT_ENTRIES_BY_GIVEN_N:
+      qsort (entries, count, sizeof (entry_node *), cmp_desc_by_given_n);
       break;
     case SORT_ENTRIES_BY_EMAIL:
+      qsort (entries, count, sizeof (entry_node *), cmp_desc_by_email);
       break;
     case SORT_ENTRIES_BY_TEL:
+      qsort (entries, count, sizeof (entry_node *), cmp_desc_by_tel);
       break;
     default:
       break;
@@ -263,7 +412,11 @@ init_index (const char *filename)
   entries_ll = NULL;
 
   /* use the array to sort */
-  sort_entries (entries_array, count, SORT_ENTRIES_BY_FAMILY_N);
+  if (-1 == g_sort_by)
+    {
+      g_sort_by = SORT_ENTRIES_BY_FAMILY_N;
+    }
+  sort_entries (entries_array, count, g_sort_by);
 
   /* construct the items array and cleanup */
   items = get_items (entries_array, count);
@@ -511,9 +664,9 @@ get_menu (ITEM ** items)
   int x = 0;
   int y = 0;
 
-  getmaxyx(win, y, x);
+  getmaxyx (win, y, x);
   menu = new_menu (items);
-  set_menu_format (menu, y - 3, 1); /* LINE rows, 1 column */
+  set_menu_format (menu, y - 3, 1);     /* LINE rows, 1 column */
 
   return menu;
 }
@@ -786,14 +939,38 @@ set_index_help_fcn (void (*fcn) (void))
 static void
 sort_ascending (int sort_by)
 {
+  int ch = 0;
   wmove (win, LINES - 1, 0);
   wclrtoeol (win);
   wprintw (win,
            "Sort ascending by [F]amily Name, [G]iven Name, [E]mail, [T]el: ");
-  getch ();
+  ch = wgetch (win);
 
   wmove (win, LINES - 1, 0);
   wclrtoeol (win);
+
+  switch (tolower (ch))
+    {
+    case 'f':
+      g_sort_by = SORT_ENTRIES_BY_FAMILY_N;
+      break;
+    case 'g':
+      g_sort_by = SORT_ENTRIES_BY_GIVEN_N;
+      break;
+    case 'e':
+      g_sort_by = SORT_ENTRIES_BY_EMAIL;
+      break;
+    case 't':
+      g_sort_by = SORT_ENTRIES_BY_TEL;
+      break;
+    default:
+      return;
+      break;
+    }
+
+  finish_index ();
+  init_index (datafile);
+  display_index ();
 }
 
 /***************************************************************************
@@ -802,14 +979,38 @@ sort_ascending (int sort_by)
 static void
 sort_descending (int sort_by)
 {
+  int ch = 0;
   wmove (win, LINES - 1, 0);
   wclrtoeol (win);
   wprintw (win,
            "Sort descending by [F]amily Name, [G]iven Name, [E]mail, [T]el: ");
-  getch ();
+  ch = wgetch (win);
 
   wmove (win, LINES - 1, 0);
   wclrtoeol (win);
+
+  switch (tolower (ch))
+    {
+    case 'f':
+      g_sort_by = SORT_ENTRIES_BY_FAMILY_N;
+      break;
+    case 'g':
+      g_sort_by = SORT_ENTRIES_BY_GIVEN_N;
+      break;
+    case 'e':
+      g_sort_by = SORT_ENTRIES_BY_EMAIL;
+      break;
+    case 't':
+      g_sort_by = SORT_ENTRIES_BY_TEL;
+      break;
+    default:
+      return;
+      break;
+    }
+
+  finish_index ();
+  init_index (datafile);
+  display_index ();
 }
 
 /***************************************************************************
