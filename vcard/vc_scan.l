@@ -16,12 +16,12 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * $Id: vcard.l,v 1.1 2003/02/24 11:43:24 ahsu Exp $
+ * $Id: vc_scan.l,v 1.1 2003/02/27 07:59:29 ahsu Exp $
  */
 
 %{
 #define YYSTYPE char*
-#include "v_parse.h"
+#include "vc_parse.h"
 
 #define YY_INPUT(buf,result,max_size) \
     { \
