@@ -17,7 +17,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  *
- * $Id: index.c,v 1.4 2003/03/05 07:13:34 ahsu Exp $
+ * $Id: index.c,v 1.5 2003/03/06 09:23:04 ahsu Rel $
  */
 
 #include "index.h"
@@ -26,10 +26,10 @@
 #include <stdlib.h>
 #include <assert.h>
 
-#define HARD_CODED_HEADER_STR "q:Quit  v:View  h:Help"
+#define HARD_CODED_HEADER_STR "q:Quit  v:View  e:Edit  a:Add  d:Delete  h:Help"
 #define MENU_PRINT_FORMAT_SIZE 38
 #ifndef CTRL
-#define CTRL(x)         ((x) & 0x1f)
+#define CTRL(x)  ((x) & 0x1f)
 #endif
 
 /*** STRUCTS ***/
@@ -816,10 +816,18 @@ process_index_commands ()
         case '/':
           search_menu ();
           break;
+        case 'a':
+          return_command = INDEX_COMMAND_ADD;
+          done = TRUE;
+          break;
         case KEY_PPAGE:
         case 'b':
         case KEY_A3:
           menu_driver (menu, REQ_SCR_UPAGE);
+          break;
+        case 'd':
+          return_command = INDEX_COMMAND_DELETE;
+          done = TRUE;
           break;
         case 'e':
           return_command = INDEX_COMMAND_EDIT;
@@ -1011,6 +1019,33 @@ sort_descending (int sort_by)
   finish_index ();
   init_index (datafile);
   display_index ();
+}
+
+/***************************************************************************
+ */
+
+void
+refresh_index ()
+{
+  int count = 0;
+  int current_index = 0;
+  ITEM *item = NULL;
+  ITEM **items = NULL;
+
+  item = current_item (menu);
+  current_index = item_index (item);
+  fprintf (stderr, "current_index: %i\n", current_index);
+
+  finish_index ();
+  init_index (datafile);
+  display_index ();
+
+  count = item_count (menu);
+
+  fprintf (stderr, "count: %i\n", count);
+  items = menu_items (menu);
+  current_index = current_index >= count ? count : current_index;
+  set_current_item (menu, items[current_index]);
 }
 
 /***************************************************************************
