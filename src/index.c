@@ -17,7 +17,7 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA
  *  02111-1307 USA
  *
- *  $Id: index.c,v 1.18 2003/05/22 05:04:53 ahsu Exp $
+ *  $Id: index.c,v 1.19 2003/05/22 08:37:34 ahsu Exp $
  */
 
 #include "entry.h"
@@ -426,6 +426,7 @@ process_index_commands ()
           index_search_prev ();
           break;
         case 'q':
+          clear_message_bar (menu);
           return_command = INDEX_COMMAND_QUIT;
           done = TRUE;
           break;
@@ -709,7 +710,7 @@ scroll_to_result (ITEM * found_item)
       current_index = item_index (current_item (menu));
       found_index = item_index (found_item);
 
-      direction = found_index >= current_index ? REQ_SCR_DPAGE : REQ_SCR_UPAGE;
+      direction = found_index > current_index ? REQ_SCR_DPAGE : REQ_SCR_UPAGE;
 
       while (FALSE == item_visible (found_item))
         {
@@ -732,8 +733,8 @@ clear_message_bar (MENU * m)
 
   w = menu_win (m);
 
-  wmove (win, LINES - 1, 0);
-  wclrtoeol (win);
+  wmove (w, LINES - 1, 0);
+  wclrtoeol (w);
 }
 
 /***************************************************************************
