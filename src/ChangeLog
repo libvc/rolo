@@ -1,3 +1,17 @@
+2003-03-24  Andrew Hsu
+
+* delete.c: New file added.  Moved delete_entry function to here.
+* delete.h: New file added.  Prototype for delete_entry.
+
+* main.c: The screen will only be refreshed if the delete is
+successful.
+
+* edit.c: Moved delete_entry function into its own file.
+* edit.h: Moved delete_entry prototype into its own file.
+
+* Makefile.am: Added delete.c and delete.h to the list of files to
+be compiled.
+
 2003-03-23  Andrew Hsu
 
 * edit.c: Doc fixes.
