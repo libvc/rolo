@@ -20,7 +20,7 @@ contacts and interfaces with the end-user through an NCurses front-end.
 %setup -q
 
 %build
-./configure
+./configure --bindir=/usr/bin --mandir=/usr/share/man
 make
 
 %install
@@ -32,6 +32,6 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(-,root,root)
-/usr/local/bin/rolo
-/usr/local/man/man1/rolo.1
+%{_bindir}/rolo
+%{_mandir}/man1/rolo.1*
 %doc AUTHORS COPYING INSTALL NEWS README THANKS test/contacts.vcf
