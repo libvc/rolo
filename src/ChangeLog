@@ -1,3 +1,33 @@
+2003-04-04  Andrew Hsu
+
+* add.c: Added set_add_editor so that the editor program can be
+checked in main upon startup.  Removed the environment checking
+that add_entry performs now that the editor program name is passed
+from main when a new entry is added.
+* add.h: Added prototype for set_add_editor.
+
+* edit.c: Added set_edit_editor so that the editor program can be
+checked in main upon startup.  Removed the environment checking
+that edit_entry performs now that the editor program name is passed
+from main when an entry is edited.
+* edit.h: Added prototype for set_edit_editor.
+
+* index.c: Added a case for process_index_commands to handle raw
+viewing of the entry.
+* index.h: Added another enum for handling raw viewing of an entry.
+
+* main.c: Added get_env_editor for retrieving the editor program
+name.  Subsequently setting the edit and add editor to the found
+program name.  Also added a case statement to handle raw viewing
+of entries.
+
+* view.c: Added a skeleton for handling raw views of entries.  Need
+to finish later.
+* view.h: Added prototype for raw_view.
+
+* help.c: Updated the help screen for the view window.  Gave details
+about the 8 new screens.
+
 2003-04-02  Andrew Hsu
 
 * view.c: Split up the view screen into 8 screens based on the
