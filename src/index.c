@@ -17,7 +17,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  *
- * $Id: index.c,v 1.8 2003/03/25 11:12:50 ahsu Exp $
+ * $Id: index.c,v 1.9 2003/03/28 08:48:08 ahsu Rel $
  */
 
 #include "index.h"
@@ -427,6 +427,10 @@ process_index_commands ()
         case 13:
         case 'v':
           return_command = INDEX_COMMAND_VIEW;
+          done = TRUE;
+          break;
+        case 'V':
+          return_command = INDEX_COMMAND_RAW_VIEW;
           done = TRUE;
           break;
         default:
