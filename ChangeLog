@@ -1,5 +1,12 @@
 2003-03-29  Andrew Hsu
 
+* Makefile.am: Added doc as one of the directories to go into.
+
+* rolo.spec.in: Added the man page as the file to include when
+creating an rpm.
+
+2003-03-29  Andrew Hsu
+
 * configure.ac: Added doc/Makefile as the file to generate.  This
 is for the man pages.
 
