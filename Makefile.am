@@ -1,8 +1,7 @@
 ## Process this file with automake to produce Makefile.in
-##
-## $Id: Makefile.am,v 1.7 2003/04/18 12:16:35 ahsu Rel $
+## $Id: Makefile.am,v 1.8 2003/05/04 12:01:32 ahsu Rel $
 
-SUBDIRS = vcard src mutt_vc_query doc
+SUBDIRS = src doc
 
 AUTOMAKE_OPTIONS = check-news dist-bzip2
 
