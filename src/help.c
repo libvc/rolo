@@ -17,7 +17,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  *
- * $Id: help.c,v 1.8 2003/03/28 08:52:09 ahsu Rel $
+ * $Id: help.c,v 1.9 2003/04/03 14:40:56 ahsu Rel $
  */
 
 #include "help.h"
@@ -113,13 +113,10 @@ show_view_help ()
   wprintw (sub, "k        move to the previous entry\n");
   wprintw (sub, "e        edit the entry\n");
   wprintw (sub, "1        view the identification details\n");
-  wprintw (sub, "2        view the delivery address details\n");
+  wprintw (sub, "2        view the geographic position details\n");
   wprintw (sub, "3        view the telecommunication details\n");
-  wprintw (sub, "4        view the geography details\n");
-  wprintw (sub, "5        view the organization details\n");
-  wprintw (sub, "6        view the additional explanation details\n");
-  wprintw (sub, "7        view the security details\n");
-  wprintw (sub, "8        view the external details\n");
+  wprintw (sub, "4        view the organization details\n");
+  wprintw (sub, "5        view the miscellaneous details\n");
   wprintw (sub,
            "h        show help for key bindings (what you are viewing now)\n");
   print_footer ("Help for the view screen");
