@@ -16,14 +16,15 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * $Id: vc_parse.y,v 1.2 2003/03/22 11:41:01 ahsu Rel $
+ * $Id: vc_parse.y,v 1.3 2003/04/19 14:58:10 ahsu Rel $
  */
 
 %{
 
 #include "vcard.h"
-#include <stdlib.h>
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
 #define YYSTYPE char*
 
@@ -101,8 +102,22 @@ params        : ';' param
 
 param         : TOK_PARAM {
                   vcard_component_param *tmp_vc_param = NULL;
+                  char str[80];
+                  char *param_name = NULL;
+                  char *param_value = NULL;
+                  
                   tmp_vc_param = vc_param_new ();
                   vc_param_set_str (tmp_vc_param, $1);
+                  
+                  /* TODO: clean up parsing of parameters
+                   */ 
+                  strncpy (str, $1, 79);
+                  str[79] = '\0';
+                  param_name = strtok (str, "=");
+                  param_value = param_name + strlen(param_name) + 1;
+                  vc_param_set_name (tmp_vc_param, param_name);
+                  vc_param_set_value (tmp_vc_param, param_value);
+                  
                   vc_add_param (current_vc, tmp_vc_param); }
 
               ;
