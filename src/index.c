@@ -17,7 +17,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  *
- * $Id: index.c,v 1.7 2003/03/22 12:12:48 ahsu Rel $
+ * $Id: index.c,v 1.8 2003/03/25 11:12:50 ahsu Exp $
  */
 
 #include "index.h"
@@ -227,7 +227,7 @@ print_header ()
   int y = 0;
 
   getmaxyx (win, y, x);
-  header_str = (char *) malloc (sizeof (char) * (x + 2));
+  header_str = (char *) malloc (sizeof (char) * (x + 1));
 
   strncpy (header_str, HARD_CODED_HEADER_STR, x);
 
@@ -236,8 +236,7 @@ print_header ()
       header_str[i] = ' ';
     }
 
-  header_str[x] = '\n';
-  header_str[x + 1] = '\0';
+  header_str[x] = '\0';
 
   wattron (win, A_REVERSE);
   mvwprintw (win, 0, 0, header_str);
@@ -264,7 +263,7 @@ print_footer (const char *filename, int entries)
   int y = 0;
 
   getmaxyx (win, y, x);
-  footer_str = (char *) malloc (sizeof (char) * (x + 2));
+  footer_str = (char *) malloc (sizeof (char) * (x + 1));
 
   /*
    * set a default footer of all dashes
@@ -314,8 +313,7 @@ print_footer (const char *filename, int entries)
       free (entries_block);
     }
 
-  footer_str[x] = '\n';
-  footer_str[x + 1] = '\0';
+  footer_str[x] = '\0';
 
   wattron (win, A_REVERSE);
   mvwprintw (win, LINES - 2, 0, footer_str);
@@ -576,6 +574,15 @@ refresh_index ()
   ITEM **items = NULL;
 
   item = current_item (menu);
+
+  if (NULL == item)
+    {
+      finish_index ();
+      init_index (datafile);
+      display_index ();
+      return;
+    }
+
   current_index = item_index (item);
 
   finish_index ();
