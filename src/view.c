@@ -17,7 +17,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  *
- * $Id: view.c,v 1.9 2003/04/06 09:22:58 ahsu Exp $
+ * $Id: view.c,v 1.10 2003/04/10 09:22:21 ahsu Rel $
  */
 
 #include "view.h"
@@ -45,8 +45,10 @@ static void view_tel ();
 static void view_org ();
 static void view_misc ();
 static char *basename (const char *path);
+static void view_left ();
+static void view_right ();
 
-enum view_mode
+enum view_modes
 { VIEW_IDENT = 1, VIEW_GEO, VIEW_TEL, VIEW_ORG, VIEW_MISC };
 
 /*** STATIC VARIABLES ***/
@@ -55,6 +57,62 @@ static WINDOW *sub = NULL;
 static void (*display_help) (void);
 static vcard *g_v = NULL;
 static int g_mode = 1;
+
+/***************************************************************************
+ */
+
+static void
+view_left ()
+{
+  switch (g_mode)
+    {
+    case VIEW_IDENT:
+      view_misc ();
+      break;
+    case VIEW_GEO:
+      view_ident ();
+      break;
+    case VIEW_TEL:
+      view_geo ();
+      break;
+    case VIEW_ORG:
+      view_tel ();
+      break;
+    case VIEW_MISC:
+      view_org ();
+      break;
+    default:
+      break;
+    }
+}
+
+/***************************************************************************
+ */
+
+static void
+view_right ()
+{
+  switch (g_mode)
+    {
+    case VIEW_IDENT:
+      view_geo ();
+      break;
+    case VIEW_GEO:
+      view_tel ();
+      break;
+    case VIEW_TEL:
+      view_org ();
+      break;
+    case VIEW_ORG:
+      view_misc ();
+      break;
+    case VIEW_MISC:
+      view_ident ();
+      break;
+    default:
+      break;
+    }
+}
 
 /***************************************************************************
     Initialize the view window without displaying it to the
@@ -595,6 +653,12 @@ process_view_commands ()
           break;
         case 'V':
           raw_view (g_v);
+          break;
+        case KEY_LEFT:
+          view_left ();
+          break;
+        case KEY_RIGHT:
+          view_right ();
           break;
         default:
           beep ();
