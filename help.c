@@ -17,7 +17,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  *
- * $Id: help.c,v 1.2 2003/02/18 10:42:32 ahsu Exp $
+ * $Id: help.c,v 1.3 2003/02/20 07:27:13 ahsu Exp $
  */
 
 #include "help.h"
@@ -132,8 +132,7 @@ print_footer(const char *text)
 
   footer_str = (char *)malloc(sizeof(char) * (COLS + 2));
 
-  for (i = 0; i < COLS; i++)
-  {
+  for (i = 0; i < COLS; i++) {
     footer_str[i] = '-';
   }
 

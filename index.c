@@ -17,7 +17,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  *
- * $Id: index.c,v 1.2 2003/02/18 10:42:33 ahsu Exp $
+ * $Id: index.c,v 1.3 2003/02/20 07:27:13 ahsu Exp $
  */
 
 #include "index.h"
@@ -226,13 +226,12 @@ print_footer(const char *filename, int entries)
 
   footer_str = (char *)malloc(sizeof(char) * (COLS + 2));
 
-  for (i = 0; i < COLS; i++)
-  {
+  for (i = 0; i < COLS; i++) {
     footer_str[i] = '-';
   }
 
   /*
-     ("---[ rolo: %s ]-----[ entries: %i ]---\n", filename, entries);
+   * ("---[ rolo: %s ]-----[ entries: %i ]---\n", filename, entries);
    */
 
   footer_str[COLS] = '\n';
@@ -343,7 +342,7 @@ get_current_item()
 }
 
 int
-get_entry_number(const ITEM *item)
+get_entry_number(const ITEM * item)
 {
   return (1 + item_index(item));
 }

@@ -17,7 +17,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  *
- * $Id: view.c,v 1.4 2003/02/20 07:27:14 ahsu Exp $
+ * $Id: view.c,v 1.5 2003/02/20 08:55:34 ahsu Exp $
  */
 
 #include "view.h"
@@ -179,13 +179,12 @@ print_footer(int entry_number, const char *fn)
 
   footer_str = (char *)malloc(sizeof(char) * (COLS + 2));
 
-  for (i = 0; i < COLS; i++)
-  {
+  for (i = 0; i < COLS; i++) {
     footer_str[i] = '-';
   }
 
   /*
-     ("---[ entry %i: %s ]---\n", entry_number, fn);
+   * ("---[ entry %i: %s ]---\n", entry_number, fn);
    */
 
   footer_str[COLS] = '\n';
