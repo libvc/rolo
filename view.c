@@ -17,7 +17,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  *
- * $Id: view.c,v 1.5 2003/02/20 08:55:34 ahsu Exp $
+ * $Id: view.c,v 1.6 2003/02/20 08:58:46 ahsu Exp $
  */
 
 #include "view.h"
@@ -60,24 +60,35 @@ view_vcard(int entry_number, vcard * v)
 
   vi = get_vcard_item_by_name(v, VC_FORMATTED_NAME);
   str = get_vcard_item_value(vi);
-  wprintw(sub, "Name          : %s\n", str ? str : "");
+  wprintw(sub, "Name            : %s\n", str ? str : "");
   print_footer(entry_number, str ? str : "");
 
   vi = get_vcard_item_by_name(v, VC_NICKNAME);
   str = get_vcard_item_value(vi);
-  wprintw(sub, "Nickname      : %s\n", str ? str : "");
+  wprintw(sub, "Nickname        : %s\n", str ? str : "");
 
   vi = get_vcard_item_by_name(v, VC_BIRTHDAY);
   str = get_vcard_item_value(vi);
-  wprintw(sub, "Birthday      : %s\n", str ? str : "");
+  wprintw(sub, "Birthday        : %s\n", str ? str : "");
 
   /*********************
     Delivery Addressing
    *********************/
 
-  vi = get_vcard_item_by_name(v, VC_DELIVERY_LABEL);
-  str = get_vcard_item_value(vi);
-  wprintw(sub, "Address       : %s\n", str ? str : "");
+  vi = get_vcard_item_by_name(v, VC_ADDRESS);
+  str = get_val_struct_part(get_vcard_item_value(vi), ADR_STREET);
+  wprintw(sub, "Street Address  : %s\n", str ? str : "");
+  free(str);
+
+  vi = get_vcard_item_by_name(v, VC_ADDRESS);
+  str = get_val_struct_part(get_vcard_item_value(vi), ADR_LOCALITY);
+  wprintw(sub, "City            : %s\n", str ? str : "");
+  free(str);
+
+  vi = get_vcard_item_by_name(v, VC_ADDRESS);
+  str = get_val_struct_part(get_vcard_item_value(vi), ADR_COUNTRY);
+  wprintw(sub, "Country         : %s\n", str ? str : "");
+  free(str);
 
   /*******************************
     Telecommunications Addressing
@@ -85,15 +96,15 @@ view_vcard(int entry_number, vcard * v)
 
   vi = get_vcard_item_by_name(v, VC_TELEPHONE);
   str = get_vcard_item_value(vi);
-  wprintw(sub, "Telephone     : %s\n", str ? str : "");
+  wprintw(sub, "Telephone       : %s\n", str ? str : "");
 
   vi = get_vcard_item_by_name(v, VC_EMAIL);
   str = get_vcard_item_value(vi);
-  wprintw(sub, "E-Mail        : %s\n", str ? str : "");
+  wprintw(sub, "E-Mail          : %s\n", str ? str : "");
 
   vi = get_vcard_item_by_name(v, VC_MAILER);
   str = get_vcard_item_value(vi);
-  wprintw(sub, "E-Mailer      : %s\n", str ? str : "");
+  wprintw(sub, "E-Mailer        : %s\n", str ? str : "");
 
   /**************
     Geographical
@@ -101,7 +112,7 @@ view_vcard(int entry_number, vcard * v)
 
   vi = get_vcard_item_by_name(v, VC_TIME_ZONE);
   str = get_vcard_item_value(vi);
-  wprintw(sub, "Time Zone     : %s\n", str ? str : "");
+  wprintw(sub, "Time Zone       : %s\n", str ? str : "");
 
   /****************
     Organizational
@@ -109,11 +120,12 @@ view_vcard(int entry_number, vcard * v)
 
   vi = get_vcard_item_by_name(v, VC_TITLE);
   str = get_vcard_item_value(vi);
-  wprintw(sub, "Title         : %s\n", str ? str : "");
+  wprintw(sub, "Title           : %s\n", str ? str : "");
 
   vi = get_vcard_item_by_name(v, VC_ORGANIZATION);
-  str = get_vcard_item_value(vi);
-  wprintw(sub, "Organization  : %s\n", str ? str : "");
+  str = get_val_struct_part(get_vcard_item_value(vi), ORG_NAME);
+  wprintw(sub, "Organization    : %s\n", str ? str : "");
+  free(str);
 
   /*************
     Explanatory
@@ -121,19 +133,19 @@ view_vcard(int entry_number, vcard * v)
 
   vi = get_vcard_item_by_name(v, VC_CATEGORIES);
   str = get_vcard_item_value(vi);
-  wprintw(sub, "Categories    : %s\n", str ? str : "");
+  wprintw(sub, "Categories      : %s\n", str ? str : "");
 
   vi = get_vcard_item_by_name(v, VC_NOTE);
   str = get_vcard_item_value(vi);
-  wprintw(sub, "Note          : %s\n", str ? str : "");
+  wprintw(sub, "Note            : %s\n", str ? str : "");
 
   vi = get_vcard_item_by_name(v, VC_REVISION);
   str = get_vcard_item_value(vi);
-  wprintw(sub, "Revision      : %s\n", str ? str : "");
+  wprintw(sub, "Revision        : %s\n", str ? str : "");
 
   vi = get_vcard_item_by_name(v, VC_URL);
   str = get_vcard_item_value(vi);
-  wprintw(sub, "URL           : %s\n", str ? str : "");
+  wprintw(sub, "URL             : %s\n", str ? str : "");
 
   /**********
     Security
@@ -141,7 +153,7 @@ view_vcard(int entry_number, vcard * v)
 
   vi = get_vcard_item_by_name(v, VC_CLASS);
   str = get_vcard_item_value(vi);
-  wprintw(sub, "Class         : %s\n", str ? str : "");
+  wprintw(sub, "Class           : %s\n", str ? str : "");
 
   touchwin(win);
   wrefresh(sub);
