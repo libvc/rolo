@@ -1,3 +1,7 @@
+2003-03-22  Andrew Hsu
+
+* vc_parse.y: Removed the parse error display to stderr.
+
 2003-02-28  Andrew Hsu
 
 * Makefile.am: Added noinst to the library because it is not finalized
