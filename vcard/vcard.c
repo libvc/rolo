@@ -16,7 +16,7 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * $Id: vcard.c,v 1.2 2003/02/28 03:32:44 ahsu Rel $
+ * $Id: vcard.c,v 1.3 2003/04/03 13:18:18 ahsu Exp $
  */
 
 
@@ -413,7 +413,7 @@ next_vcard_item_param (struct vcard_item_param_iter_tag *it)
  */
 
 void
-fprintf_vcard (FILE * fp, struct vcard_tag *v)
+fprintf_vcard (FILE * fp, const struct vcard_tag *v)
 {
   struct vcard_item_iter_tag item_it;
   struct vcard_item_param_iter_tag param_it;

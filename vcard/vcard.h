@@ -16,7 +16,7 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * $Id: vcard.h,v 1.1 2003/02/24 11:43:24 ahsu Rel $
+ * $Id: vcard.h,v 1.2 2003/04/02 11:20:23 ahsu Exp $
  */
 
 #ifndef __VCARD_H
@@ -36,7 +36,7 @@ typedef struct vcard_item_param_iter_tag vcard_item_param_iter;
 
 vcard *create_vcard ();
 void delete_vcard (vcard * v);
-void fprintf_vcard (FILE * fp, vcard * v);
+void fprintf_vcard (FILE * fp, const vcard * v);
 
 void set_vcard_group (vcard * v, const char *group);
 char *get_vcard_group (const vcard * v);
