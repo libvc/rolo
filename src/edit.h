@@ -17,15 +17,18 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  *
- * $Id: edit.h,v 1.2 2003/02/24 03:11:25 ahsu Exp $
+ * $Id: edit.h,v 1.1 2003/02/24 09:15:33 ahsu Rel $
  */
 
 #include <vcard.h>
 #include <ncurses.h>
 
-enum edit_commands { EDIT_COMMAND_INDEX };
+enum edit_commands
+{ EDIT_COMMAND_INDEX };
 
-extern void init_edit();
-extern void edit_vcard(vcard * v);
-extern int process_edit_commands();
-extern void set_edit_help_fcn(void (*fcn) (void));
+extern void init_edit ();
+extern void edit_vcard (const char *datafile, long pos);
+extern int process_edit_commands ();
+extern void set_edit_help_fcn (void (*fcn) (void));
+extern void add_vcard (const char *datafile);
+extern void delete_entry (const char *datafile, long pos);
