@@ -17,7 +17,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  * 
- * $Id: main.c,v 1.5 2003/02/19 08:28:13 ahsu Exp $
+ * $Id: main.c,v 1.6 2003/02/20 07:27:13 ahsu Exp $
  */
 
 #include "vcard.h"
@@ -35,6 +35,8 @@
 #include <assert.h>
 
 #define ROLO_VERSION_STRING "001"
+#define DEFAULT_HOME_ROLO_DIR ".rolo"
+#define DEFAULT_FILENAME "contacts.vcf"
 
 /*** GLOBALS ***/
 
@@ -69,7 +71,23 @@ finish(int sig)
 static void
 set_defaults()
 {
-  strcpy(data_path, "data.vcf");
+  char default_datafile[PATH_MAX];
+  char *home = NULL;
+
+  home = getenv("HOME");
+  if (NULL != home) {
+    strcpy(default_datafile, home);
+    strncat(default_datafile, "/", 1);
+    strncat(default_datafile, DEFAULT_HOME_ROLO_DIR,
+        strlen(DEFAULT_HOME_ROLO_DIR));
+    strncat(default_datafile, "/", 1);
+    strncat(default_datafile, DEFAULT_FILENAME, strlen(DEFAULT_FILENAME));
+  } else {
+    fprintf(stderr, "unable to deterime home directory");
+    exit(1);
+  }
+
+  strcpy(data_path, default_datafile);
 }
 
 static void
