@@ -17,7 +17,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  *
- * $Id: view.c,v 1.2 2003/02/18 04:27:04 ahsu Exp $
+ * $Id: view.c,v 1.3 2003/02/19 08:33:24 ahsu Exp $
  */
 
 #include "view.h"
@@ -31,7 +31,7 @@
 
 /*** PROTOTYPES ***/
 static void print_header();
-static void print_footer(const char *fn);
+static void print_footer(int entry_number, const char *fn);
 
 static WINDOW *win = NULL;
 static WINDOW *sub = NULL;
@@ -47,7 +47,7 @@ init_view()
 }
 
 void
-view_vcard(vcard * v)
+view_vcard(int entry_number, vcard * v)
 {
   vcard_item *vi = NULL;
   char *str = NULL;
@@ -61,7 +61,7 @@ view_vcard(vcard * v)
   vi = get_vcard_item_by_name(v, VC_FORMATTED_NAME);
   str = get_vcard_item_value(vi);
   wprintw(sub, "Name          : %s\n", str ? str : "");
-  print_footer(str ? str : "");
+  print_footer(entry_number, str ? str : "");
 
   vi = get_vcard_item_by_name(v, VC_NICKNAME);
   str = get_vcard_item_value(vi);
@@ -172,11 +172,29 @@ print_header()
 }
 
 static void
-print_footer(const char *fn)
+print_footer(int entry_number, const char *fn)
 {
+  char *footer_str = NULL;
+  int i = 0;
+
+  footer_str = (char *)malloc(sizeof(char) * (COLS + 2));
+
+  for (i = 0; i < COLS; i++)
+  {
+    footer_str[i] = '-';
+  }
+
+  /*
+     ("---[ entry %i: %s ]---\n", entry_number, fn);
+   */
+
+  footer_str[COLS] = '\n';
+  footer_str[COLS + 1] = '\0';
+
   wattron(win, A_REVERSE);
-  mvwprintw(win, LINES - 2, 0, "-[ %s ]-\n", fn);
+  mvwprintw(win, LINES - 2, 0, footer_str);
   wstandend(win);
+  free(footer_str);
 }
 
 int

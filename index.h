@@ -17,7 +17,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  *
- * $Id$
+ * $Id: index.h,v 1.1 2003/02/16 06:13:24 ahsu Exp $
  */
 
 #include <menu.h>
@@ -37,4 +37,5 @@ extern void free_items(ITEM ** items);
 extern void select_next_item();
 extern void select_previous_item();
 extern ITEM *get_current_item();
+extern int get_entry_number(const ITEM *item);
 extern void set_index_help_fcn(void (*fcn) (void));

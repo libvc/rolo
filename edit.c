@@ -17,7 +17,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  *
- * $Id: edit.c,v 1.1 2003/02/16 06:11:04 ahsu Exp $
+ * $Id: edit.c,v 1.2 2003/02/19 08:33:24 ahsu Exp $
  */
 
 #include "edit.h"
@@ -67,9 +67,27 @@ print_header()
 static void
 print_footer(const char *fn)
 {
+  char *footer_str = NULL;
+  int i = 0;
+
+  footer_str = (char *)malloc(sizeof(char) * (COLS + 2));
+
+  for (i = 0; i < COLS; i++)
+  {
+    footer_str[i] = '-';
+  }
+
+  /*
+     ("---[ editing: %s ]---\n", fn);
+   */
+
+  footer_str[COLS] = '\n';
+  footer_str[COLS + 1] = '\0';
+
   wattron(win, A_REVERSE);
-  mvwprintw(win, LINES - 2, 0, "-[ %s ]-\n", fn);
+  mvwprintw(win, LINES - 2, 0, footer_str);
   wstandend(win);
+  free(footer_str);
 }
 
 void

@@ -17,7 +17,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  *
- * $Id: index.c,v 1.1 2003/02/16 06:12:56 ahsu Exp $
+ * $Id: index.c,v 1.2 2003/02/18 10:42:33 ahsu Exp $
  */
 
 #include "index.h"
@@ -31,7 +31,7 @@
 /*** PROTOTYPES ***/
 static char *construct_menu_name(const char *family_name,
     const char *given_name, const char *email, const char *tel);
-static void print_footer(int entries);
+static void print_footer(const char *filename, int entries);
 static void print_header();
 static void search_menu();
 static ITEM *search_items(const char *search_string);
@@ -69,7 +69,7 @@ init_index(const char *filename)
   sub = derwin(win, rows, cols, 1, 0);
 
   print_header();
-  print_footer(count);
+  print_footer(filename, count);
 
   set_menu_win(menu, win);
   set_menu_sub(menu, sub);
@@ -219,15 +219,29 @@ print_header()
 }
 
 static void
-print_footer(int entries)
+print_footer(const char *filename, int entries)
 {
-  extern char data_path[];
+  char *footer_str = NULL;
+  int i = 0;
+
+  footer_str = (char *)malloc(sizeof(char) * (COLS + 2));
+
+  for (i = 0; i < COLS; i++)
+  {
+    footer_str[i] = '-';
+  }
+
+  /*
+     ("---[ rolo: %s ]-----[ entries: %i ]---\n", filename, entries);
+   */
+
+  footer_str[COLS] = '\n';
+  footer_str[COLS + 1] = '\0';
 
   wattron(win, A_REVERSE);
-  mvwprintw(win, LINES - 2, 0,
-      "---[ rolo: %s ]---[ entries: %0.3i ]----------------------------------\n", data_path, entries);
+  mvwprintw(win, LINES - 2, 0, footer_str);
   wstandend(win);
-
+  free(footer_str);
 }
 
 void
@@ -326,6 +340,12 @@ ITEM *
 get_current_item()
 {
   return current_item(menu);
+}
+
+int
+get_entry_number(const ITEM *item)
+{
+  return (1 + item_index(item));
 }
 
 void

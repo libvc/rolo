@@ -17,7 +17,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  * 
- * $Id: main.c,v 1.4 2003/02/19 04:30:17 ahsu Exp $
+ * $Id: main.c,v 1.5 2003/02/19 08:28:13 ahsu Exp $
  */
 
 #include "vcard.h"
@@ -174,6 +174,7 @@ main(int argc, char *argv[])
   fpos_t *fpos = NULL;
   FILE *fp = NULL;
   ITEM *it = NULL;
+  int entry_number = 0;
 
   bool done = FALSE;
   int win_state = WINDOW_INDEX;
@@ -245,7 +246,8 @@ main(int argc, char *argv[])
       fclose(fp);
 
       if (v != NULL) {
-        view_vcard(v);
+        entry_number = get_entry_number(it);
+        view_vcard(entry_number, v);
         command = process_view_commands();
 
         switch (command) {
