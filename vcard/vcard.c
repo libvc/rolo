@@ -16,7 +16,7 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * $Id: vcard.c,v 1.1 2003/02/16 05:02:54 ahsu Rel $
+ * $Id: vcard.c,v 1.1 2003/02/24 11:43:24 ahsu Exp $
  */
 
 
@@ -26,6 +26,8 @@
 #include <stdio.h>
 
 #define BUF_LEN 80
+
+/*** STRUCTS ***/
 
 struct vcard_tag {
   char *group;
@@ -55,15 +57,12 @@ struct vcard_item_param_iter_tag {
   struct vcard_item_param_tag *current_param;
 };
 
-/*******************
-  static prototypes
- *******************/
+/*** STATIC PROTOTYPES ***/ 
 
 static struct vcard_item_tag *create_vcard_item();
 static struct vcard_item_param_tag *create_vcard_item_param();
 
-/*************************************************************
-  create_vcard
+/***************************************************************************
  */
 
 vcard *
@@ -81,8 +80,7 @@ create_vcard()
   return new_vcard;
 }
 
-/*************************************************************
-  delete_vcard
+/***************************************************************************
  */
 
 void
@@ -116,8 +114,7 @@ delete_vcard(struct vcard_tag *v)
   }
 }
 
-/*************************************************************
-  insert_vcard_item
+/***************************************************************************
  */
 
 vcard_item *
@@ -138,8 +135,7 @@ insert_vcard_item(struct vcard_tag *v, const char *name)
   return new_vcard_item;
 }
 
-/*************************************************************
-  create_vcard_item
+/***************************************************************************
  */
 
 static struct vcard_item_tag *
@@ -161,8 +157,7 @@ create_vcard_item()
   return new_vcard_item;
 }
 
-/*************************************************************
-  set_vcard_item_group
+/***************************************************************************
  */
 
 void
@@ -174,8 +169,7 @@ set_vcard_item_group(struct vcard_item_tag *vi, const char *group)
   }
 }
 
-/*************************************************************
-  get_vcard_item_group
+/***************************************************************************
  */
 
 char *
@@ -190,8 +184,7 @@ get_vcard_item_group(const struct vcard_item_tag *vi)
   return result;
 }
 
-/*************************************************************
-  set_vcard_item_value
+/***************************************************************************
  */
 
 void
@@ -203,8 +196,7 @@ set_vcard_item_value(struct vcard_item_tag *vi, const char *value)
   }
 }
 
-/*************************************************************
-  get_vcard_item_value
+/***************************************************************************
  */
 
 char *
@@ -219,8 +211,7 @@ get_vcard_item_value(const struct vcard_item_tag *vi)
   return result;
 }
 
-/*************************************************************
-  set_vcard_group
+/***************************************************************************
  */
 
 void
@@ -232,8 +223,7 @@ set_vcard_group(struct vcard_tag *v, const char *group)
   }
 }
 
-/*************************************************************
-  get_vcard_group
+/***************************************************************************
  */
 
 char *
@@ -248,8 +238,7 @@ get_vcard_group(const struct vcard_tag *v)
   return result;
 }
 
-/*************************************************************
-  init_vcard_item_iter
+/***************************************************************************
  */
 
 void
@@ -266,8 +255,7 @@ init_vcard_item_iter(struct vcard_item_iter_tag *it, struct vcard_tag *v)
   }
 }
 
-/*************************************************************
-  next_vcard_item
+/***************************************************************************
  */
 
 struct vcard_item_tag *
@@ -286,8 +274,7 @@ next_vcard_item(struct vcard_item_iter_tag *it)
   return result_vcard_item;
 }
 
-/*************************************************************
-  insert_vcard_item_param
+/***************************************************************************
  */
 
 struct vcard_item_param_tag *
@@ -309,8 +296,7 @@ insert_vcard_item_param(struct vcard_item_tag *vi, const char *str)
   return new_vcard_item_param;
 }
 
-/*************************************************************
-  create_vcard_item_param
+/***************************************************************************
  */
 
 static struct vcard_item_param_tag *
@@ -330,8 +316,7 @@ create_vcard_item_param()
   return new_vcard_item_param;
 }
 
-/*************************************************************
-  delete_vcard_item_param
+/***************************************************************************
  */
 
 void
@@ -339,8 +324,7 @@ delete_vcard_item_param(struct vcard_item_param_tag *param)
 {
 }
 
-/*************************************************************
-  init_vcard_item_param_iter
+/***************************************************************************
  */
 
 void
@@ -358,8 +342,7 @@ init_vcard_item_param_iter(struct vcard_item_param_iter_tag *it,
   }
 }
 
-/*************************************************************
-  next_vcard_item_param
+/***************************************************************************
  */
 
 struct vcard_item_param_tag *
@@ -378,8 +361,7 @@ next_vcard_item_param(struct vcard_item_param_iter_tag *it)
   return result_vcard_item_param;
 }
 
-/*************************************************************
-  display_vcard
+/***************************************************************************
  */
 
 void
@@ -427,8 +409,7 @@ fprintf_vcard(FILE * fp, struct vcard_tag *v)
   }
 }
 
-/*************************************************************
-  get_vcard_item_by_name
+/***************************************************************************
  */
 
 struct vcard_item_tag *
@@ -453,8 +434,7 @@ get_vcard_item_by_name(const vcard * v, const char *name)
   return result_vi;
 }
 
-/*************************************************************
-  get_val_struct_part
+/***************************************************************************
  */
 
 char *
@@ -496,8 +476,7 @@ get_val_struct_part(const char *str, int part_index)
   return result;
 }
 
-/*************************************************************
-  count_vcards
+/***************************************************************************
  */
 
 int
