@@ -17,7 +17,7 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA
  *  02111-1307 USA
  *
- *  $Id: search.c,v 1.1 2003/05/20 04:59:33 ahsu Exp $
+ *  $Id: search.c,v 1.2 2003/05/21 00:01:00 ahsu Exp $
  */
 
 #include "search.h"
@@ -86,12 +86,12 @@ search_menu (MENU * menu, const char *search_string)
       i = item_index (current_item (menu));
       items = menu_items (menu);
 
-      while (!done && (items[i] != NULL))
+      while (!done && (NULL != items[i]))
         {
           found_string =
               strstr_nocase (item_description (items[i]), search_string);
 
-          if (found_string == 1)
+          if (1 == found_string)
             {
               result_entry = items[i];
               done = TRUE;
