@@ -17,7 +17,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  *
- * $Id: index.c,v 1.5 2003/03/06 09:23:04 ahsu Rel $
+ * $Id: index.c,v 1.6 2003/03/22 12:01:03 ahsu Exp $
  */
 
 #include "index.h"
@@ -1034,7 +1034,6 @@ refresh_index ()
 
   item = current_item (menu);
   current_index = item_index (item);
-  fprintf (stderr, "current_index: %i\n", current_index);
 
   finish_index ();
   init_index (datafile);
@@ -1042,7 +1041,6 @@ refresh_index ()
 
   count = item_count (menu);
 
-  fprintf (stderr, "count: %i\n", count);
   items = menu_items (menu);
   current_index = current_index >= count ? count : current_index;
   set_current_item (menu, items[current_index]);
