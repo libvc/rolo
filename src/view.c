@@ -17,7 +17,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  *
- * $Id: view.c,v 1.4 2003/03/23 08:04:54 ahsu Exp $
+ * $Id: view.c,v 1.5 2003/03/28 08:50:20 ahsu Exp $
  */
 
 #include "view.h"
@@ -304,6 +304,7 @@ process_view_commands ()
           wrefresh (win);
           wrefresh (sub);
           break;
+        case 'i':
         case 'q':
           command = VIEW_COMMAND_INDEX;
           done = TRUE;
