@@ -17,7 +17,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  * 
- * $Id: result.c,v 1.1 2003/05/04 11:43:45 ahsu Exp $
+ * $Id: result.c,v 1.2 2003/05/04 12:37:54 ahsu Rel $
  */
 
 #include "result.h"
@@ -85,12 +85,13 @@ get_results (FILE * fp, const char *query_string, int *searched,
       fn = vc_get_next_by_name (v, VC_FORMATTED_NAME);
       name = vc_get_value (fn);
       email = vc_get_preferred_email (v);
-      email = email ? email : " ";
-      adr = vc_get_next_by_name (v, VC_ADDRESS);
-      misc = get_val_struct_part (vc_get_value (adr), ADR_LOCALITY);
-      misc = misc ? misc : " ";
-      if (NULL != name)
+
+      if (NULL != name && NULL != email)
         {
+          adr = vc_get_next_by_name (v, VC_ADDRESS);
+          misc = get_val_struct_part (vc_get_value (adr), ADR_LOCALITY);
+          misc = misc ? misc : " ";
+
           if (strstr (name, query_string) || strstr (email, query_string)
               || strstr (misc, query_string))
             {
