@@ -1,3 +1,7 @@
+2003-04-21  Andrew Hsu
+
+* help.c: Updated view help.
+
 2003-04-20  Andrew Hsu
 
 * main.c: Adjustments for the new libvcard API.
