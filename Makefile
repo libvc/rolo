@@ -17,7 +17,7 @@
 # Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #
 #
-# $Id$
+# $Id: Makefile,v 1.1 2003/02/16 06:09:15 ahsu Exp $
 #
 
 SHELL = /bin/sh
@@ -32,9 +32,18 @@ IFLAGS = -nut -i2
 
 all: rolo
 
-rolo: main view edit index help
+rolo: lib main index view edit help
 	$(CC) main.o help.o index.o view.o edit.o \
-        $(CFLAGS) $(LDFLAGS) -o rolo -l vcard -Llibvcard
+        $(CFLAGS) $(LDFLAGS) -o rolo -lvcard -Llibvcard
+
+lib:
+	cd libvcard; make; cd ..
+
+main: main.c
+	$(CC) $(CFLAGS) main.c -c
+
+index: index.c index.h
+	$(CC) $(CFLAGS) index.c -c
 
 view: view.c view.h
 	$(CC) $(CFLAGS) view.c -c
@@ -45,12 +54,6 @@ edit: edit.c edit.h
 help: help.c help.h
 	$(CC) $(CFLAGS) help.c -c
 
-index: index.c index.h
-	$(CC) $(CFLAGS) index.c -c
-
-main: main.c
-	$(CC) $(CFLAGS) main.c -c
-
 pretty:
 	$(INDENT) $(IFLAGS) main.c
 	$(INDENT) $(IFLAGS) index.c
@@ -59,8 +62,8 @@ pretty:
 	$(INDENT) $(IFLAGS) view.h
 	$(INDENT) $(IFLAGS) edit.c
 	$(INDENT) $(IFLAGS) edit.h
-	$(INDENT) $(IFLAGS) help.h
 	$(INDENT) $(IFLAGS) help.c
+	$(INDENT) $(IFLAGS) help.h
 
 clean:
 	-rm -fv rolo *core *~ *.exe *.o *.stackdump
