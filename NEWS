@@ -1,3 +1,18 @@
+Rolo 008 (2003-04-20)
+
+* Revamped the entire libvcard with a brand-spanking-new API.  Now
+there are only two typedefs that the user programmer needs to know
+about: vcard_component and vcard_component_param.
+
+* Added more telephone numbers and email addresses to the
+telecommunications display screen.
+
+* Added ability to use the left and right arrow keys to switch
+between the 5 groups in the view screen.
+
+* Source code will also be distributed in Tar/Bzip2 format from now
+on.
+
 Rolo 007 (2003-04-10)
 
 * The view screen has now been simplified to 5 groupings.  The help
