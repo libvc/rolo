@@ -17,7 +17,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  *
- * $Id: edit.c,v 1.6 2003/03/25 11:09:11 ahsu Exp $
+ * $Id: edit.c,v 1.7 2003/03/26 11:19:27 ahsu Rel $
  */
 
 #include "edit.h"
@@ -41,6 +41,8 @@ static void update_datafile (const char *datafile, long pos,
 static WINDOW *win = NULL;
 static WINDOW *sub = NULL;
 static void (*display_help) (void);
+static const char *editor = NULL;
+static const char *editor_basename = NULL;
 
 /***************************************************************************
  */
@@ -116,6 +118,7 @@ update_datafile (const char *datafile, long pos,
 void
 init_edit ()
 {
+  editor_basename = basename (editor);
   win = newwin (0, 0, 0, 0);
   sub = derwin (win, LINES - 3, COLS, 1, 0);
   keypad (win, TRUE);           /* enable keypad for use of arrow keys */
@@ -181,6 +184,15 @@ print_footer (const char *fn)
 /***************************************************************************
  */
 
+void
+set_edit_editor (const char *str)
+{
+  editor = str;
+}
+
+/***************************************************************************
+ */
+
 static char *
 basename (const char *path)
 {
@@ -209,8 +221,6 @@ edit_entry (const char *datafile, long pos)
 {
   FILE *fp = NULL;
   char filename[PATH_MAX];
-  char *editor = NULL;
-  char *editor_basename = NULL;
   pid_t process_id = 0;
   int status = 0;
   struct stat sb;
@@ -237,20 +247,6 @@ edit_entry (const char *datafile, long pos)
   /* record when the file has been modified */
   stat (filename, &sb);
   modified_time = sb.st_mtime;
-
-  /*-------------------------
-     setup the editor to use
-    -------------------------*/
-  editor = getenv ("EDITOR");
-  if (NULL == editor)
-    {
-      editor = strdup ("vi");
-      editor_basename = strdup ("vi");
-    }
-  else
-    {
-      editor_basename = basename (editor);
-    }
 
   endwin ();
 
