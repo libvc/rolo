@@ -1,0 +1,36 @@
+Summary: contact management software
+Name: @PACKAGE@
+Version: @VERSION@
+Release: 1
+Source: http://osdn.dl.sourceforge.net/sourceforge/rolo/%{name}-%{version}.tar.gz
+License: GPL
+URL: http://rolo.sf.net/
+Packager: Andrew Hsu <ahsu@users.sf.net>
+Vendor: Andrew Hsu <ahsu@users.sf.net>
+Group: Applications/Productivity
+BuildRoot: %{_tmppath}/%{name}-buildroot
+
+%description
+Rolo keeps track of contacts and displays with a text-based menu. It
+strives to be a well-constructed tool for complementing text-based
+email programs. It utilizes the vCard version 3.0 format for storing its
+contacts and interfaces with the end-user through an NCurses front-end.
+
+%prep
+%setup -q
+
+%build
+./configure
+make
+
+%install
+rm -rf $RPM_BUILD_ROOT
+make DESTDIR=$RPM_BUILD_ROOT install
+
+%clean
+rm -rf $RPM_BUILD_ROOT
+
+%files
+%defattr(-,root,root)
+/usr/local/bin/rolo
+%doc AUTHORS COPYING INSTALL NEWS README THANKS test/contacts.vcf
