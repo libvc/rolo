@@ -1,3 +1,8 @@
+2003-04-25  Andrew Hsu
+
+* help.c: Renamed the #defines for clarity.
+* index.c: Renamed the #defines for clarity.
+
 2003-04-23  Andrew Hsu
 
 * edit.c: Renamed the #defines for clarity.

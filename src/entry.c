@@ -17,7 +17,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  *
- * $Id: entry.c,v 1.1 2003/03/25 11:03:57 ahsu Rel $
+ * $Id: entry.c,v 1.2 2003/04/19 15:47:47 ahsu Rel $
  */
 
 #include "entry.h"
@@ -38,6 +38,29 @@ static char *construct_menu_name (const char *family_name,
                                   const char *given_name, const char *email,
                                   const char *tel);
 static void set_menu_print_format (char *menu_print_format, int width);
+static char *get_preferred_email (vcard_component * v);
+static char *get_preferred_tel (vcard_component * v);
+
+/***************************************************************************
+ */
+
+static char *
+get_preferred_tel (vcard_component * v)
+{
+  vcard_component *vc = NULL;
+  char *ret_val = NULL;
+
+  vc = vc_get_next_by_name (v, VC_EMAIL);
+  return ret_val;
+}
+
+/***************************************************************************
+ */
+
+static char *
+get_preferred_email (vcard_component * v)
+{
+}
 
 /***************************************************************************
  */
@@ -396,14 +419,14 @@ get_entries (FILE * fp, entry_node * entries_ll)
       given_name = get_val_struct_part (vc_get_value (vc), N_GIVEN);
 
       /*
-       * retrive the email value
+       * retrive the preferred email value
        */
 
       vc = vc_get_next_by_name (v, VC_EMAIL);
       email = vc_get_value (vc);
 
       /*
-       * retrive the telephone value
+       * retrive the preferred telephone value
        */
 
       vc = vc_get_next_by_name (v, VC_TELEPHONE);
