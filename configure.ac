@@ -1,21 +1,18 @@
 # Process this file with autoconf to produce a configure script.
-#
-# $Id: configure.ac,v 1.13 2003/05/04 12:01:33 ahsu Exp $
-#
+# $Id: configure.ac,v 1.14 2003/05/04 12:54:03 ahsu Rel $
+
 AC_INIT(rolo, 010, ahsu@users.sf.net)
 AM_INIT_AUTOMAKE(rolo, 010)
 AC_COPYRIGHT([Copyright (C) 2003  Andrew Hsu])
-AC_REVISION($Revision: 1.13 $)
+AC_REVISION($Revision: 1.14 $)
 AC_CONFIG_SRCDIR([src/main.c])
 AM_CONFIG_HEADER([config.h])
 
 # Checks for programs.
 AC_PROG_CC
-AM_PROG_LEX
-AC_PROG_YACC
-AC_PROG_RANLIB
 
 # Checks for libraries.
+AC_CHECK_LIB(vc, vc_new)
 AC_CHECK_LIB(ncurses, newwin)
 AC_CHECK_LIB(menu, new_menu)
 
@@ -30,5 +27,5 @@ AC_FUNC_MALLOC
 AC_TYPE_SIGNAL
 AC_CHECK_FUNCS([strdup strstr])
 
-AC_CONFIG_FILES([Makefile vcard/Makefile src/Makefile mutt_vc_query/Makefile doc/Makefile rolo.spec])
+AC_CONFIG_FILES([Makefile src/Makefile doc/Makefile rolo.spec])
 AC_OUTPUT
