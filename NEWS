@@ -1,3 +1,16 @@
+Rolo 005 (2003-03-29)
+
+* A datafile is created upon the startup of rolo if it does not
+already exist.  The datafile is at $HOME/.rolo/contacts.vcf.
+
+* Fixed a core dump upon adding the first entry in an empty datafile.
+
+* Performance improvements for those cases where an edit, add, or
+delete is aborted--the index refresh is spared in those circumstances.
+
+* Updated the help screens to match the functionality implemented
+thus far.
+
 Rolo 004 (2003-03-23)
 
 * Added `edit' functionality.  Press the `e' key in the index screen
