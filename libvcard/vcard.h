@@ -16,7 +16,7 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * $Id$
+ * $Id: vcard.h,v 1.1 2003/02/16 05:03:32 ahsu Exp $
  */
 
 #ifndef __VCARD_H
@@ -79,6 +79,7 @@ enum adr_parts { ADR_PO_BOX, ADR_EXT_ADDRESS, ADR_STREET, ADR_LOCALITY,
 #define VC_AGENT                "AGENT"
 #define VC_BIRTHDAY             "BDAY"
 #define VC_CATEGORIES           "CATEGORIES"
+#define VC_CLASS                "CLASS"
 #define VC_DELIVERY_LABEL       "LABEL"
 #define VC_EMAIL                "EMAIL"
 #define VC_FORMATTED_NAME       "FN"
@@ -97,6 +98,7 @@ enum adr_parts { ADR_PO_BOX, ADR_EXT_ADDRESS, ADR_STREET, ADR_LOCALITY,
 #define VC_TELEPHONE            "TEL"
 #define VC_TIME_ZONE            "TZ"
 #define VC_TITLE                "TITLE"
+#define VC_URL                  "URL"
 #define VC_VCARD                "VCARD"
 #define VC_VERSION              "VERSION"
 
