@@ -1,3 +1,17 @@
+2003-04-25  Andrew Hsu
+
+* vcard.h: Prototypes for four more `convenience functions'.  This
+saves the user programmer a little bit more time.  Mostly for
+retrieving the `preferred' telephone and email of a given vCard.
+
+* vcard.c: Definitions for four more functions.  Mostly for retrieving
+the `preferred' telephone and email of a given vCard.
+
+* vc_parse.y: Parse the parameter tokens a little more so that the
+name and value can be extracted.  Only does a dumb parse of grabbing
+both sides of an `=' character.  This will need to be fixed up
+later.
+
 2003-04-20  Andrew Hsu
 
 * vcard.c: Fixed vc_get_next_by_name so that it starts its search
