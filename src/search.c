@@ -17,13 +17,15 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA
  *  02111-1307 USA
  *
- *  $Id: search.c,v 1.4 2003/05/21 05:09:34 ahsu Exp $
+ *  $Id: search.c,v 1.5 2003/05/22 05:04:54 ahsu Exp $
  */
 
 #include "search.h"
 #include <string.h>
 
 static int strstr_nocase (const char *haystack, const char *needle);
+static ITEM *search_menu_forwards (MENU * menu);
+static ITEM *search_menu_backwards (MENU * menu);
 
 /***************************************************************************
     Searches for the needle in the haystack without worrying about
@@ -99,14 +101,33 @@ set_menu_search_string (MENU * menu, const char *search_string)
  */
 
 ITEM *
-search_menu (MENU * menu)
+search_menu (MENU * menu, int initial_direction)
 {
   ITEM *result_item = NULL;
+
+  switch (initial_direction)
+    {
+    case REQ_SCR_DPAGE:
+      result_item = search_menu_forwards (menu);
+      break;
+    case REQ_SCR_UPAGE:
+      result_item = search_menu_backwards (menu);
+      break;
+    default:
+      break;
+    }
+
+  return result_item;
+}
+
+static ITEM *
+search_menu_forwards (MENU * menu)
+{
   char *search_string = NULL;
+  ITEM *result_item = NULL;
 
   /* the search string is stored in the menu user pointer */
   search_string = (char *) menu_userptr (menu);
-
   if (NULL != search_string)
     {
       int i = -1;
@@ -139,6 +160,54 @@ search_menu (MENU * menu)
       if (found)
         {
           result_item = items[i - 1];
+        }
+
+    }
+
+  return result_item;
+}
+
+static ITEM *
+search_menu_backwards (MENU * menu)
+{
+  char *search_string = NULL;
+  ITEM *result_item = NULL;
+
+  /* the search string is stored in the menu user pointer */
+  search_string = (char *) menu_userptr (menu);
+
+  if (NULL != search_string)
+    {
+      int i = -1;
+      int current_index = -1;
+      ITEM **items = NULL;
+      int found = 0;
+      bool done = FALSE;
+
+      current_index = item_index (current_item (menu));
+      items = menu_items (menu);
+
+      /* start search from the item immediately before the current item */
+      for (i = current_index - 1; i >= 0 && !found; i--)
+        {
+          found = strstr_nocase (item_description (items[i]), search_string);
+        }
+
+      if (!found)
+        {
+          int count = -1;
+          count = item_count (menu);
+          /* start search from the end (i.e. wrap around) */
+          for (i = count - 1; i >= current_index && !found; i--)
+            {
+              found =
+                  strstr_nocase (item_description (items[i]), search_string);
+            }
+        }
+
+      if (found)
+        {
+          result_item = items[i + 1];
         }
     }
 

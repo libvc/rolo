@@ -17,7 +17,7 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA
  *  02111-1307 USA
  *
- *  $Id$
+ *  $Id: help.c,v 1.13 2003/05/20 01:08:52 ahsu Exp $
  */
 
 #include "help.h"
@@ -81,7 +81,9 @@ show_index_help ()
 /* wprintw (sub, "S              sort the entries in descending order\n"); */
   wprintw (sub, "f              filter the entries\n");
   wprintw (sub, "F              remove the filter\n");
-  wprintw (sub, "/              search the index screen\n");
+  wprintw (sub, "/              search the index screen with a given string\n");
+  wprintw (sub, "n              search forwards for the next search result\n");
+  wprintw (sub, "N              search backwards for the next search result\n");
   wprintw (sub, "a              add a new entry using a text editor\n");
 /* wprintw (sub, "a              add a new entry using a form\n"); */
   wprintw (sub, "e              edit an entry\n");

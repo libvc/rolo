@@ -17,10 +17,10 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA
  *  02111-1307 USA
  *
- *  $Id: search.h,v 1.1 2003/05/20 04:59:33 ahsu Exp $
+ *  $Id: search.h,v 1.2 2003/05/22 05:04:54 ahsu Exp $
  */
 
 #include <menu.h>
 
 extern void set_menu_search_string (MENU * menu, const char *search_string);
-extern ITEM *search_menu (MENU * menu);
+extern ITEM *search_menu (MENU * menu, int initial_direction);

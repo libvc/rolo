@@ -17,7 +17,7 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA
  *  02111-1307 USA
  *
- *  $Id: index.c,v 1.17 2003/05/22 01:10:40 ahsu Exp $
+ *  $Id: index.c,v 1.18 2003/05/22 05:04:53 ahsu Exp $
  */
 
 #include "entry.h"
@@ -38,7 +38,9 @@
 
 static void print_footer (const char *filename, int entries);
 static void print_header ();
-static void perform_search ();
+static void index_search ();
+static void index_search_next ();
+static void index_search_prev ();
 
 static ITEM **get_items (entry_node ** entries, int count);
 static void filter_menu ();
@@ -364,7 +366,7 @@ process_index_commands ()
           menu_driver (menu, REQ_SCR_DPAGE);
           break;
         case '/':
-          perform_search ();
+          index_search ();
           break;
         case 'a':
           return_command = INDEX_COMMAND_ADD;
@@ -418,10 +420,10 @@ process_index_commands ()
           menu_driver (menu, REQ_PREV_ITEM);
           break;
         case 'n':
-          menu_driver (menu, REQ_NEXT_MATCH);
+          index_search_next ();
           break;
         case 'N':
-          menu_driver (menu, REQ_PREV_MATCH);
+          index_search_prev ();
           break;
         case 'q':
           return_command = INDEX_COMMAND_QUIT;
@@ -674,11 +676,9 @@ filter_menu ()
  */
 
 static void
-perform_search ()
+index_search ()
 {
   char search_string[80];
-  ITEM *found_item = NULL;
-  int direction = 0;
 
   wmove (win, LINES - 1, 0);
   wclrtoeol (win);
@@ -686,29 +686,11 @@ perform_search ()
   nocbreak ();
   echo ();
   wscanw (win, "%s", search_string);
-
-  set_menu_search_string(menu, search_string);
-  found_item = search_menu (menu);
-  direction = scroll_to_result (found_item);
-  switch (direction)
-    {
-    case 0:
-      wmove (win, LINES - 1, 0);
-      wclrtoeol (win);
-      mvwprintw (win, LINES - 1, 0, "Not found.");
-      beep ();
-      break;
-
-    case REQ_SCR_UPAGE:
-      mvwprintw (win, LINES - 1, 0, "Search wrapped to top.");
-      break;
-
-    default:
-      break;
-    }
-
   cbreak ();
   noecho ();
+
+  set_menu_search_string (menu, search_string);
+  index_search_next ();
 }
 
 /***************************************************************************
@@ -727,7 +709,7 @@ scroll_to_result (ITEM * found_item)
       current_index = item_index (current_item (menu));
       found_index = item_index (found_item);
 
-      direction = found_index > current_index ? REQ_SCR_DPAGE : REQ_SCR_UPAGE;
+      direction = found_index >= current_index ? REQ_SCR_DPAGE : REQ_SCR_UPAGE;
 
       while (FALSE == item_visible (found_item))
         {
@@ -752,4 +734,62 @@ clear_message_bar (MENU * m)
 
   wmove (win, LINES - 1, 0);
   wclrtoeol (win);
+}
+
+/***************************************************************************
+ */
+
+static void
+index_search_next ()
+{
+  ITEM *found_item = NULL;
+  int direction = 0;
+
+  found_item = search_menu (menu, REQ_SCR_DPAGE);
+  direction = scroll_to_result (found_item);
+  switch (direction)
+    {
+    case 0:
+      wmove (win, LINES - 1, 0);
+      wclrtoeol (win);
+      mvwprintw (win, LINES - 1, 0, "Not found.");
+      beep ();
+      break;
+
+    case REQ_SCR_UPAGE:
+      mvwprintw (win, LINES - 1, 0, "Search wrapped to top.");
+      break;
+
+    default:
+      break;
+    }
+}
+
+/***************************************************************************
+ */
+
+static void
+index_search_prev ()
+{
+  ITEM *found_item = NULL;
+  int direction = 0;
+
+  found_item = search_menu (menu, REQ_SCR_UPAGE);
+  direction = scroll_to_result (found_item);
+  switch (direction)
+    {
+    case 0:
+      wmove (win, LINES - 1, 0);
+      wclrtoeol (win);
+      mvwprintw (win, LINES - 1, 0, "Not found.");
+      beep ();
+      break;
+
+    case REQ_SCR_DPAGE:
+      mvwprintw (win, LINES - 1, 0, "Search wrapped to bottom.");
+      break;
+
+    default:
+      break;
+    }
 }
