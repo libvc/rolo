@@ -1,3 +1,34 @@
+2003-03-22  Andrew Hsu
+
+* main.c: Added case statements for WINDOW_DELETE and WINDOW_ADD.
+These statements will handle the new `delete' and `add' commands.
+
+* edit.c: Created the functions that actually do the adding and
+deleting of the vcard entries.  Changed the `edit' functionality
+of the edit_vcard function to call upon the EDITOR as a way to edit
+the vcard.  Steering away from the forms-based solution for now
+just so that editing functionality can be implemented for a start.
+Not sure if a forms based solution will exist in the future.  Also,
+a few static functions were added in support of the newly exposed
+functions.
+
+* edit.h: Changed the prototype for edit_vcard and added prototypes
+for adding and deleting.  The prototypes may be renamed in the
+future so that they do not use the word `vcard' in them so that
+they do not conflict with the libvcard interface.
+
+* index.c: Added case statements in the process_index_commands
+function to process adding and deleting commands.  Created a new
+external refresh_index function that will maintain the item index
+selection after a refresh.
+
+* index.h: Added new enums for the add and delete index commands.
+Exposed the new refresh_index function.
+
+* view.c: Added the edit command to the header bar.
+
+* help.c: Added new commands to the help window for view and edit.
+
 2003-03-07  Andrew Hsu
 
 * main.c: Uses config.h define to print version.
