@@ -1,15 +1,22 @@
-$Id$
-
-rolo - contact management software
+Rolo - contact management software
+version 001
 
 Copyright (C) 2003  Andrew Hsu
 
-This software is maintained on SourceForge:
+Using the vCard format as the data storage structure, Rolo will
+keep track of your contacts and display them to you with a curses
+front end.
 
+Directory contents:
+doc - documentation for rolo.
+src - source code for the rolo user interface.
+test - test data for rolo.
+vcard - source code for libvcard.
+
+This software is maintained on SourceForge:
 http://rolo.sf.net/
 
-Questions, comments, and suggestions should be directed to:
+See the `INSTALL' file for building and installation instructions.
+See the `COPYING' file for copying conditions.
 
-Andrew Hsu
-email: ahsu "at" users.sf.net
-
+Send bugs, questions, or comments to Andrew Hsu <ahsu@users.sf.net>
