@@ -17,7 +17,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  *
- * $Id: edit.c,v 1.3 2003/03/22 11:54:46 ahsu Rel $
+ * $Id: edit.c,v 1.4 2003/03/23 08:04:54 ahsu Exp $
  */
 
 #include "edit.h"
@@ -43,6 +43,74 @@ static void update_datafile (const char *datafile, long pos,
 static WINDOW *win = NULL;
 static WINDOW *sub = NULL;
 static void (*display_help) (void);
+
+/***************************************************************************
+ */
+
+static void
+update_datafile (const char *datafile, long pos,
+                 const char *new_entry_filename)
+{
+  FILE *tfp = NULL;
+  FILE *dfp = NULL;
+  FILE *efp = NULL;
+  char tmp_datafile[PATH_MAX];
+  int ch = 0;
+  long i = 0;
+  int rc = 0;
+
+  strcpy (tmp_datafile, datafile);
+  strcat (tmp_datafile, ".tmp");
+  dfp = fopen (datafile, "r");
+  tfp = fopen (tmp_datafile, "w");
+
+  /* copy the datafile into the temp file but only upto where to change */
+  i = 0;
+  ch = getc (dfp);
+  while (ch != EOF && i < pos)
+    {
+      putc (ch, tfp);
+      ch = getc (dfp);
+      i++;
+    }
+
+  efp = fopen (new_entry_filename, "r");
+
+  /* copy the new entry into the temp file */
+  putc ('\n', tfp);
+  ch = getc (efp);
+  while (ch != EOF)
+    {
+      putc (ch, tfp);
+      ch = getc (efp);
+    }
+
+  fclose (efp);                 /* entry file no longer needed */
+
+  /* move to just after the changed entry position */
+  fseek (dfp, pos, SEEK_SET);
+  parse_vcard_file (dfp);
+
+  /* copy the rest of the datafile over to the temp file */
+  ch = getc (dfp);
+  while (ch != EOF)
+    {
+      putc (ch, tfp);
+      ch = getc (dfp);
+    }
+
+  fclose (dfp);                 /* datafile no longer needed */
+  fclose (tfp);                 /* temp file no longer needed */
+
+  /* replace the datafile with the temp datafile */
+  rename (tmp_datafile, datafile);
+
+  if (-1 == rc)
+    {
+      fprintf (stderr, "error with rename...\n");
+      perror ("rolo");
+    }
+}
 
 /***************************************************************************
  */
@@ -81,71 +149,6 @@ append_to_datafile (const char *datafile, const char *new_entry_filename)
   putc ('\n', tfp);
   fprintf_vcard (tfp, v);
 
-  fclose (tfp);                 /* temp file no longer needed */
-
-  /* replace the datafile with the temp datafile */
-  rename (tmp_datafile, datafile);
-
-  if (-1 == rc)
-    {
-      fprintf (stderr, "error with rename...\n");
-      perror ("rolo");
-    }
-}
-
-/***************************************************************************
- */
-
-void
-delete_entry (const char *datafile, long pos)
-{
-  FILE *tfp = NULL;
-  FILE *dfp = NULL;
-  char tmp_datafile[PATH_MAX];
-  vcard *v = NULL;
-  int ch = 0;
-  long i = 0;
-  int rc = 0;
-
-  wmove (stdscr, LINES - 1, 0);
-  wclrtoeol (stdscr);
-  wprintw (stdscr, "Delete selected item? [Y]es [N]o: ");
-  ch = wgetch (stdscr);
-
-  wmove (stdscr, LINES - 1, 0);
-  wclrtoeol (stdscr);
-
-  if ('y' != tolower (ch))
-    return;
-
-  /* open a temp file for editing */
-  strcpy (tmp_datafile, datafile);
-  strcat (tmp_datafile, ".tmp");
-  dfp = fopen (datafile, "r");
-  tfp = fopen (tmp_datafile, "w");
-
-  /* copy the datafile into the temp file but only upto where to change */
-  i = 0;
-  ch = getc (dfp);
-  while (ch != EOF && i < pos)
-    {
-      putc (ch, tfp);
-      ch = getc (dfp);
-      i++;
-    }
-
-  fseek (dfp, pos, SEEK_SET);
-  v = parse_vcard_file (dfp);
-
-  /* copy the rest of the datafile over to the temp file */
-  ch = getc (dfp);
-  while (ch != EOF)
-    {
-      putc (ch, tfp);
-      ch = getc (dfp);
-    }
-
-  fclose (dfp);                 /* datafile no longer needed */
   fclose (tfp);                 /* temp file no longer needed */
 
   /* replace the datafile with the temp datafile */
@@ -332,74 +335,6 @@ basename (const char *path)
     }
 
   return retval;
-}
-
-/***************************************************************************
- */
-
-static void
-update_datafile (const char *datafile, long pos,
-                 const char *new_entry_filename)
-{
-  FILE *tfp = NULL;
-  FILE *dfp = NULL;
-  FILE *efp = NULL;
-  char tmp_datafile[PATH_MAX];
-  int ch = 0;
-  long i = 0;
-  int rc = 0;
-
-  strcpy (tmp_datafile, datafile);
-  strcat (tmp_datafile, ".tmp");
-  dfp = fopen (datafile, "r");
-  tfp = fopen (tmp_datafile, "w");
-
-  /* copy the datafile into the temp file but only upto where to change */
-  i = 0;
-  ch = getc (dfp);
-  while (ch != EOF && i < pos)
-    {
-      putc (ch, tfp);
-      ch = getc (dfp);
-      i++;
-    }
-
-  efp = fopen (new_entry_filename, "r");
-
-  /* copy the new entry into the temp file */
-  putc ('\n', tfp);
-  ch = getc (efp);
-  while (ch != EOF)
-    {
-      putc (ch, tfp);
-      ch = getc (efp);
-    }
-
-  fclose (efp);                 /* entry file no longer needed */
-
-  /* move to just after the changed entry position */
-  fseek (dfp, pos, SEEK_SET);
-  parse_vcard_file (dfp);
-
-  /* copy the rest of the datafile over to the temp file */
-  ch = getc (dfp);
-  while (ch != EOF)
-    {
-      putc (ch, tfp);
-      ch = getc (dfp);
-    }
-
-  fclose (dfp);                 /* datafile no longer needed */
-  fclose (tfp);                 /* temp file no longer needed */
-
-  /* replace the datafile with the temp datafile */
-  rename (tmp_datafile, datafile);
-
-  if (-1 == rc)
-    {
-      fprintf (stderr, "error with rename...\n");
-      perror ("rolo");
-    }
 }
 
 /***************************************************************************
