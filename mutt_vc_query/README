@@ -1,0 +1,10 @@
+mutt_vc_query - vCard address query utility for mutt
+
+Copyright (C) 2003  Andrew Hsu
+
+Add the following line to your ~/.muttrc file:
+
+  set query_command="mutt_vc_query '%s'"
+
+And you will then be able to query email addresses stored in your
+local `contacts.vcf' file from mutt when you use the `Q' command.
