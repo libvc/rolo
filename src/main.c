@@ -17,11 +17,12 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  * 
- * $Id: main.c,v 1.5 2003/03/07 07:28:22 ahsu Rel $
+ * $Id: main.c,v 1.6 2003/03/22 11:48:24 ahsu Rel $
  */
 
 #include <vcard.h>
 #include "view.h"
+#include "delete.h"
 #include "edit.h"
 #include "index.h"
 #include "help.h"
@@ -417,11 +418,10 @@ main (int argc, char *argv[])
               fclose (fp);
               fp = NULL;
 
-              /* FIXME: return val of delete_entry should show if edit
-                 actually took place.  if it did not take place,
-                 then a refresh could be spared */
-              delete_entry (data_path, pos);
-              refresh_index ();
+              if (DELETE_SUCCESSFUL == delete_entry (data_path, pos))
+                {
+                  refresh_index ();
+                }
             }
 
           win_state = WINDOW_INDEX;
