@@ -16,7 +16,7 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * $Id: vcard.h,v 1.2 2003/04/02 11:20:23 ahsu Exp $
+ * $Id: vcard.h,v 1.3 2003/04/03 14:28:15 ahsu Rel $
  */
 
 #ifndef __VCARD_H
@@ -24,62 +24,95 @@
 
 #include <stdio.h>
 
-typedef struct vcard_tag vcard;
-typedef struct vcard_item_tag vcard_item;
-typedef struct vcard_item_param_tag vcard_item_param;
-typedef struct vcard_item_iter_tag vcard_item_iter;
-typedef struct vcard_item_param_iter_tag vcard_item_param_iter;
+/*** TYPEDEFS ***/
 
-/* *** PROTOTYPES *** */
+typedef struct vcard_component_tag vcard_component;
+typedef struct vcard_component_param_tag vcard_component_param;
 
-/* vcard operations */
+/*** PROTOTYPES ***/
 
-vcard *create_vcard ();
-void delete_vcard (vcard * v);
-void fprintf_vcard (FILE * fp, const vcard * v);
+/* create function for vcard_component */
+vcard_component *vc_new ();
 
-void set_vcard_group (vcard * v, const char *group);
-char *get_vcard_group (const vcard * v);
+/* modify functions for vcard_component */
+vcard_component *vc_set_group (vcard_component * vc, const char *group);
+vcard_component *vc_set_name (vcard_component * vc, char *name);
+vcard_component *vc_add_param (vcard_component * vc,
+                               vcard_component_param * vc_param);
+vcard_component *vc_set_value (vcard_component * vc, const char *value);
+vcard_component *vc_link (vcard_component * head, vcard_component * tail);
 
-/* vcard item operations */
+/* convenience function */
+vcard_component *vc_append_with_name (vcard_component * vc, char *name);
 
-vcard_item *insert_vcard_item (vcard * v, const char *name);
+/* read functions for vcard_component */
+char *vc_get_group (const vcard_component * vc);
+char *vc_get_name (const vcard_component * vc);
+vcard_component_param *vc_get_param (const vcard_component * vc);
+char *vc_get_value (const vcard_component * vc);
 
-void set_vcard_item_group (vcard_item * vi, const char *group);
-char *get_vcard_item_group (const vcard_item * vi);
+/* create function for vcard_component_param */
+vcard_component_param *vc_param_new ();
 
-void set_vcard_item_value (vcard_item * vi, const char *value);
-char *get_vcard_item_value (const vcard_item * vi);
+/* modify functions for vcard_component_param */
+vcard_component_param *vc_param_set_name (vcard_component_param * vc_param,
+                                          const char *name);
+vcard_component_param *vc_param_set_value (vcard_component_param * vc_param,
+                                           const char *value);
+vcard_component_param *vc_param_set_str (vcard_component_param * vc_param,
+                                         const char *str);
+vcard_component_param *vc_param_link (vcard_component_param * head,
+                                      vcard_component_param * tail);
 
-void init_vcard_item_iter (vcard_item_iter * it, vcard * v);
-vcard_item *next_vcard_item (vcard_item_iter * it);
+/* read functions for vcard_component_param */
+char *vc_param_get_name (const vcard_component_param * vc_param);
+char *vc_param_get_value (const vcard_component_param * vc_param);
 
-/* vcard item parameter operations */
+/* functions for scrolling through vcard_components */
+vcard_component *vc_get_next (const vcard_component * vc);
+vcard_component *vc_get_next_by_name (vcard_component * vc, const char *name);
 
-vcard_item_param *insert_vcard_item_param (vcard_item * vi, const char *str);
+/* functions for scrolling through vcard_component_params */
+vcard_component_param *vc_param_get_next (const vcard_component_param
+                                          * vc_param);
+vcard_component_param *vc_param_get_next_by_name (vcard_component_param
+                                                  * vc_param,
+                                                  const char *name);
 
-void init_vcard_item_param_iter (vcard_item_param_iter * it, vcard_item * vi);
-vcard_item_param *next_vcard_item_param (vcard_item_param_iter * it);
+/* clean-up functions */
+void vc_delete (vcard_component * vc);
+void vc_delete_deep (vcard_component * vc);
+void vc_param_delete (vcard_component_param * vc_param);
+void vc_param_delete_deep (vcard_component_param * vc_param);
+
+/* printing functions */
+void
+fprintf_vcard_component_param (FILE * fp, vcard_component_param * vc_param);
+void fprintf_vcard_component (FILE * fp, vcard_component * vc);
+void fprintf_vcard (FILE * fp, vcard_component * vcard);
 
 /* parsing functions */
-vcard *parse_vcard_file (FILE * fp);
+vcard_component *parse_vcard_file (FILE * fp);
 int count_vcards (FILE * fp);
-
-/* query functions */
-vcard_item *get_vcard_item_by_name (const vcard * v, const char *name);
-
 char *get_val_struct_part (const char *n, int part);
+
+/*** ENUMS ***/
 
 enum n_parts
 { N_FAMILY, N_GIVEN, N_MIDDLE, N_PREFIX, N_SUFFIX };
+
 enum adr_parts
 { ADR_PO_BOX, ADR_EXT_ADDRESS, ADR_STREET, ADR_LOCALITY,
   ADR_REGION, ADR_POSTAL_CODE, ADR_COUNTRY
 };
+
 enum org_parts
 { ORG_NAME, ORG_UNIT_1, ORG_UNIT_2, ORG_UNIT_3, ORG_UNIT_4 };
+
 enum geo_parts
 { GEO_LATITUDE, GEO_LONGITUDE };
+
+/*** DEFINES ***/
 
 #define VC_ADDRESS              "ADR"
 #define VC_AGENT                "AGENT"
