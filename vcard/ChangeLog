@@ -1,3 +1,16 @@
+2003-04-20  Andrew Hsu
+
+* vcard.h: Big changes.  Revamped the entire API.  Now there are
+only two typedefs that the user programmer needs to know about:
+vcard_component and vcard_component_param.  No more iterators.
+
+* vcard.c: Changes to coincide with those described for vcard.h.
+Every function has a description!  These changes took approximately
+12 hours to complete.
+
+* vc_parse.y: The parser had to be touched up to work with the new
+API.
+
 2003-04-10  Andrew Hsu
 
 * vcard.c: Replaced all structs with their respective typedef
