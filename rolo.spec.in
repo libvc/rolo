@@ -1,5 +1,5 @@
 #
-# $Id: rolo.spec.in,v 1.4 2003/03/31 10:07:09 ahsu Exp $
+# $Id: rolo.spec.in,v 1.5 2003/04/02 11:16:15 ahsu Rel $
 #
 Summary: Text-based contact management software.
 Name: @PACKAGE@
@@ -38,4 +38,4 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(-,root,root)
 %{_bindir}/rolo
 %{_mandir}/man1/rolo.1*
-%doc AUTHORS COPYING INSTALL NEWS README THANKS test/contacts.vcf
+%doc AUTHORS COPYING INSTALL NEWS README THANKS TODO test/contacts.vcf
