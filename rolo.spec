@@ -1,8 +1,8 @@
 # RPM spec file for Red Hat Linux
-# $Id: rolo.spec.in,v 1.8 2003/05/14 10:16:34 ahsu Exp $
+# $Id: rolo.spec_rh,v 1.1 2003/05/14 12:39:29 ahsu Exp $
 Summary: Text-based contact management software.
 Name: rolo
-Version: 010
+Version: 011
 Release: 1
 Source: http://osdn.dl.sourceforge.net/sourceforge/rolo/%{name}-%{version}.tar.gz
 License: GPL
@@ -12,6 +12,8 @@ Distribution: Red Hat Linux
 Vendor: Andrew Hsu
 Group: Applications/Productivity
 BuildRoot: %{_tmppath}/%{name}-buildroot
+BuildRequires: libvc
+Prefix: /usr
 
 %description
 Rolo keeps track of contacts and displays with a text-based menu. It
@@ -23,7 +25,7 @@ contacts and interfaces with the end-user through an NCurses front-end.
 %setup -q
 
 %build
-./configure --bindir=/usr/bin --mandir=/usr/share/man
+./configure --prefix=/usr --mandir=/usr/share/man
 make
 
 %install
@@ -35,6 +37,6 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(-,root,root)
-%{_bindir}/rolo
-%{_mandir}/man1/rolo.1*
+%{_bindir}/*
+%{_mandir}/man1/*
 %doc AUTHORS ChangeLog COPYING INSTALL NEWS README THANKS TODO test/contacts.vcf doc/rfc2426.txt
