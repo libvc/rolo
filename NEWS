@@ -1,10 +1,23 @@
-RELEASE NOTES FOR ROLO
+Rolo 002 (2003-02-28)
 
-release 001 (2003-02-22)
+* The source code is now distributed with a proper `configure'
+script.  Refer to the `INSTALL' file for details on how to use it
+to compile and install Rolo.  This means Rolo should be able to run
+on a more diverse list of operating systems and environments (thanks
+to autoconf and automake).
 
-this is the first release of the rolo package.  it has been developed
-and tested on FreeBSD 4.7.  keep in mind that you will need a file
-in your %{HOME}/.rolo/ directory titled contacts.vcf and in the
-same format as the data.vcf file format (which is in vCard 3.0
-format).  this release only has capabilities to read from the file
+* The help screens should be more relevant to the screens they give
+help about.
+
+* An example data file can be found in the `test' directory.  After
+rolo is installed, the example data file can be loaded by using the
+`-f' option on rolo.
+
+Rolo 001 (2003-02-22)
+
+This is the first release of the Rolo package.  It has been developed
+and tested on FreeBSD 4.7.  Keep in mind that you will need a file
+in your `%{HOME}/.rolo/' directory titled `contacts.vcf' and in the
+same format as the `data.vcf' file format (which is in vCard 3.0
+format).  This release only has capabilities to read from the file
 and display the entries to screen.
