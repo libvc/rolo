@@ -17,7 +17,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  * 
- * $Id$
+ * $Id: result.c,v 1.1 2003/05/04 11:43:45 ahsu Exp $
  */
 
 #include "result.h"
@@ -34,8 +34,8 @@ struct query_result_tag
 };
 
 /*** LOCAL PROTOTYPES ***/
-static query_result **lltoa (query_result * results, int n);
-static query_result *atoll (query_result ** results_a, int n);
+static query_result **qr_lltoa (query_result * results, int n);
+static query_result *qr_atoll (query_result ** results_a, int n);
 static int cmp_results_by_name (const void *a, const void *b);
 static int cmp_results_by_email (const void *a, const void *b);
 static int cmp_results_by_misc (const void *a, const void *b);
@@ -212,7 +212,7 @@ sort_results (query_result * results, int n, int sort_by)
   query_result **results_a = NULL;
   int i = 0;
 
-  results_a = lltoa (results, n);
+  results_a = qr_lltoa (results, n);
 
   switch (sort_by)
     {
@@ -229,14 +229,14 @@ sort_results (query_result * results, int n, int sort_by)
       break;
     }
 
-  results->next = atoll (results_a, n);
+  results->next = qr_atoll (results_a, n);
 }
 
 /***************************************************************************
  */
 
 static query_result **
-lltoa (query_result * results, int n)
+qr_lltoa (query_result * results, int n)
 {
   query_result **results_a = NULL;
   query_result *r = NULL;
@@ -274,7 +274,7 @@ delete_query_result (query_result * qr)
  */
 
 static query_result *
-atoll (query_result ** results_a, int n)
+qr_atoll (query_result ** results_a, int n)
 {
   query_result *r = NULL;
   query_result *returning_r = NULL;
