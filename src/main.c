@@ -17,7 +17,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  * 
- * $Id: main.c,v 1.11 2003/04/03 14:55:24 ahsu Rel $
+ * $Id: main.c,v 1.12 2003/04/19 15:44:00 ahsu Rel $
  */
 
 #include <vcard.h>
@@ -40,7 +40,9 @@
 #include <sys/stat.h>
 
 #if HAVE_CONFIG_H
-#  include "config.h"
+#include "config.h"
+#else
+#define PACKAGE_STRING "rolo"
 #endif
 
 #define DEFAULT_HOME_ROLO_DIR ".rolo"
@@ -50,7 +52,8 @@
 
 enum win_states
 { WINDOW_INDEX, WINDOW_VIEW, WINDOW_RAW_VIEW, WINDOW_EDIT, WINDOW_DELETE,
-      WINDOW_ADD };
+  WINDOW_ADD
+};
 char data_path[PATH_MAX];
 
 /*** PROTOTYPES ***/
@@ -66,6 +69,10 @@ static void display_license ();
 static char *get_env_editor ();
 
 /***************************************************************************
+    Gets the editor to invoke from the environment settings.  If
+    none of the environment settings are set, then the default value
+    of `vi' will be returned.  The user of this function must
+    remember to free the returned string.
  */
 
 static char *
@@ -91,6 +98,7 @@ get_env_editor ()
 /***************************************************************************
     This is called upon when the window is resized.
  */
+
 static void
 resize (int sig)
 {
@@ -112,6 +120,7 @@ resize (int sig)
 /***************************************************************************
     This is called upon when the program is asked to finish.
  */
+
 static void
 finish (int sig)
 {
@@ -123,6 +132,7 @@ finish (int sig)
 /***************************************************************************
     Sets the default program startup values.
  */
+
 static void
 set_defaults ()
 {
@@ -214,6 +224,7 @@ display_usage (const char *prog_name)
 /***************************************************************************
     Outputs a one-line version statement.
  */
+
 static void
 display_version ()
 {
@@ -257,6 +268,7 @@ display_license ()
 /***************************************************************************
     Helper function for setting the contact file.
  */
+
 static void
 set_contacts_file ()
 {
