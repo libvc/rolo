@@ -1,5 +1,10 @@
 2003-03-29  Andrew Hsu
 
+* rolo.spec.in: Added distribution so that it would be grouped
+properly in rpmfind.net and touched up a few fields.
+
+2003-03-29  Andrew Hsu
+
 * rolo.spec.in: Doc fixes.
 
 * rolo.spec.in: Binary and man pages are now installed in the proper
