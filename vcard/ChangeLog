@@ -1,5 +1,8 @@
 2003-04-04  Andrew Hsu
 
+* vcard.c: Changed fprintf_vcard to accept const vcard.
+* vcard.h: Changed fprintf_vcard to accept const vcard.
+
 * vcard.c: The insert_vcard_item now preserves the order of the
 items inserted.
 
