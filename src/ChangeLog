@@ -1,3 +1,9 @@
+2003-05-07  Andrew Hsu
+
+* index.c: Added a check for null search_string in search_items().
+Finding a result off screen will now scroll the menu so that the
+result is at the top of the screen.
+
 2003-04-25  Andrew Hsu
 
 * entry.c: The preferred telephone and email are now retrieved for
