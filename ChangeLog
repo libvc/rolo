@@ -1,5 +1,7 @@
 2003-03-29  Andrew Hsu
 
+* rolo.spec.in: Doc fixes.
+
 * rolo.spec.in: Binary and man pages are now installed in the proper
 directory.
 
