@@ -17,7 +17,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  *
- * $Id: view.c,v 1.3 2003/02/19 08:33:24 ahsu Exp $
+ * $Id: view.c,v 1.4 2003/02/20 07:27:14 ahsu Exp $
  */
 
 #include "view.h"
@@ -25,7 +25,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define HARD_CODED_HEADER_STR "q:Quit  e:Edit  j:Next  k:Prev  h:Help"
+#define HARD_CODED_HEADER_STR "q:Quit  j:Next  k:Prev  h:Help"
 
 /*** GLOBALS ***/
 
