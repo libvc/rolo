@@ -17,7 +17,7 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA
  *  02111-1307 USA
  *
- *  $Id: index.c,v 1.16 2003/05/21 05:09:02 ahsu Exp $
+ *  $Id: index.c,v 1.17 2003/05/22 01:10:40 ahsu Exp $
  */
 
 #include "entry.h"
@@ -138,6 +138,9 @@ init_index (const char *filename)
 
   /* set the menu hook to clear the message bar */
   set_item_init (menu, clear_message_bar);
+
+  /* initialize the menu_userptr to NULL (to be used as search string) */
+  set_menu_userptr (menu, NULL);
 
   print_header ();
   print_footer (filename, count);
@@ -684,7 +687,8 @@ perform_search ()
   echo ();
   wscanw (win, "%s", search_string);
 
-  found_item = search_menu (menu, search_string);
+  set_menu_search_string(menu, search_string);
+  found_item = search_menu (menu);
   direction = scroll_to_result (found_item);
   switch (direction)
     {

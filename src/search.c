@@ -17,7 +17,7 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA
  *  02111-1307 USA
  *
- *  $Id: search.c,v 1.3 2003/05/21 01:37:24 ahsu Exp $
+ *  $Id: search.c,v 1.4 2003/05/21 05:09:34 ahsu Exp $
  */
 
 #include "search.h"
@@ -69,13 +69,43 @@ strstr_nocase (const char *haystack, const char *needle)
 }
 
 /***************************************************************************
-    Perform the search for an item with a given search string.
+ */
+
+void
+set_menu_search_string (MENU * menu, const char *search_string)
+{
+  void *userptr = NULL;
+
+  userptr = menu_userptr (menu);
+
+  if (NULL != userptr)
+    {
+      free (userptr);
+    }
+
+  if (NULL == search_string)
+    {
+      set_menu_userptr (menu, NULL);
+    }
+  else
+    {
+      set_menu_userptr (menu, strdup (search_string));
+    }
+}
+
+/***************************************************************************
+    Perform the search for an item using the stored search string
+    in the user_ptr.
  */
 
 ITEM *
-search_menu (MENU * menu, const char *search_string)
+search_menu (MENU * menu)
 {
   ITEM *result_item = NULL;
+  char *search_string = NULL;
+
+  /* the search string is stored in the menu user pointer */
+  search_string = (char *) menu_userptr (menu);
 
   if (NULL != search_string)
     {
