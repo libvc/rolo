@@ -1,15 +1,15 @@
 2003-02-28  Andrew Hsu  <ahsu@users.sf.net>
 
-* Makefile.am: Changed stuff to make the compile run smoother.
-* index.c: Doc fixes.
-* view.c: Doc fixes.
-* edit.c: Doc fixes.
-* help.c: Doc fixes.
+* Makefile.am: Added noinst to the library because it is not finalized
+yet.  Added ChangeLog as file to distribute.
+* vc_scan.l: Doc fixes.  Removed unnecessary stuff.
+* vcard.c: Doc fixes.
 
 2003-02-27  Andrew Hsu  <ahsu@users.sf.net>
 
-* Makefile.am: Added includes and needed libraries.
-* main.c: Doc fixes.  Included `config.h'.
+* Makefile.am: Changed stuff to make the compile run smoother.
+* vc_parse.y: Renamed from vcard.y.
+* vc_scan.l: Renamed from vcard.l.  Fixed include typo.
 
 2003-02-26  Andrew Hsu  <ahsu@users.sf.net>
 
@@ -17,12 +17,5 @@
 
 2003-02-24  Andrew Hsu  <ahsu@users.sf.net>
 
-* main.c: Moved the file to rolo/src directory.
-* index.c: Moved the file to rolo/src directory.
-* index.h: Moved the file to rolo/src directory.
-* view.c: Moved the file to rolo/src directory.
-* view.h: Moved the file to rolo/src directory.
-* edit.c: Moved the file to rolo/src directory.
-* edit.h: Moved the file to rolo/src directory.
-* help.c: Moved the file to rolo/src directory.
-* help.h: Moved the file to rolo/src directory.
+* vcard.c: Moved file to rolo/vcard directory.
+* vcard.h: Moved file to rolo/vcard directory.
