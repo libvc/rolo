@@ -1,3 +1,9 @@
+2003-03-03  Andrew Hsu  <ahsu@users.sf.net>
+
+* index.c: First attempt at adding sort capabilities for the index.
+This will have to be redone because the entry numbers are not sorted.
+* index.h: Prototype and enum for sort function.
+
 2003-02-28  Andrew Hsu  <ahsu@users.sf.net>
 
 * Makefile.am: Changed stuff to make the compile run smoother.
