@@ -17,7 +17,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  *
- * $Id: help.c,v 1.5 2003/03/22 12:20:46 ahsu Rel $
+ * $Id: help.c,v 1.6 2003/03/25 11:15:45 ahsu Exp $
  */
 
 #include "help.h"
@@ -47,6 +47,7 @@ init_help ()
 {
   win = newwin (0, 0, 0, 0);
   sub = derwin (win, LINES - 3, COLS, 1, 0);
+  scrollok (sub, TRUE);
   print_header ();
 }
 
@@ -75,12 +76,14 @@ show_index_help ()
   wprintw (sub, "<Space>        scroll down a page\n");
   wprintw (sub, "G              move to the last entry\n");
   wprintw (sub, "v              view the details of an entry\n");
+/* wprintw (sub, "V              view the vCard format of an entry\n"); */
   wprintw (sub, "s              sort the entries in ascending order\n");
 /* wprintw (sub, "S              sort the entries in descending order\n"); */
   wprintw (sub, "f              filter the entries\n");
   wprintw (sub, "F              remove the filter\n");
   wprintw (sub, "/              search the index screen\n");
-  wprintw (sub, "a              add a new entry\n");
+  wprintw (sub, "a              add a new entry using a text editor\n");
+/* wprintw (sub, "a              add a new entry using a form\n"); */
   wprintw (sub, "e              edit an entry\n");
   wprintw (sub, "d              delete an entry\n");
 /* wprintw(sub, "t              tag/un-tag an entry\n"); */
@@ -211,7 +214,28 @@ print_footer (const char *text)
 static void
 process_help_commands ()
 {
+  bool done = FALSE;
   int ch = 0;
 
-  ch = wgetch (sub);
+  while (!done)
+    {
+      ch = wgetch (sub);
+
+      switch (ch)
+        {
+        case 'j':
+          wscrl (sub, 1);
+          wrefresh (sub);
+          break;
+        case 'k':
+          wscrl (sub, -1);
+          wrefresh (sub);
+          break;
+        case 'q':
+          done = TRUE;
+          break;
+        default:
+          break;
+        }
+    }
 }
