@@ -1,9 +1,0 @@
-#!/bin/sh
-#
-# $Id: bootstrap.sh,v 1.1 2003/02/27 07:27:51 ahsu Exp $
-#
-
-aclocal
-autoheader
-autoconf
-automake --add-missing --copy
