@@ -1,3 +1,8 @@
+2003-04-02  Andrew Hsu
+
+* vcard.h: Added a few defines that were missing and prettied the
+code.
+
 2003-03-22  Andrew Hsu
 
 * vc_parse.y: Removed the parse error display to stderr.
