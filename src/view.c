@@ -17,7 +17,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  *
- * $Id: view.c,v 1.10 2003/02/24 01:01:39 ahsu Exp $
+ * $Id: view.c,v 1.1 2003/02/24 09:15:34 ahsu Exp $
  */
 
 #include "view.h"
@@ -27,16 +27,19 @@
 
 #define HARD_CODED_HEADER_STR "q:Quit  h:Help"
 
-/*** GLOBALS ***/
-
 /*** PROTOTYPES ***/
 static void print_header();
 static void print_footer(int entry_number, const char *fn);
 
+/*** STATIC VARIABLES ***/
 static WINDOW *win = NULL;
 static WINDOW *sub = NULL;
-
 static void (*display_help) (void);
+
+/* ------------------------------------------------------------------
+    Initialize the view window without displaying it to the
+    end-user.
+ */
 
 void
 init_view()
@@ -46,6 +49,10 @@ init_view()
   print_header();
   keypad(win, TRUE);            /* enable keypad for use of arrow keys */
 }
+
+/* ------------------------------------------------------------------
+    Display the given vCard to the end-user.
+ */
 
 void
 view_vcard(int entry_number, vcard * v)
@@ -161,6 +168,11 @@ view_vcard(int entry_number, vcard * v)
   wrefresh(win);
 }
 
+/* ------------------------------------------------------------------
+    Prints the header to the window buffer, but does not display it
+    to the end-user.
+ */
+
 static void
 print_header()
 {
@@ -184,6 +196,12 @@ print_header()
   free(header_str);
 }
 
+/* ------------------------------------------------------------------
+    Prints the footer to the window buffer, but does not display it
+    to the end-user.  The contents of the footer depends on the
+    width of the screen.
+ */
+
 static void
 print_footer(int entry_number, const char *fn)
 {
@@ -194,6 +212,10 @@ print_footer(int entry_number, const char *fn)
 
   footer_str = (char *)malloc(sizeof(char) * (COLS + 2));
 
+  /****************************************
+    initialize the footer string to dashes
+   ****************************************/
+
   for (i = 0; i < COLS; i++) {
     footer_str[i] = '-';
   }
@@ -203,6 +225,10 @@ print_footer(int entry_number, const char *fn)
   } else {
     entry_block_len = 17 + 3;   /* 3 for entry_number */
   }
+
+  /****************************************************
+    add the `entry' block only if there is enough room
+   ****************************************************/
 
   if (entry_block_len <= COLS) {
     entry_block = (char *)malloc(sizeof(char) * (entry_block_len + 1));
@@ -229,6 +255,10 @@ print_footer(int entry_number, const char *fn)
   wstandend(win);
   free(footer_str);
 }
+
+/* ------------------------------------------------------------------
+    Handle input from the end-user.
+ */
 
 int
 process_view_commands()
@@ -272,6 +302,9 @@ process_view_commands()
   }
   return command;
 }
+
+/* ------------------------------------------------------------------
+ */
 
 void
 set_view_help_fcn(void (*fcn) (void))
