@@ -17,7 +17,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  * 
- * $Id: main.c,v 1.1 2003/02/24 09:15:34 ahsu Exp $
+ * $Id: main.c,v 1.2 2003/02/27 14:54:07 ahsu Exp $
  */
 
 #include <vcard.h>
@@ -34,7 +34,14 @@
 #include <menu.h>
 #include <assert.h>
 
-#define ROLO_VERSION_STRING "001"
+#if HAVE_CONFIG_H
+#  include "config.h"
+#endif
+
+#ifndef PACKAGE_VERSION
+#  define PACKAGE_VERSION "---"
+#endif
+
 #define DEFAULT_HOME_ROLO_DIR ".rolo"
 #define DEFAULT_FILENAME "contacts.vcf"
 
@@ -128,7 +135,7 @@ display_usage(const char *prog_name)
 static void
 display_version()
 {
-  printf("rolo version %s\n", ROLO_VERSION_STRING);
+  printf("rolo version %s\n", PACKAGE_VERSION);
 }
 
 /* ------------------------------------------------------------------
