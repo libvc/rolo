@@ -17,7 +17,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  *
- * $Id: index.h,v 1.3 2003/03/05 07:15:20 ahsu Rel $
+ * $Id: index.h,v 1.4 2003/03/22 12:02:38 ahsu Rel $
  */
 
 #include <menu.h>
@@ -25,11 +25,6 @@
 enum index_commands
 { INDEX_COMMAND_VIEW, INDEX_COMMAND_EDIT,
   INDEX_COMMAND_ADD, INDEX_COMMAND_DELETE, INDEX_COMMAND_QUIT
-};
-
-enum sort_entries_by
-{ SORT_ENTRIES_BY_FAMILY_N, SORT_ENTRIES_BY_GIVEN_N,
-  SORT_ENTRIES_BY_EMAIL, SORT_ENTRIES_BY_TEL
 };
 
 /*** PROTOTYPES ***/
