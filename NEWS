@@ -1,6 +1,17 @@
 Rolo 011 (2003-05-20)
 
-*
+* Searching is now fixed and the results are appearing properly on
+the screen.  Searches are now performed case-insensitive.
+
+* Added ability to search forwards or backwards for the next match.
+
+* There is now a dependency on libvc if you want to perform your
+own build of rolo.  You can download libvc from the rolo web site
+(see the README file for the web address).
+
+* The mutt_vc_query utility is no longer distributed with rolo.  It
+is now a separate package.  You can download mutt_vc_query from the
+rolo web site (see the README file for the web address).
 
 Rolo 010 (2003-05-04)
 
