@@ -3,6 +3,14 @@
 * configure.ac: Incremented the version to 005 for the pending
 release.
 
+* rolo.spec.in: New file: template spec file for autoconf to munch
+on and output a proper spec file for rpm to use to build an rpm
+package.
+
+* configure.ac: Added rolo.spec file to be generated.
+
+* Makefile.am: Added rolo.spec file to be included in the dist.
+
 2003-03-23  Andrew Hsu
 
 * configure.ac: Incremented version number for new release.
