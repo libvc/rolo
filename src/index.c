@@ -17,7 +17,7 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA
  *  02111-1307 USA
  *
- *  $Id: index.c,v 1.15 2003/05/20 04:59:33 ahsu Exp $
+ *  $Id: index.c,v 1.16 2003/05/21 05:09:02 ahsu Exp $
  */
 
 #include "entry.h"
@@ -45,7 +45,8 @@ static void filter_menu ();
 static void unfilter_menu ();
 static void sort_ascending (int sort_by);
 static void sort_descending (int sort_by);
-static void scroll_to_result (ITEM * found_item);
+static int scroll_to_result (ITEM * found_item);
+static void clear_message_bar (MENU * m);
 
 /*** STATIC VARIABLES ***/
 
@@ -134,6 +135,9 @@ init_index (const char *filename)
   entries_array = NULL;
 
   menu = get_menu (items);
+
+  /* set the menu hook to clear the message bar */
+  set_item_init (menu, clear_message_bar);
 
   print_header ();
   print_footer (filename, count);
@@ -361,6 +365,7 @@ process_index_commands ()
           break;
         case 'a':
           return_command = INDEX_COMMAND_ADD;
+          clear_message_bar (menu);
           done = TRUE;
           break;
         case KEY_PPAGE:
@@ -370,10 +375,12 @@ process_index_commands ()
           break;
         case 'd':
           return_command = INDEX_COMMAND_DELETE;
+          clear_message_bar (menu);
           done = TRUE;
           break;
         case 'e':
           return_command = INDEX_COMMAND_EDIT;
+          clear_message_bar (menu);
           done = TRUE;
           break;
         case 'f':
@@ -397,6 +404,7 @@ process_index_commands ()
           touchwin (win);
           wrefresh (win);
           wrefresh (sub);
+          clear_message_bar (menu);
           break;
         case KEY_DOWN:
         case 'j':
@@ -424,15 +432,18 @@ process_index_commands ()
           break;
         case 't':
           menu_driver (menu, REQ_TOGGLE_ITEM);
+          clear_message_bar (menu);
           break;
         case KEY_ENTER:
         case 13:
         case 'v':
           return_command = INDEX_COMMAND_VIEW;
+          clear_message_bar (menu);
           done = TRUE;
           break;
         case 'V':
           return_command = INDEX_COMMAND_RAW_VIEW;
+          clear_message_bar (menu);
           done = TRUE;
           break;
         default:
@@ -664,6 +675,7 @@ perform_search ()
 {
   char search_string[80];
   ITEM *found_item = NULL;
+  int direction = 0;
 
   wmove (win, LINES - 1, 0);
   wclrtoeol (win);
@@ -673,25 +685,40 @@ perform_search ()
   wscanw (win, "%s", search_string);
 
   found_item = search_menu (menu, search_string);
-  scroll_to_result(found_item);
+  direction = scroll_to_result (found_item);
+  switch (direction)
+    {
+    case 0:
+      wmove (win, LINES - 1, 0);
+      wclrtoeol (win);
+      mvwprintw (win, LINES - 1, 0, "Not found.");
+      beep ();
+      break;
+
+    case REQ_SCR_UPAGE:
+      mvwprintw (win, LINES - 1, 0, "Search wrapped to top.");
+      break;
+
+    default:
+      break;
+    }
 
   cbreak ();
   noecho ();
-  wmove (win, LINES - 1, 0);
-  wclrtoeol (win);
 }
 
 /***************************************************************************
  */
 
-static void
+static int
 scroll_to_result (ITEM * found_item)
 {
+  int direction = 0;
+
   if (NULL != found_item)
     {
       int current_index = -1;
       int found_index = -1;
-      int direction = -1;
 
       current_index = item_index (current_item (menu));
       found_index = item_index (found_item);
@@ -705,4 +732,20 @@ scroll_to_result (ITEM * found_item)
 
       set_current_item (menu, found_item);
     }
+
+  return direction;
+}
+
+/***************************************************************************
+ */
+
+static void
+clear_message_bar (MENU * m)
+{
+  WINDOW *w = NULL;
+
+  w = menu_win (m);
+
+  wmove (win, LINES - 1, 0);
+  wclrtoeol (win);
 }
