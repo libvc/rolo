@@ -16,13 +16,16 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * $Id: vc_scan.l,v 1.1 2003/02/27 07:59:29 ahsu Exp $
+ * $Id: vc_scan.l,v 1.2 2003/02/27 08:05:01 ahsu Exp $
  */
 
 %{
 #define YYSTYPE char*
 #include "vc_parse.h"
 
+/****************************************************
+  to force flex to scan only one character at a time
+ ****************************************************/
 #define YY_INPUT(buf,result,max_size) \
     { \
     int c = getc(yyin); \
@@ -43,7 +46,6 @@ SP              \x20
 VCHAR           [\x21-\x7E]
 WSP             {SP}|{HTAB}
 NON-ASCII       [\x80-\xFF]
-QSAFE-CHAR      {WSP}|\x21|[\x23-\x7E]|{NON-ASCII}
 SAFE-CHAR       {WSP}|\x21|[\x23-\x2B]|[\x2D-\x39]|[\x3C-\x7E]|{NON-ASCII}
 VALUE-CHAR      {WSP}|{VCHAR}|{NON-ASCII}
 
