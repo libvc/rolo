@@ -17,7 +17,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  *
- * $Id: help.c,v 1.10 2003/04/10 09:20:40 ahsu Rel $
+ * $Id: help.c,v 1.11 2003/04/21 00:10:44 ahsu Exp $
  */
 
 #include "help.h"
@@ -25,7 +25,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define HARD_CODED_HEADER_STR "Press any key to exit this screen"
+#define MENU_BAR_STRING "Press any key to exit this screen"
 
 enum help_window
 { HELP_INDEX, HELP_VIEW, HELP_EDIT };
@@ -156,9 +156,9 @@ print_header ()
 
   header_str = (char *) malloc (sizeof (char) * (COLS + 2));
 
-  strncpy (header_str, HARD_CODED_HEADER_STR, COLS);
+  strncpy (header_str, MENU_BAR_STRING, COLS);
 
-  for (i = strlen (HARD_CODED_HEADER_STR); i < COLS; i++)
+  for (i = strlen (MENU_BAR_STRING); i < COLS; i++)
     {
       header_str[i] = ' ';
     }

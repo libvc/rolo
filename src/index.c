@@ -17,7 +17,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  *
- * $Id: index.c,v 1.9 2003/03/28 08:48:08 ahsu Rel $
+ * $Id: index.c,v 1.10 2003/04/03 14:52:22 ahsu Rel $
  */
 
 #include "index.h"
@@ -27,7 +27,7 @@
 #include <stdlib.h>
 #include <assert.h>
 
-#define HARD_CODED_HEADER_STR "q:Quit  v:View  e:Edit  a:Add  d:Delete  h:Help"
+#define MENU_BAR_STRING "q:Quit  v:View  e:Edit  a:Add  d:Delete  h:Help"
 #ifndef CTRL
 #define CTRL(x)  ((x) & 0x1f)
 #endif
@@ -229,9 +229,9 @@ print_header ()
   getmaxyx (win, y, x);
   header_str = (char *) malloc (sizeof (char) * (x + 1));
 
-  strncpy (header_str, HARD_CODED_HEADER_STR, x);
+  strncpy (header_str, MENU_BAR_STRING, x);
 
-  for (i = strlen (HARD_CODED_HEADER_STR); i < x; i++)
+  for (i = strlen (MENU_BAR_STRING); i < x; i++)
     {
       header_str[i] = ' ';
     }
