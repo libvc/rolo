@@ -17,7 +17,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  *
- * $Id: edit.c,v 1.5 2003/03/24 07:43:29 ahsu Exp $
+ * $Id: edit.c,v 1.6 2003/03/25 11:09:11 ahsu Exp $
  */
 
 #include "edit.h"
@@ -204,8 +204,8 @@ basename (const char *path)
 /***************************************************************************
  */
 
-void
-edit_vcard (const char *datafile, long pos)
+int
+edit_entry (const char *datafile, long pos)
 {
   FILE *fp = NULL;
   char filename[PATH_MAX];
@@ -216,6 +216,7 @@ edit_vcard (const char *datafile, long pos)
   struct stat sb;
   time_t modified_time = 0;
   vcard *v = NULL;
+  int ret_val = -1;
 
   /* retrieve the entry for editing */
   fp = fopen (datafile, "r");
@@ -278,6 +279,11 @@ edit_vcard (const char *datafile, long pos)
     {
       /* need to change the datafile */
       update_datafile (datafile, pos, filename);
+      ret_val = EDIT_SUCCESSFUL;
+    }
+  else
+    {
+      ret_val = EDIT_ABORTED;
     }
 
   remove (filename);
@@ -289,6 +295,7 @@ edit_vcard (const char *datafile, long pos)
   nonl ();                      /* tell curses not to do NL->CR/NL on output */
   cbreak ();                    /* take input chars immediately */
   noecho ();
+  return ret_val;
 }
 
 /***************************************************************************
