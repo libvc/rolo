@@ -16,7 +16,7 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * $Id: vcard.c,v 1.3 2003/04/03 13:18:18 ahsu Exp $
+ * $Id: vcard.c,v 1.4 2003/04/03 14:28:16 ahsu Rel $
  */
 
 
@@ -32,40 +32,40 @@
 struct vcard_tag
 {
   char *group;
-  struct vcard_item_tag *item;
+  vcard_item *item;
 };
 
 struct vcard_item_tag
 {
   char *group;
   char *name;
-  struct vcard_item_param_tag *param;
+  vcard_item_param *param;
   char *value;
-  struct vcard_item_tag *next;
+  vcard_item *next;
 };
 
 struct vcard_item_param_tag
 {
   char *str;
-  struct vcard_item_param_tag *next;
+  vcard_item_param *next;
 };
 
 struct vcard_item_iter_tag
 {
-  struct vcard_tag *vcard;
-  struct vcard_item_tag *current_item;
+  vcard *vcard;
+  vcard_item *current_item;
 };
 
 struct vcard_item_param_iter_tag
 {
-  struct vcard_item_tag *item;
-  struct vcard_item_param_tag *current_param;
+  vcard_item *item;
+  vcard_item_param *current_param;
 };
 
 /*** STATIC PROTOTYPES ***/
 
-static struct vcard_item_tag *create_vcard_item ();
-static struct vcard_item_param_tag *create_vcard_item_param ();
+static vcard_item *create_vcard_item ();
+static vcard_item_param *create_vcard_item_param ();
 
 /***************************************************************************
  */
@@ -73,7 +73,7 @@ static struct vcard_item_param_tag *create_vcard_item_param ();
 vcard *
 create_vcard ()
 {
-  struct vcard_tag *new_vcard = NULL;
+  vcard *new_vcard = NULL;
 
   new_vcard = (vcard *) malloc (sizeof (vcard));
 
@@ -90,12 +90,12 @@ create_vcard ()
  */
 
 void
-delete_vcard (struct vcard_tag *v)
+delete_vcard (vcard *v)
 {
-  struct vcard_item_tag *vi = NULL;
-  struct vcard_item_tag *vi_to_free = NULL;
-  struct vcard_item_param_tag *param = NULL;
-  struct vcard_item_param_tag *param_to_free = NULL;
+  vcard_item *vi = NULL;
+  vcard_item *vi_to_free = NULL;
+  vcard_item_param *param = NULL;
+  vcard_item_param *param_to_free = NULL;
 
   if (NULL != v)
     {
@@ -127,9 +127,9 @@ delete_vcard (struct vcard_tag *v)
  */
 
 vcard_item *
-insert_vcard_item (struct vcard_tag *v, const char *name)
+insert_vcard_item (vcard *v, const char *name)
 {
-  struct vcard_item_tag *new_vcard_item = NULL;
+  vcard_item *new_vcard_item = NULL;
 
   if (NULL != v)
     {
@@ -137,7 +137,7 @@ insert_vcard_item (struct vcard_tag *v, const char *name)
 
       if (NULL != new_vcard_item)
         {
-          struct vcard_item_tag *vi = NULL;
+          vcard_item *vi = NULL;
 
           new_vcard_item->name = strdup (name);
 
@@ -164,13 +164,13 @@ insert_vcard_item (struct vcard_tag *v, const char *name)
 /***************************************************************************
  */
 
-static struct vcard_item_tag *
+static vcard_item *
 create_vcard_item ()
 {
-  struct vcard_item_tag *new_vcard_item = NULL;
+  vcard_item *new_vcard_item = NULL;
 
   new_vcard_item =
-      (struct vcard_item_tag *) malloc (sizeof (struct vcard_item_tag));
+      (vcard_item *) malloc (sizeof (vcard_item));
 
   if (NULL != new_vcard_item)
     {
@@ -188,7 +188,7 @@ create_vcard_item ()
  */
 
 void
-set_vcard_item_group (struct vcard_item_tag *vi, const char *group)
+set_vcard_item_group (vcard_item *vi, const char *group)
 {
   if (NULL != vi)
     {
@@ -201,7 +201,7 @@ set_vcard_item_group (struct vcard_item_tag *vi, const char *group)
  */
 
 char *
-get_vcard_item_group (const struct vcard_item_tag *vi)
+get_vcard_item_group (const vcard_item *vi)
 {
   char *result = NULL;
 
@@ -217,7 +217,7 @@ get_vcard_item_group (const struct vcard_item_tag *vi)
  */
 
 void
-set_vcard_item_value (struct vcard_item_tag *vi, const char *value)
+set_vcard_item_value (vcard_item *vi, const char *value)
 {
   if (NULL != vi)
     {
@@ -230,7 +230,7 @@ set_vcard_item_value (struct vcard_item_tag *vi, const char *value)
  */
 
 char *
-get_vcard_item_value (const struct vcard_item_tag *vi)
+get_vcard_item_value (const vcard_item *vi)
 {
   char *result = NULL;
 
@@ -246,7 +246,7 @@ get_vcard_item_value (const struct vcard_item_tag *vi)
  */
 
 void
-set_vcard_group (struct vcard_tag *v, const char *group)
+set_vcard_group (vcard *v, const char *group)
 {
   if (NULL != v)
     {
@@ -259,7 +259,7 @@ set_vcard_group (struct vcard_tag *v, const char *group)
  */
 
 char *
-get_vcard_group (const struct vcard_tag *v)
+get_vcard_group (const vcard *v)
 {
   char *result = NULL;
 
@@ -275,7 +275,7 @@ get_vcard_group (const struct vcard_tag *v)
  */
 
 void
-init_vcard_item_iter (struct vcard_item_iter_tag *it, struct vcard_tag *v)
+init_vcard_item_iter (vcard_item_iter *it, vcard *v)
 {
   if (NULL != it)
     {
@@ -295,8 +295,8 @@ init_vcard_item_iter (struct vcard_item_iter_tag *it, struct vcard_tag *v)
 /***************************************************************************
  */
 
-struct vcard_item_tag *
-next_vcard_item (struct vcard_item_iter_tag *it)
+vcard_item *
+next_vcard_item (vcard_item_iter *it)
 {
   vcard_item *result_vcard_item = NULL;
 
@@ -316,15 +316,15 @@ next_vcard_item (struct vcard_item_iter_tag *it)
 /***************************************************************************
  */
 
-struct vcard_item_param_tag *
-insert_vcard_item_param (struct vcard_item_tag *vi, const char *str)
+vcard_item_param *
+insert_vcard_item_param (vcard_item *vi, const char *str)
 {
-  struct vcard_item_param_tag *new_vcard_item_param = NULL;
+  vcard_item_param *new_vcard_item_param = NULL;
 
   if (NULL != vi)
     {
       new_vcard_item_param =
-          (struct vcard_item_param_tag *) create_vcard_item_param ();
+          (vcard_item_param *) create_vcard_item_param ();
 
       if (NULL != new_vcard_item_param)
         {
@@ -340,13 +340,13 @@ insert_vcard_item_param (struct vcard_item_tag *vi, const char *str)
 /***************************************************************************
  */
 
-static struct vcard_item_param_tag *
+static vcard_item_param *
 create_vcard_item_param ()
 {
-  struct vcard_item_param_tag *new_vcard_item_param = NULL;
+  vcard_item_param *new_vcard_item_param = NULL;
 
   new_vcard_item_param =
-      (struct vcard_item_param_tag *) malloc (sizeof (struct
+      (vcard_item_param *) malloc (sizeof (struct
                                                       vcard_item_param_tag));
 
   if (NULL != new_vcard_item_param)
@@ -362,7 +362,7 @@ create_vcard_item_param ()
  */
 
 void
-delete_vcard_item_param (struct vcard_item_param_tag *param)
+delete_vcard_item_param (vcard_item_param *param)
 {
 }
 
@@ -370,7 +370,7 @@ delete_vcard_item_param (struct vcard_item_param_tag *param)
  */
 
 void
-init_vcard_item_param_iter (struct vcard_item_param_iter_tag *it,
+init_vcard_item_param_iter (vcard_item_param_iter *it,
                             vcard_item * vi)
 {
   if (NULL != it)
@@ -391,10 +391,10 @@ init_vcard_item_param_iter (struct vcard_item_param_iter_tag *it,
 /***************************************************************************
  */
 
-struct vcard_item_param_tag *
-next_vcard_item_param (struct vcard_item_param_iter_tag *it)
+vcard_item_param *
+next_vcard_item_param (vcard_item_param_iter *it)
 {
-  struct vcard_item_param_tag *result_vcard_item_param = NULL;
+  vcard_item_param *result_vcard_item_param = NULL;
 
   if (NULL != it)
     {
@@ -413,12 +413,12 @@ next_vcard_item_param (struct vcard_item_param_iter_tag *it)
  */
 
 void
-fprintf_vcard (FILE * fp, const struct vcard_tag *v)
+fprintf_vcard (FILE * fp, const vcard *v)
 {
-  struct vcard_item_iter_tag item_it;
-  struct vcard_item_param_iter_tag param_it;
-  struct vcard_item_tag *vi = NULL;
-  struct vcard_item_param_tag *param = NULL;
+  vcard_item_iter item_it;
+  vcard_item_param_iter param_it;
+  vcard_item *vi = NULL;
+  vcard_item_param *param = NULL;
 
   if (NULL != v)
     {
@@ -466,11 +466,11 @@ fprintf_vcard (FILE * fp, const struct vcard_tag *v)
 /***************************************************************************
  */
 
-struct vcard_item_tag *
+vcard_item *
 get_vcard_item_by_name (const vcard * v, const char *name)
 {
-  struct vcard_item_tag *result_vi = NULL;
-  struct vcard_item_tag *vi = NULL;
+  vcard_item *result_vi = NULL;
+  vcard_item *vi = NULL;
   int done = 0;
 
   if (NULL != v && NULL != name)
