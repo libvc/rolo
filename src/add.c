@@ -17,7 +17,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  *
- * $Id: add.c,v 1.1 2003/03/25 10:59:10 ahsu Rel $
+ * $Id: add.c,v 1.2 2003/04/03 14:45:21 ahsu Rel $
  */
 
 #include "add.h"
@@ -49,7 +49,7 @@ append_to_datafile (const char *datafile, const char *new_entry_filename)
   char tmp_datafile[PATH_MAX];
   int ch = 0;
   int rc = 0;
-  vcard *v = NULL;
+  vcard_component *v = NULL;
 
   strcpy (tmp_datafile, datafile);
   strcat (tmp_datafile, ".tmp");

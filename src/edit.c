@@ -17,7 +17,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  *
- * $Id: edit.c,v 1.7 2003/03/26 11:19:27 ahsu Rel $
+ * $Id: edit.c,v 1.8 2003/04/03 14:50:20 ahsu Rel $
  */
 
 #include "edit.h"
@@ -225,7 +225,7 @@ edit_entry (const char *datafile, long pos)
   int status = 0;
   struct stat sb;
   time_t modified_time = 0;
-  vcard *v = NULL;
+  vcard_component *v = NULL;
   int ret_val = -1;
 
   /* retrieve the entry for editing */

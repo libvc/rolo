@@ -17,7 +17,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  *
- * $Id$
+ * $Id: entry.c,v 1.1 2003/03/25 11:03:57 ahsu Rel $
  */
 
 #include "entry.h"
@@ -361,8 +361,8 @@ int
 get_entries (FILE * fp, entry_node * entries_ll)
 {
   int i = 0;
-  vcard *v = NULL;
-  vcard_item *vi = NULL;
+  vcard_component *v = NULL;
+  vcard_component *vc = NULL;
   char *email = NULL;
   char *tel = NULL;
   char *family_name = NULL;
@@ -391,23 +391,23 @@ get_entries (FILE * fp, entry_node * entries_ll)
        * retrive the name value
        */
 
-      vi = get_vcard_item_by_name (v, VC_NAME);
-      family_name = get_val_struct_part (get_vcard_item_value (vi), N_FAMILY);
-      given_name = get_val_struct_part (get_vcard_item_value (vi), N_GIVEN);
+      vc = vc_get_next_by_name (v, VC_NAME);
+      family_name = get_val_struct_part (vc_get_value (vc), N_FAMILY);
+      given_name = get_val_struct_part (vc_get_value (vc), N_GIVEN);
 
       /*
        * retrive the email value
        */
 
-      vi = get_vcard_item_by_name (v, VC_EMAIL);
-      email = get_vcard_item_value (vi);
+      vc = vc_get_next_by_name (v, VC_EMAIL);
+      email = vc_get_value (vc);
 
       /*
        * retrive the telephone value
        */
 
-      vi = get_vcard_item_by_name (v, VC_TELEPHONE);
-      tel = get_vcard_item_value (vi);
+      vc = vc_get_next_by_name (v, VC_TELEPHONE);
+      tel = vc_get_value (vc);
 
       /*
        * put them together
@@ -424,7 +424,7 @@ get_entries (FILE * fp, entry_node * entries_ll)
       free (given_name);
       family_name = NULL;
       given_name = NULL;
-      delete_vcard (v);
+      vc_delete_deep (v);
       v = NULL;
 
       fpos = (fpos_t *) malloc (sizeof (fpos_t));

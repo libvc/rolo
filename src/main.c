@@ -17,7 +17,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  * 
- * $Id: main.c,v 1.10 2003/03/27 12:48:52 ahsu Rel $
+ * $Id: main.c,v 1.11 2003/04/03 14:55:24 ahsu Rel $
  */
 
 #include <vcard.h>
@@ -307,7 +307,7 @@ process_command_line_args (int argc, char *const *argv)
 int
 main (int argc, char *argv[])
 {
-  vcard *v = NULL;
+  vcard_component *v = NULL;
   fpos_t *fpos = NULL;
   long pos = 0;
   FILE *fp = NULL;
@@ -407,7 +407,7 @@ main (int argc, char *argv[])
           if (v != NULL)
             {
               raw_view (v);
-              delete_vcard (v);
+              vc_delete_deep (v);
               v = NULL;
             }
 
@@ -469,7 +469,7 @@ main (int argc, char *argv[])
               win_state = WINDOW_INDEX;
             }
 
-          delete_vcard (v);
+          vc_delete_deep (v);
           v = NULL;
 
           break;
