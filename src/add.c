@@ -16,8 +16,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- *
- * $Id: add.c,v 1.2 2003/04/03 14:45:21 ahsu Rel $
+ * $Id: add.c,v 1.3 2003/04/19 15:44:50 ahsu Rel $
  */
 
 #include "add.h"
@@ -28,7 +27,7 @@
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <unistd.h>
-#include <vcard.h>
+#include <vc.h>
 
 static void append_to_datafile (const char *datafile,
                                 const char *new_entry_filename);
@@ -49,7 +48,7 @@ append_to_datafile (const char *datafile, const char *new_entry_filename)
   char tmp_datafile[PATH_MAX];
   int ch = 0;
   int rc = 0;
-  vcard_component *v = NULL;
+  vc_component *v = NULL;
 
   strcpy (tmp_datafile, datafile);
   strcat (tmp_datafile, ".tmp");

@@ -16,13 +16,12 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- *
- * $Id: index.c,v 1.11 2003/04/25 01:33:13 ahsu Rel $
+ * $Id: index.c,v 1.12 2003/05/07 11:04:47 ahsu Exp $
  */
 
 #include "index.h"
 #include "entry.h"
-#include <vcard.h>
+#include <vc.h>
 #include <string.h>
 #include <stdlib.h>
 #include <assert.h>

@@ -16,8 +16,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- *
- * $Id$
+ * $Id: entry.h,v 1.1 2003/03/25 11:05:18 ahsu Rel $
  */
 
 #include <stdio.h>

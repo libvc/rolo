@@ -16,14 +16,13 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- *
- * $Id: entry.c,v 1.3 2003/04/25 01:33:35 ahsu Exp $
+ * $Id: entry.c,v 1.4 2003/04/25 11:36:34 ahsu Rel $
  */
 
 #include "entry.h"
 #include <ncurses.h>
 #include <string.h>
-#include <vcard.h>
+#include <vc.h>
 
 #define MENU_PRINT_FORMAT_SIZE 38
 
@@ -361,8 +360,8 @@ int
 get_entries (FILE * fp, entry_node * entries_ll)
 {
   int i = 0;
-  vcard_component *v = NULL;
-  vcard_component *vc = NULL;
+  vc_component *v = NULL;
+  vc_component *vc = NULL;
   char *email = NULL;
   char *tel = NULL;
   char *family_name = NULL;

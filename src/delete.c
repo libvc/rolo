@@ -17,13 +17,13 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  *
- * $Id: delete.c,v 1.1 2003/03/24 07:42:49 ahsu Rel $
+ * $Id: delete.c,v 1.2 2003/04/19 15:45:40 ahsu Rel $
  */
 
 #include "delete.h"
 #include <limits.h>
 #include <ncurses.h>
-#include <vcard.h>
+#include <vc.h>
 #include <string.h>
 
 /***************************************************************************
@@ -35,7 +35,7 @@ delete_entry (const char *datafile, long pos)
   FILE *tfp = NULL;
   FILE *dfp = NULL;
   char tmp_datafile[PATH_MAX];
-  vcard_component *v = NULL;
+  vc_component *v = NULL;
   int ch = 0;
   long i = 0;
   int rc = 0;

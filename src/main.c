@@ -16,11 +16,10 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * 
- * $Id: main.c,v 1.12 2003/04/19 15:44:00 ahsu Rel $
+ * $Id: main.c,v 1.13 2003/04/22 08:01:23 ahsu Rel $
  */
 
-#include <vcard.h>
+#include <vc.h>
 #include "add.h"
 #include "view.h"
 #include "delete.h"
@@ -319,7 +318,7 @@ process_command_line_args (int argc, char *const *argv)
 int
 main (int argc, char *argv[])
 {
-  vcard_component *v = NULL;
+  vc_component *v = NULL;
   fpos_t *fpos = NULL;
   long pos = 0;
   FILE *fp = NULL;

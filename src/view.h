@@ -16,11 +16,10 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- *
- * $Id: view.h,v 1.2 2003/04/03 14:58:09 ahsu Rel $
+ * $Id: view.h,v 1.3 2003/04/19 15:48:29 ahsu Rel $
  */
 
-#include <vcard.h>
+#include <vc.h>
 #include <ncurses.h>
 
 /*** GLOBALS ***/
@@ -33,7 +32,7 @@ enum view_commands
 /*** PROTOTYPES ***/
 
 extern void init_view ();
-extern void view_vcard (int entry_number, vcard_component * v);
+extern void view_vcard (int entry_number, vc_component * v);
 extern int process_view_commands ();
 extern void set_view_help_fcn (void (*fcn) (void));
-extern void raw_view (const vcard_component * v);
+extern void raw_view (const vc_component * v);

@@ -16,11 +16,10 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- *
- * $Id: edit.h,v 1.5 2003/03/26 11:19:48 ahsu Rel $
+ * $Id: edit.h,v 1.6 2003/04/03 14:51:01 ahsu Rel $
  */
 
-#include <vcard.h>
+#include <vc.h>
 #include <ncurses.h>
 
 enum edit_commands

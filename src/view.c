@@ -16,8 +16,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- *
- * $Id: view.c,v 1.12 2003/04/19 15:50:23 ahsu Rel $
+ * $Id: view.c,v 1.13 2003/04/22 08:25:31 ahsu Rel $
  */
 
 #include "view.h"
@@ -55,7 +54,7 @@ enum view_modes
 static WINDOW *win = NULL;
 static WINDOW *sub = NULL;
 static void (*display_help) (void);
-static vcard_component *g_v = NULL;
+static vc_component *g_v = NULL;
 static int g_mode = 1;
 
 /***************************************************************************
@@ -157,7 +156,7 @@ basename (const char *path)
 static void
 view_ident ()
 {
-  vcard_component *vc = NULL;
+  vc_component *vc = NULL;
   char *val = NULL;
   int x = 0;
   int y = 0;
@@ -225,7 +224,7 @@ view_ident ()
 static void
 view_geo ()
 {
-  vcard_component *vc = NULL;
+  vc_component *vc = NULL;
   char *str = NULL;
   char *val = NULL;
   int x = 0;
@@ -304,7 +303,7 @@ view_geo ()
 static void
 view_tel ()
 {
-  vcard_component *vc = NULL;
+  vc_component *vc = NULL;
   char *val = NULL;
   int x = 0;
   int y = 0;
@@ -355,7 +354,7 @@ view_tel ()
 static void
 view_org ()
 {
-  vcard_component *vc = NULL;
+  vc_component *vc = NULL;
   char *str = NULL;
   char *val = NULL;
   int x = 0;
@@ -427,7 +426,7 @@ view_org ()
 static void
 view_misc ()
 {
-  vcard_component *vc = NULL;
+  vc_component *vc = NULL;
   char *str = NULL;
   char *val = NULL;
   int x = 0;
@@ -467,9 +466,9 @@ view_misc ()
  */
 
 void
-view_vcard (int entry_number, vcard_component * v)
+view_vcard (int entry_number, vc_component * v)
 {
-  vcard_component *vc = NULL;
+  vc_component *vc = NULL;
   char *val = NULL;
 
   g_v = v;
@@ -688,7 +687,7 @@ set_view_help_fcn (void (*fcn) (void))
  */
 
 void
-raw_view (const vcard_component * v)
+raw_view (const vc_component * v)
 {
   /* FIXME: have a simple scrolling raw display of the vcard */
 }

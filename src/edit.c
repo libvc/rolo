@@ -16,8 +16,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- *
- * $Id: edit.c,v 1.9 2003/04/19 15:46:34 ahsu Rel $
+ * $Id: edit.c,v 1.10 2003/04/23 10:18:50 ahsu Rel $
  */
 
 #include "edit.h"
@@ -225,7 +224,7 @@ edit_entry (const char *datafile, long pos)
   int status = 0;
   struct stat sb;
   time_t modified_time = 0;
-  vcard_component *v = NULL;
+  vc_component *v = NULL;
   int ret_val = -1;
 
   /* retrieve the entry for editing */

@@ -16,8 +16,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- *
- * $Id: index.h,v 1.5 2003/03/25 11:14:40 ahsu Rel $
+ * $Id: index.h,v 1.6 2003/04/03 14:53:06 ahsu Rel $
  */
 
 #include <menu.h>
