@@ -1,5 +1,5 @@
 Rolo - contact management software
-Version 009
+Version 010
 
 Copyright (C) 2003  Andrew Hsu
 
@@ -27,18 +27,32 @@ will pop open your "favorite editor" so you can compose a new vCard
 file by hand.  This may be a little low-level for some people, so
 an example vCard file has been provided in the `test' directory.
 If rolo is installed using an rpm file, the example file can be
-found in: /usr/share/doc/rolo-009/contacts.vcf
+found in: /usr/share/doc/rolo-010/contacts.vcf
+
+A mutt query_command utility is included with the rolo package.
+This utility will allow queries to the data file (defaults to
+~/.rolo/contacts.vcf) from mutt using mutt's query_command (see
+muttrc(5) for more info).  In order to get this to work, you must
+add the following line to your ~/.muttrc file after installing the
+rolo package:
+
+  set query_command="mutt_vc_query '%s'"
+
+And you will then be able to query email addresses when you use the
+`Q' command in mutt.
 
 Directory contents:
 
-  doc/ ........ Documentation for Rolo.
+  doc/ .............. Documentation for Rolo.
 
-  src/ ........ Source code for the rolo user interface.
+  mutt_vc_query/ .... Source code for the mutt query_command utility.
 
-  test/ ....... Test data for rolo.
+  src/ .............. Source code for the rolo user interface.
 
-  vcard/ ...... Source code for the vCard library that was created
-                specifically for the rolo project.
+  test/ ............. Test data for rolo.
+
+  vcard/ ............ Source code for the vCard library that was created
+                      specifically for the rolo project.
 
 This software is maintained on SourceForge:
 http://rolo.sf.net/
