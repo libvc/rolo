@@ -1,3 +1,17 @@
+Rolo 009 (2003-04-26)
+
+* Preferred telephone number and email addresses are now displayed
+in the index screen (but only if the parameter is specified exactly
+as TYPE=pref).  A cleaner way of parsing out the parameter values
+is in the works.
+
+* Added a few more `convenience functions' to the vcard API.
+
+* Help screen has been updated.
+
+* Man page has been updated with the mdoc template format as specified
+in mdoc(7).
+
 Rolo 008 (2003-04-20)
 
 * Revamped the entire libvcard with a brand-spanking-new API.  Now

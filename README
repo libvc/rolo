@@ -1,5 +1,5 @@
 Rolo - contact management software
-Version 008
+Version 009
 
 Copyright (C) 2003  Andrew Hsu
 
@@ -27,7 +27,7 @@ will pop open your "favorite editor" so you can compose a new vCard
 file by hand.  This may be a little low-level for some people, so
 an example vCard file has been provided in the `test' directory.
 If rolo is installed using an rpm file, the example file can be
-found in: /usr/share/doc/rolo-008/contacts.vcf
+found in: /usr/share/doc/rolo-009/contacts.vcf
 
 Directory contents:
 
