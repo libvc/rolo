@@ -1,5 +1,9 @@
 2003-04-25  Andrew Hsu
 
+* entry.c: The preferred telephone and email are now retrieved for
+each entry node.  Also removed some old code from an accidental
+commit.
+
 * help.c: Renamed the #defines for clarity.
 * index.c: Renamed the #defines for clarity.
 
