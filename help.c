@@ -17,11 +17,15 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  *
- * $Id$
+ * $Id: help.c,v 1.1 2003/02/16 06:11:58 ahsu Exp $
  */
 
 #include "help.h"
 #include <assert.h>
+#include <stdlib.h>
+#include <string.h>
+
+#define HARD_CODED_HEADER_STR "Press any key to exit this screen"
 
 /*** GLOBALS ***/
 
@@ -100,10 +104,24 @@ show_edit_help()
 static void
 print_header()
 {
+  char *header_str = NULL;
+  int i = 0;
+
+  header_str = (char *)malloc(sizeof(char) * (COLS + 2));
+
+  strncpy(header_str, HARD_CODED_HEADER_STR, COLS);
+
+  for (i = strlen(HARD_CODED_HEADER_STR); i < COLS; i++) {
+    header_str[i] = ' ';
+  }
+
+  header_str[COLS] = '\n';
+  header_str[COLS + 1] = '\0';
+
   wattron(win, A_REVERSE);
-  wprintw(win,
-      "Press any key to exit this screen                                              \n");
+  wprintw(win, header_str);
   wstandend(win);
+  free(header_str);
 }
 
 static void

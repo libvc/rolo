@@ -17,7 +17,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  *
- * $Id$
+ * $Id: index.c,v 1.1 2003/02/16 06:12:56 ahsu Exp $
  */
 
 #include "index.h"
@@ -26,6 +26,7 @@
 #include <stdlib.h>
 #include <assert.h>
 
+#define HARD_CODED_HEADER_STR "q:Quit  v:View  h:Help"
 
 /*** PROTOTYPES ***/
 static char *construct_menu_name(const char *family_name,
@@ -53,6 +54,7 @@ init_index(const char *filename)
   fp = fopen(filename, "r");
   if (NULL == fp) {
     fprintf(stderr, "unable to open file: %s\n", filename);
+    endwin();                   /* exit gracefully */
     exit(1);
   }
 
@@ -196,19 +198,34 @@ get_menu(ITEM ** items)
 static void
 print_header()
 {
+  char *header_str = NULL;
+  int i = 0;
+
+  header_str = (char *)malloc(sizeof(char) * (COLS + 2));
+
+  strncpy(header_str, HARD_CODED_HEADER_STR, COLS);
+
+  for (i = strlen(HARD_CODED_HEADER_STR); i < COLS; i++) {
+    header_str[i] = ' ';
+  }
+
+  header_str[COLS] = '\n';
+  header_str[COLS + 1] = '\0';
+
   wattron(win, A_REVERSE);
-  wprintw(win,
-      "q:Quit  v:View  h:Help                                                         \n");
+  wprintw(win, header_str);
   wstandend(win);
+  free(header_str);
 }
 
 static void
 print_footer(int entries)
 {
+  extern char data_path[];
+
   wattron(win, A_REVERSE);
   mvwprintw(win, LINES - 2, 0,
-      "-[ rolo ]---[ entries: %0.3i ]---------------------------------------------------\n",
-      entries);
+      "---[ rolo: %s ]---[ entries: %0.3i ]----------------------------------\n", data_path, entries);
   wstandend(win);
 
 }
