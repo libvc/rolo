@@ -17,7 +17,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  *
- * $Id: help.c,v 1.1 2003/02/24 09:15:34 ahsu Exp $
+ * $Id: help.c,v 1.2 2003/02/28 03:12:50 ahsu Rel $
  */
 
 #include "help.h"
@@ -27,167 +27,184 @@
 
 #define HARD_CODED_HEADER_STR "Press any key to exit this screen"
 
-enum help_window { HELP_INDEX, HELP_VIEW, HELP_EDIT };
+enum help_window
+{ HELP_INDEX, HELP_VIEW, HELP_EDIT };
 
 /*** PROTOTYPES ***/
-static void print_header();
-static void print_footer(const char *text);
-static void process_help_commands();
+static void print_header ();
+static void print_footer (const char *text);
+static void process_help_commands ();
 
 /*** STATIC VARIABLES ***/
 static WINDOW *win = NULL;
 static WINDOW *sub = NULL;
 
-/* ------------------------------------------------------------------
+/***************************************************************************
  */
 
 void
-init_help()
+init_help ()
 {
-  win = newwin(0, 0, 0, 0);
-  sub = derwin(win, LINES - 3, COLS, 1, 0);
-  print_header();
+  win = newwin (0, 0, 0, 0);
+  sub = derwin (win, LINES - 3, COLS, 1, 0);
+  print_header ();
 }
 
-/* ------------------------------------------------------------------
+/***************************************************************************
+    The help screen for the index.
  */
 
 void
-show_index_help()
+show_index_help ()
 {
-  werase(sub);
-  wprintw(sub, "q              quit the program\n");
-  wprintw(sub, "<Down>         move to the next entry\n");
-  wprintw(sub, "<Up>           move to the previous entry\n");
-  wprintw(sub, "g              move to the first entry\n");
-  wprintw(sub, "G              move to the last entry\n");
-  wprintw(sub, "j              move to the next entry\n");
-  wprintw(sub, "k              move to the previous entry\n");
-  wprintw(sub,
-      "h              show help for key bindings (what you are viewing now)\n");
-  wprintw(sub, "<Page Up>      scroll up a page\n");
-  wprintw(sub, "b              scroll up a page\n");
-  wprintw(sub, "<Page Down>    scroll down a page\n");
-  wprintw(sub, "<Space>        scroll down a page\n");
-  wprintw(sub, "t              tag/un-tag an entry\n");
-  wprintw(sub, "v              view the details of an entry\n");
-  wprintw(sub, "<Enter>        view the details of an entry\n");
-  wprintw(sub, "/              search the index screen\n");
-  print_footer("Help for the index screen");
-  touchwin(win);
-  wrefresh(sub);
-  wrefresh(win);
-  process_help_commands();
+  werase (sub);
+  wprintw (sub, "q              quit the program\n");
+  wprintw (sub, "<Down>         move to the next entry\n");
+  wprintw (sub, "<Up>           move to the previous entry\n");
+  wprintw (sub, "g              move to the first entry\n");
+  wprintw (sub, "<Home>         move to the first entry\n");
+  wprintw (sub, "G              move to the last entry\n");
+  wprintw (sub, "<End>          move to the last entry\n");
+  wprintw (sub, "j              move to the next entry\n");
+  wprintw (sub, "k              move to the previous entry\n");
+  wprintw (sub,
+           "h              show help for key bindings (what you are viewing now)\n");
+  wprintw (sub, "<Page Up>      scroll up a page\n");
+  wprintw (sub, "b              scroll up a page\n");
+  wprintw (sub, "<Page Down>    scroll down a page\n");
+  wprintw (sub, "<Space>        scroll down a page\n");
+  wprintw (sub, "v              view the details of an entry\n");
+  wprintw (sub, "<Enter>        view the details of an entry\n");
+  wprintw (sub, "/              search the index screen\n");
+  wprintw (sub, "s              sort the entries\n");
+  wprintw (sub, "f              filter the entries\n");
+  wprintw (sub, "F              remove the filter\n");
+  wprintw (sub, "/              search the index screen\n");
+/* wprintw(sub, "t              tag/un-tag an entry\n"); */
+  print_footer ("Help for the index screen");
+  touchwin (win);
+  wrefresh (sub);
+  wrefresh (win);
+  process_help_commands ();
 }
 
-/* ------------------------------------------------------------------
+/***************************************************************************
+    The help screen for viewing entries.
  */
 
 void
-show_view_help()
+show_view_help ()
 {
-  werase(sub);
-  wprintw(sub, "<Down>   move to the next entry\n");
-  wprintw(sub, "<Up>     move to the previous entry\n");
-  wprintw(sub, "j        move to the next entry\n");
-  wprintw(sub, "k        move to the previous entry\n");
-  wprintw(sub, "q        exit to index screen\n");
-  wprintw(sub,
-      "h        show help for key bindings (what you are viewing now)\n");
-  print_footer("Help for the view screen");
-  touchwin(win);
-  wrefresh(sub);
-  wrefresh(win);
-  process_help_commands();
+  werase (sub);
+  wprintw (sub, "<Down>   move to the next entry\n");
+  wprintw (sub, "<Up>     move to the previous entry\n");
+  wprintw (sub, "j        move to the next entry\n");
+  wprintw (sub, "k        move to the previous entry\n");
+  wprintw (sub, "q        exit to index screen\n");
+  wprintw (sub,
+           "h        show help for key bindings (what you are viewing now)\n");
+  print_footer ("Help for the view screen");
+  touchwin (win);
+  wrefresh (sub);
+  wrefresh (win);
+  process_help_commands ();
 }
 
-/* ------------------------------------------------------------------
+/***************************************************************************
+    The help screen for editing entries.
  */
 
 void
-show_edit_help()
+show_edit_help ()
 {
-  werase(sub);
-  wprintw(sub, "This is help documentation for edit.");
-  print_footer("Help for the edit screen");
-  touchwin(win);
-  wrefresh(sub);
-  wrefresh(win);
-  process_help_commands();
+  werase (sub);
+  wprintw (sub, "This is help documentation for edit.");
+  print_footer ("Help for the edit screen");
+  touchwin (win);
+  wrefresh (sub);
+  wrefresh (win);
+  process_help_commands ();
 }
 
-/* ------------------------------------------------------------------
+/***************************************************************************
+    Prints the header for the help screen.
  */
 
 static void
-print_header()
+print_header ()
 {
   char *header_str = NULL;
   int i = 0;
 
-  header_str = (char *)malloc(sizeof(char) * (COLS + 2));
+  header_str = (char *) malloc (sizeof (char) * (COLS + 2));
 
-  strncpy(header_str, HARD_CODED_HEADER_STR, COLS);
+  strncpy (header_str, HARD_CODED_HEADER_STR, COLS);
 
-  for (i = strlen(HARD_CODED_HEADER_STR); i < COLS; i++) {
-    header_str[i] = ' ';
-  }
+  for (i = strlen (HARD_CODED_HEADER_STR); i < COLS; i++)
+    {
+      header_str[i] = ' ';
+    }
 
   header_str[COLS] = '\n';
   header_str[COLS + 1] = '\0';
 
-  wattron(win, A_REVERSE);
-  wprintw(win, header_str);
-  wstandend(win);
-  free(header_str);
+  wattron (win, A_REVERSE);
+  wprintw (win, header_str);
+  wstandend (win);
+  free (header_str);
 }
 
-/* ------------------------------------------------------------------
+/***************************************************************************
+    Prints the footer for the help screen.
  */
 
 static void
-print_footer(const char *text)
+print_footer (const char *text)
 {
   char *footer_str = NULL;
   char *help_block = NULL;
   int help_block_len = 0;
   int i = 0;
 
-  footer_str = (char *)malloc(sizeof(char) * (COLS + 2));
+  footer_str = (char *) malloc (sizeof (char) * (COLS + 2));
 
-  for (i = 0; i < COLS; i++) {
-    footer_str[i] = '-';
-  }
-
-  if (NULL != text) {
-    help_block_len = strlen(text) + 10;
-    help_block = (char *)malloc(sizeof(char) * (help_block_len + 1));
-
-    sprintf(help_block, "---[ %s ]---", text);
-
-    for (i = 0; i < help_block_len; i++) {
-      footer_str[i] = help_block[i];
+  for (i = 0; i < COLS; i++)
+    {
+      footer_str[i] = '-';
     }
 
-    free(help_block);
-  }
+  if (NULL != text)
+    {
+      help_block_len = strlen (text) + 10;
+      help_block = (char *) malloc (sizeof (char) * (help_block_len + 1));
+
+      sprintf (help_block, "---[ %s ]---", text);
+
+      for (i = 0; i < help_block_len; i++)
+        {
+          footer_str[i] = help_block[i];
+        }
+
+      free (help_block);
+    }
 
   footer_str[COLS] = '\n';
   footer_str[COLS + 1] = '\0';
 
-  wattron(win, A_REVERSE);
-  mvwprintw(win, LINES - 2, 0, footer_str);
-  wstandend(win);
-  free(footer_str);
+  wattron (win, A_REVERSE);
+  mvwprintw (win, LINES - 2, 0, footer_str);
+  wstandend (win);
+  free (footer_str);
 }
 
-/* ------------------------------------------------------------------
+/***************************************************************************
+    Processes the help screen input commands.
  */
 
 static void
-process_help_commands()
+process_help_commands ()
 {
   int ch = 0;
 
-  ch = wgetch(sub);
+  ch = wgetch (sub);
 }
