@@ -16,7 +16,7 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * $Id: vcard.y,v 1.1 2003/02/24 11:43:24 ahsu Exp $
+ * $Id: vc_parse.y,v 1.1 2003/02/27 08:04:18 ahsu Rel $
  */
 
 %{
@@ -108,7 +108,6 @@ value         : TOK_VALUE { set_vcard_item_value(current_vi, $1); }
 
 void yyerror(char *s)
 {
-  fprintf(stderr, "** yyerror:%s\n", s);
 }
 
 vcard *parse_vcard_file(FILE *fp)
