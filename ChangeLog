@@ -1,3 +1,10 @@
+2003-04-28  Andrew Hsu
+
+* bootstrap: Removed this file because the `autoreconf' program can
+do the same thing.  The `bootstrap' file was originally created
+because the autobook document said it was needed, but the autobook
+document was found to be a little out-dated.
+
 2003-04-27  Andrew Hsu
 
 * rolo.spec.in: Added TODO as one of the doc files to include in
