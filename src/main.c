@@ -17,7 +17,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  * 
- * $Id: main.c,v 1.4 2003/03/05 07:45:00 ahsu Exp $
+ * $Id: main.c,v 1.5 2003/03/07 07:28:22 ahsu Rel $
  */
 
 #include <vcard.h>
@@ -38,17 +38,13 @@
 #  include "config.h"
 #endif
 
-#ifndef PACKAGE_VERSION
-#  define PACKAGE_VERSION "---"
-#endif
-
 #define DEFAULT_HOME_ROLO_DIR ".rolo"
 #define DEFAULT_FILENAME "contacts.vcf"
 
 /*** GLOBALS ***/
 
 enum win_states
-{ WINDOW_INDEX, WINDOW_VIEW, WINDOW_EDIT };
+{ WINDOW_INDEX, WINDOW_VIEW, WINDOW_EDIT, WINDOW_DELETE, WINDOW_ADD };
 char data_path[PATH_MAX];
 
 /*** PROTOTYPES ***/
@@ -239,6 +235,7 @@ main (int argc, char *argv[])
 {
   vcard *v = NULL;
   fpos_t *fpos = NULL;
+  long pos = 0;
   FILE *fp = NULL;
   ITEM *it = NULL;
   int entry_number = 0;
@@ -291,6 +288,12 @@ main (int argc, char *argv[])
               break;
             case INDEX_COMMAND_EDIT:
               win_state = WINDOW_EDIT;
+              break;
+            case INDEX_COMMAND_ADD:
+              win_state = WINDOW_ADD;
+              break;
+            case INDEX_COMMAND_DELETE:
+              win_state = WINDOW_DELETE;
               break;
             case INDEX_COMMAND_QUIT:
               done = TRUE;
@@ -366,25 +369,65 @@ main (int argc, char *argv[])
          edit a vcard
         --------------*/
 
-          /* FIXME: checks to perform before calling edit_vcard() */
-          /* FIXME: get the vcard! */
-          edit_vcard (v);
-          command = process_edit_commands ();
+          it = get_current_item ();
 
-          switch (command)
+          /* only display if there is an item that is selected */
+          if (NULL != it)
             {
-            case EDIT_COMMAND_INDEX:
-              win_state = WINDOW_INDEX;
-              break;
-            default:
-              break;
+              fpos = (fpos_t *) item_userptr (it);
+
+              fp = fopen (data_path, "r");
+              fsetpos (fp, fpos);
+              pos = ftell (fp);
+              fclose (fp);
+              fp = NULL;
+
+              /* FIXME: return val of edit_vcard should show if edit
+                 actually took place.  if it did not take place,
+                 then a refresh could be spared */
+
+              edit_vcard (data_path, pos);
+              refresh_index ();
+
             }
 
+          win_state = WINDOW_INDEX;
           break;
 
+        case WINDOW_ADD:
+          /* FIXME: return val of add_vcard should show if edit
+             actually took place.  if it did not take place,
+             then a refresh could be spared */
+          add_vcard (data_path);
+          refresh_index ();
+          win_state = WINDOW_INDEX;
+          break;
+        case WINDOW_DELETE:
+
+          it = get_current_item ();
+
+          /* only delete if there is an item that is selected */
+          if (NULL != it)
+            {
+              fpos = (fpos_t *) item_userptr (it);
+
+              fp = fopen (data_path, "r");
+              fsetpos (fp, fpos);
+              pos = ftell (fp);
+              fclose (fp);
+              fp = NULL;
+
+              /* FIXME: return val of delete_entry should show if edit
+                 actually took place.  if it did not take place,
+                 then a refresh could be spared */
+              delete_entry (data_path, pos);
+              refresh_index ();
+            }
+
+          win_state = WINDOW_INDEX;
+          break;
         default:
           break;
-
         }
     }
 
