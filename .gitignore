@@ -1,3 +1,11 @@
+Makefile
+Makefile.in
+*~
+*core
+*.swp
+*.tar.gz
+*.tar.bz2
+rolo.spec
 aclocal.m4
 autom4te.cache
 config.h
@@ -12,4 +20,3 @@ mkinstalldirs
 stamp-h
 stamp-h.in
 stamp-h1
-rolo.spec

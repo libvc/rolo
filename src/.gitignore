@@ -1,2 +1,7 @@
+Makefile
+Makefile.in
+*~
+*core
+*.swp
 .deps
 rolo
