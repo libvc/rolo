@@ -16,7 +16,7 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * $Id: vcard.c,v 1.5 2003/04/10 07:20:11 ahsu Rel $
+ * $Id: vcard.c,v 1.6 2003/04/19 14:57:45 ahsu Exp $
  */
 
 
@@ -452,8 +452,8 @@ vc_get_next (const vcard_component * vc)
 
 /***************************************************************************
     Searches for a vcard_component that matches the given name,
-    starting with the given vcard_component.  Returns NULL if none
-    is found.
+    starting with the one after the given vcard_component.  Returns
+    NULL if none is found.
  */
 
 vcard_component *
@@ -465,18 +465,21 @@ vc_get_next_by_name (vcard_component * vc, const char *name)
 
   if (NULL != name)
     {
-      tmp_vc = vc;
-      while ((0 == done) && (NULL != tmp_vc))
+      if (NULL != vc)
         {
-          if (NULL != tmp_vc->name)
+          tmp_vc = vc->next;
+          while ((0 == done) && (NULL != tmp_vc))
             {
-              if (0 == strcmp (name, tmp_vc->name))
+              if (NULL != tmp_vc->name)
                 {
-                  result_vc = tmp_vc;
-                  done = 1;
+                  if (0 == strcmp (name, tmp_vc->name))
+                    {
+                      result_vc = tmp_vc;
+                      done = 1;
+                    }
                 }
+              tmp_vc = tmp_vc->next;
             }
-          tmp_vc = tmp_vc->next;
         }
     }
 
