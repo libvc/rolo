@@ -1,14 +1,15 @@
 .\" Process this file with
 .\" groff -man -Tascii rolo.1
 .\"
-.\" $Id: rolo.1,v 1.2 2003/02/25 03:35:58 ahsu Rel $
+.\" $Id: rolo.1,v 1.3 2003/03/30 12:10:23 ahsu Exp $
 .\"
 .TH rolo 1
 .SH NAME
-rolo \- contact management software
+rolo \- Text-based contact management software
 .SH SYNOPSIS
 .B rolo
-[-r] [-f
+.\" [-r] [-f
+[-f
 .I file
 ]
 .br
@@ -27,9 +28,9 @@ complimenting text-based email programs-such as mutt. It utilizes
 the vCard version 3.0 format for storing its contacts and it
 interfaces with the end-user through a NCurses front-end.
 .SH OPTIONS
-.IP -r
-Open the data file in read-only mode.  This essentially disables
-adding, editing, and deleting contacts.
+.\" .IP -r
+.\" Open the data file in read-only mode.  This essentially disables
+.\" adding, editing, and deleting contacts.
 .IP -f
 Use the specified
 .I file
@@ -44,28 +45,20 @@ Display usage information.
 .IP HOME
 Full path of the user's home directory.
 .IP ROLO_EDITOR
-If EDITOR is set, its value is used as the name of the program to
-invoke when displaying contact entries in advanced edit.  If
+If ROLO_EDITOR is set, its value is used as the name of the program
+to invoke when displaying contact entries in advanced edit.  If
 ROLO_EDITOR is not set, then EDITOR is used.  If EDITOR is also not
 set, the default value of
 .B vi
 is used.
-.IP ROLO_PAGER
-If ROLO_PAGER is set, its value is used as the name of the program
-to invoke when displaying contact entries in advanced edit.  If
-ROLO_PAGER is not set, then PAGER is used.  If PAGER is also not
-set, the default value of
-.B more
-is used.
 .SH FILES
-.IP ~/.rolo/rolorc
+.IP $HOME/.rolo/rolorc
 User configuration file.
-.IP ~/.rolo/contacts.vcf
+.IP $HOME/.rolo/contacts.vcf
 The default vCard file where the contacts are stored.
 .SH AUTHOR
 Andrew Hsu <ahsu@users.sf.net>
 .SH "SEE ALSO"
-.BR rolorc (5),
-.BR vcf (5),
-.BR more (1),
+.\" .BR rolorc (5),
+.\" .BR vcf (5),
 .BR vi (1)
