@@ -1,3 +1,8 @@
+2003-03-29  Andrew Hsu
+
+* view.c: Have the `i' key in the view screen exit to the index
+screen.
+
 2003-03-27  Andrew Hsu
 
 * index.c: Reduced the length of a few strings that were unnecessarily
