@@ -1,12 +1,18 @@
 .\" Process this file with
 .\" groff -man -Tascii rolo.1
 .\"
-.\" $Id$
+.\" $Id: rolo.1,v 1.1 2003/02/24 21:29:50 ahsu Exp $
 .\"
 .TH rolo 1
 .SH NAME
 rolo \- contact management software
 .SH SYNOPSIS
+.B rolo
+-v
+.br
+.B rolo
+-V
+.br
 .B rolo
 -h
 .SH DESCRIPTION
@@ -14,8 +20,12 @@ Using the vCard format as the data storage structure, Rolo will
 keep track of your contacts and display them to you with a curses
 front end.
 .SH OPTIONS
+.IP -v
+Display the version.
+.IP -V
+Display the copyright and license.
 .IP -h
-Display help.
+Display usage information.
 .SH ENVIRONMENT
 .IP HOME
 Full path of the user's home directory.
@@ -24,6 +34,6 @@ Full path of the user's home directory.
 .RS
 The default vCard file where the contacts are stored.
 .SH SEE ALSO
-.BR mutt (1)
+.BR mutt(1)
 .SH AUTHOR
 Andrew Hsu <ahsu@users.sf.net>
