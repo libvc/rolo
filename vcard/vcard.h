@@ -16,7 +16,7 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * $Id: vcard.h,v 1.3 2003/04/03 14:28:15 ahsu Rel $
+ * $Id: vcard.h,v 1.4 2003/04/19 14:57:22 ahsu Rel $
  */
 
 #ifndef __VCARD_H
@@ -44,6 +44,9 @@ vcard_component *vc_link (vcard_component * head, vcard_component * tail);
 
 /* convenience function */
 vcard_component *vc_append_with_name (vcard_component * vc, char *name);
+int vc_is_preferred (vcard_component * vc);
+char *vc_get_preferred_tel (vcard_component * v);
+char *vc_get_preferred_email (vcard_component * v);
 
 /* read functions for vcard_component */
 char *vc_get_group (const vcard_component * vc);
@@ -75,6 +78,8 @@ vcard_component *vc_get_next_by_name (vcard_component * vc, const char *name);
 /* functions for scrolling through vcard_component_params */
 vcard_component_param *vc_param_get_next (const vcard_component_param
                                           * vc_param);
+vcard_component_param *vc_param_get_by_name (vcard_component_param
+                                             * vc_param, const char *name);
 vcard_component_param *vc_param_get_next_by_name (vcard_component_param
                                                   * vc_param,
                                                   const char *name);
