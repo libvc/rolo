@@ -31,6 +31,8 @@ found in: /usr/share/doc/rolo-009/contacts.vcf
 
 Directory contents:
 
+  doc/ ........ Documentation for Rolo.
+
   src/ ........ Source code for the rolo user interface.
 
   test/ ....... Test data for rolo.
