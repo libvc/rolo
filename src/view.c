@@ -17,13 +17,17 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  *
- * $Id: view.c,v 1.6 2003/03/28 15:44:16 ahsu Rel $
+ * $Id: view.c,v 1.7 2003/04/02 11:29:24 ahsu Exp $
  */
 
 #include "view.h"
 #include <assert.h>
+#include <limits.h>
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <sys/stat.h>
+#include <sys/types.h>
 
 #define HARD_CODED_HEADER_STR "i:Index  h:Help  1:Ident  2:Adr  3:Tel  4:Geo  5:Org  6:Info  7:Sec  8:Extra"
 
@@ -38,6 +42,7 @@ static void view_org ();
 static void view_info ();
 static void view_sec ();
 static void view_extra ();
+static char *basename (const char *path);
 
 enum view_mode
 { VIEW_IDENT = 1, VIEW_ADR, VIEW_TEL, VIEW_GEO, VIEW_ORG, VIEW_INFO, VIEW_SEC,
@@ -64,6 +69,32 @@ init_view ()
   print_header ();
   keypad (win, TRUE);           /* enable keypad for use of arrow keys */
 }
+
+/***************************************************************************
+ */
+
+static char *
+basename (const char *path)
+{
+  char *beginning = NULL;
+  char *retval = NULL;
+
+  beginning = strrchr (path, '/');
+
+  if (NULL == beginning)
+    {
+      retval = strdup (path);
+    }
+  else
+    {
+      retval = strdup (beginning);
+    }
+
+  return retval;
+}
+
+/***************************************************************************
+ */
 
 static void
 view_ident ()
@@ -120,6 +151,9 @@ view_ident ()
   wrefresh (win);
 }
 
+/***************************************************************************
+ */
+
 static void
 view_adr ()
 {
@@ -174,6 +208,9 @@ view_adr ()
   wrefresh (win);
 }
 
+/***************************************************************************
+ */
+
 static void
 view_tel ()
 {
@@ -210,6 +247,9 @@ view_tel ()
   wrefresh (sub);
   wrefresh (win);
 }
+
+/***************************************************************************
+ */
 
 static void
 view_geo ()
@@ -248,6 +288,9 @@ view_geo ()
   wrefresh (sub);
   wrefresh (win);
 }
+
+/***************************************************************************
+ */
 
 static void
 view_org ()
@@ -316,6 +359,9 @@ view_org ()
   wrefresh (win);
 }
 
+/***************************************************************************
+ */
+
 static void
 view_info ()
 {
@@ -372,6 +418,9 @@ view_info ()
   wrefresh (win);
 }
 
+/***************************************************************************
+ */
+
 static void
 view_sec ()
 {
@@ -403,6 +452,9 @@ view_sec ()
   wrefresh (sub);
   wrefresh (win);
 }
+
+/***************************************************************************
+ */
 
 static void
 view_extra ()
@@ -640,6 +692,9 @@ process_view_commands ()
           g_mode = VIEW_IDENT;
           done = TRUE;
           break;
+        case 'V':
+          raw_view (g_v);
+          break;
         default:
           beep ();
           break;
@@ -655,4 +710,13 @@ void
 set_view_help_fcn (void (*fcn) (void))
 {
   display_help = fcn;
+}
+
+/***************************************************************************
+ */
+
+void
+raw_view (const vcard * v)
+{
+  /* FIXME: have a simple scrolling raw display of the vcard */
 }
