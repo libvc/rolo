@@ -1,3 +1,8 @@
+2003-10-04  Andrew Hsu
+
+* vcard.c: Replaced all structs with their respective typedef
+counterparts.
+
 2003-04-04  Andrew Hsu
 
 * vcard.c: Changed fprintf_vcard to accept const vcard.
