@@ -16,7 +16,7 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * $Id: vcard.h,v 1.5 2003/02/24 03:38:20 ahsu Exp $
+ * $Id: vcard.h,v 1.1 2003/02/24 11:43:24 ahsu Rel $
  */
 
 #ifndef __VCARD_H
@@ -34,48 +34,52 @@ typedef struct vcard_item_param_iter_tag vcard_item_param_iter;
 
 /* vcard operations */
 
-vcard *create_vcard();
-void delete_vcard(vcard * v);
-void fprintf_vcard(FILE * fp, vcard * v);
+vcard *create_vcard ();
+void delete_vcard (vcard * v);
+void fprintf_vcard (FILE * fp, vcard * v);
 
-void set_vcard_group(vcard * v, const char *group);
-char *get_vcard_group(const vcard * v);
+void set_vcard_group (vcard * v, const char *group);
+char *get_vcard_group (const vcard * v);
 
 /* vcard item operations */
 
-vcard_item *insert_vcard_item(vcard * v, const char *name);
+vcard_item *insert_vcard_item (vcard * v, const char *name);
 
-void set_vcard_item_group(vcard_item * vi, const char *group);
-char *get_vcard_item_group(const vcard_item * vi);
+void set_vcard_item_group (vcard_item * vi, const char *group);
+char *get_vcard_item_group (const vcard_item * vi);
 
-void set_vcard_item_value(vcard_item * vi, const char *value);
-char *get_vcard_item_value(const vcard_item * vi);
+void set_vcard_item_value (vcard_item * vi, const char *value);
+char *get_vcard_item_value (const vcard_item * vi);
 
-void init_vcard_item_iter(vcard_item_iter * it, vcard * v);
-vcard_item *next_vcard_item(vcard_item_iter * it);
+void init_vcard_item_iter (vcard_item_iter * it, vcard * v);
+vcard_item *next_vcard_item (vcard_item_iter * it);
 
 /* vcard item parameter operations */
 
-vcard_item_param *insert_vcard_item_param(vcard_item * vi, const char *str);
+vcard_item_param *insert_vcard_item_param (vcard_item * vi, const char *str);
 
-void init_vcard_item_param_iter(vcard_item_param_iter * it, vcard_item * vi);
-vcard_item_param *next_vcard_item_param(vcard_item_param_iter * it);
+void init_vcard_item_param_iter (vcard_item_param_iter * it, vcard_item * vi);
+vcard_item_param *next_vcard_item_param (vcard_item_param_iter * it);
 
 /* parsing functions */
-vcard *parse_vcard_file(FILE * fp);
-int count_vcards(FILE * fp);
+vcard *parse_vcard_file (FILE * fp);
+int count_vcards (FILE * fp);
 
 /* query functions */
-vcard_item *get_vcard_item_by_name(const vcard * v, const char *name);
+vcard_item *get_vcard_item_by_name (const vcard * v, const char *name);
 
-char *get_val_struct_part(const char *n, int part);
+char *get_val_struct_part (const char *n, int part);
 
-enum n_parts { N_FAMILY, N_GIVEN, N_MIDDLE, N_PREFIX, N_SUFFIX };
-enum adr_parts { ADR_PO_BOX, ADR_EXT_ADDRESS, ADR_STREET, ADR_LOCALITY,
+enum n_parts
+{ N_FAMILY, N_GIVEN, N_MIDDLE, N_PREFIX, N_SUFFIX };
+enum adr_parts
+{ ADR_PO_BOX, ADR_EXT_ADDRESS, ADR_STREET, ADR_LOCALITY,
   ADR_REGION, ADR_POSTAL_CODE, ADR_COUNTRY
 };
-enum org_parts { ORG_NAME, ORG_UNIT_1, ORG_UNIT_2 };
-enum geo_parts { GEO_LATITUDE, GEO_LONGITUDE };
+enum org_parts
+{ ORG_NAME, ORG_UNIT_1, ORG_UNIT_2, ORG_UNIT_3, ORG_UNIT_4 };
+enum geo_parts
+{ GEO_LATITUDE, GEO_LONGITUDE };
 
 #define VC_ADDRESS              "ADR"
 #define VC_AGENT                "AGENT"
@@ -86,6 +90,7 @@ enum geo_parts { GEO_LATITUDE, GEO_LONGITUDE };
 #define VC_EMAIL                "EMAIL"
 #define VC_FORMATTED_NAME       "FN"
 #define VC_GEOGRAPHIC_POSITION  "GEO"
+#define VC_KEY                  "KEY"
 #define VC_LOGO                 "LOGO"
 #define VC_MAILER               "MAILER"
 #define VC_NAME                 "N"
@@ -97,6 +102,7 @@ enum geo_parts { GEO_LATITUDE, GEO_LONGITUDE };
 #define VC_REVISION             "REV"
 #define VC_ROLE                 "ROLE"
 #define VC_SORT_STRING          "SORT-STRING"
+#define VC_SOUND                "SOUND"
 #define VC_TELEPHONE            "TEL"
 #define VC_TIME_ZONE            "TZ"
 #define VC_TITLE                "TITLE"
@@ -104,4 +110,4 @@ enum geo_parts { GEO_LATITUDE, GEO_LONGITUDE };
 #define VC_VCARD                "VCARD"
 #define VC_VERSION              "VERSION"
 
-#endif                          /* __VCARD_H */
+#endif /* __VCARD_H */
