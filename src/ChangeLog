@@ -1,10 +1,13 @@
+2003-03-07  Andrew Hsu
+
+* help.c: Cleaned up the help screens.
+
 2003-03-06  Andrew Hsu
 
 * index.c: Finished implementing the sort ascending functionality.
 Just need to take care of the sort descending sometime.  Note: the
 code is a bit ugly...may need a smarter way of going about it.  For
 now, it works--it just has a lot of duplicate code.
-
 
 2003-03-05  Andrew Hsu
 
