@@ -1,3 +1,8 @@
+2003-03-23  Andrew Hsu
+
+* edit.c: Doc fixes.
+* view.c: Doc fixes.
+
 2003-03-22  Andrew Hsu
 
 * main.c: Added case statements for WINDOW_DELETE and WINDOW_ADD.
