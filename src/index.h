@@ -17,30 +17,31 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  *
- * $Id: index.h,v 1.1 2003/02/24 09:15:34 ahsu Rel $
+ * $Id: index.h,v 1.2 2003/03/02 19:32:53 ahsu Exp $
  */
 
 #include <menu.h>
 
-enum index_commands { INDEX_COMMAND_VIEW, INDEX_COMMAND_EDIT,
+enum index_commands
+{ INDEX_COMMAND_VIEW, INDEX_COMMAND_EDIT,
   INDEX_COMMAND_QUIT
 };
 
-enum sort_menu { SORT_MENU_BY_FAMILY_NAME, SORT_MENU_BY_GIVEN_NAME,
-  SORT_MENU_BY_EMAIL, SORT_MENU_BY_TEL
+enum sort_entries_by
+{ SORT_ENTRIES_BY_FAMILY_N, SORT_ENTRIES_BY_GIVEN_N,
+  SORT_ENTRIES_BY_EMAIL, SORT_ENTRIES_BY_TEL
 };
 
 /*** PROTOTYPES ***/
 
-extern void init_index(const char *dirpath);
-extern void sort_items(ITEM **items, int count, int sort_by);
-extern ITEM **get_items(FILE * fp, int count);
-extern MENU *get_menu(ITEM ** items);
-extern void display_index();
-extern int process_index_commands();
-extern void free_items(ITEM ** items);
-extern void select_next_item();
-extern void select_previous_item();
-extern ITEM *get_current_item();
-extern int get_entry_number(const ITEM * item);
-extern void set_index_help_fcn(void (*fcn) (void));
+extern void init_index (const char *dirpath);
+extern MENU *get_menu (ITEM ** items);
+extern void display_index ();
+extern int process_index_commands ();
+extern void free_items (ITEM ** items);
+extern void select_next_item ();
+extern void select_previous_item ();
+extern ITEM *get_current_item ();
+extern int get_entry_number (const ITEM * item);
+extern void set_index_help_fcn (void (*fcn) (void));
+extern void finish_index ();
