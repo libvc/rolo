@@ -1,3 +1,13 @@
+2003-05-06  Andrew Hsu
+
+* result.c: Check to see if query result has an email address before
+continuing.  This is because mutt chokes if no email address is
+returned.
+
+2003-05-05  Andrew Hsu
+
+* main.c: Tweaked the format of the output.
+
 2003-05-04  Andrew Hsu
 
 * result.c: Rename of atoll and lltoa to qr_atoll and qr_lltoa
