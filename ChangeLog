@@ -1,5 +1,10 @@
 2003-03-29  Andrew Hsu
 
+* configure.ac: Added doc/Makefile as the file to generate.  This
+is for the man pages.
+
+2003-03-29  Andrew Hsu
+
 * configure.ac: Incremented the version to 005 for the pending
 release.
 
