@@ -17,10 +17,10 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  *
- * $Id: view.h,v 1.1 2003/02/16 06:14:43 ahsu Exp $
+ * $Id: view.h,v 1.2 2003/02/20 07:27:14 ahsu Rel $
  */
 
-#include "vcard.h"
+#include <vcard.h>
 #include <ncurses.h>
 
 /*** GLOBALS ***/

@@ -17,10 +17,10 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  *
- * $Id$
+ * $Id: edit.h,v 1.1 2003/02/16 06:11:28 ahsu Rel $
  */
 
-#include "vcard.h"
+#include <vcard.h>
 #include <ncurses.h>
 
 enum edit_commands { EDIT_COMMAND_INDEX };

@@ -17,11 +17,11 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  *
- * $Id: index.c,v 1.7 2003/02/21 11:22:10 ahsu Rel $
+ * $Id: index.c,v 1.8 2003/02/24 01:02:19 ahsu Exp $
  */
 
 #include "index.h"
-#include "vcard.h"
+#include <vcard.h>
 #include <string.h>
 #include <stdlib.h>
 #include <assert.h>
