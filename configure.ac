@@ -1,10 +1,11 @@
 # Process this file with autoconf to produce a configure script.
-# $Id: configure.ac,v 1.14 2003/05/04 12:54:03 ahsu Rel $
+# $Id: configure.ac,v 1.15 2003/05/14 10:05:21 ahsu Exp $
 
 AC_INIT(rolo, 010, ahsu@users.sf.net)
-AM_INIT_AUTOMAKE(rolo, 010)
+AM_INIT_AUTOMAKE
+AC_PREREQ(2.57)
 AC_COPYRIGHT([Copyright (C) 2003  Andrew Hsu])
-AC_REVISION($Revision: 1.14 $)
+AC_REVISION($Revision: 1.15 $)
 AC_CONFIG_SRCDIR([src/main.c])
 AM_CONFIG_HEADER([config.h])
 
@@ -15,6 +16,7 @@ AC_PROG_CC
 AC_CHECK_LIB(vc, vc_new)
 AC_CHECK_LIB(ncurses, newwin)
 AC_CHECK_LIB(menu, new_menu)
+AC_CHECK_LIB(form, new_form)
 
 # Checks for header files.
 AC_HEADER_STDC
@@ -27,5 +29,5 @@ AC_FUNC_MALLOC
 AC_TYPE_SIGNAL
 AC_CHECK_FUNCS([strdup strstr])
 
-AC_CONFIG_FILES([Makefile src/Makefile doc/Makefile rolo.spec])
+AC_CONFIG_FILES([Makefile src/Makefile doc/Makefile])
 AC_OUTPUT
