@@ -17,7 +17,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  * 
- * $Id: main.c,v 1.2 2003/02/16 17:04:30 ahsu Exp $
+ * $Id: main.c,v 1.3 2003/02/17 08:15:35 ahsu Exp $
  */
 
 #include "vcard.h"
@@ -50,7 +50,7 @@ static void process_command_line_args(int argc, char *const *argv);
 static void display_usage(const char *prog_name);
 static void display_version();
 static void set_contacts_file();
-static void display_long_version();
+static void display_license();
 
 static void
 resize(int sig)
@@ -75,17 +75,20 @@ set_defaults()
 static void
 display_usage(const char *prog_name)
 {
-  printf("rolo version %s\n", ROLO_VERSION_STRING);
   printf("usage: %s [-r] [-f <file>]\n", prog_name);
   printf("       %s -v\n", prog_name);
   printf("       %s -V\n", prog_name);
   printf("       %s -h\n", prog_name);
   printf("options:\n");
-  /* do not show options that are not implemented: */
-  /* printf("  -r            open the contact file as read-only\n"); */
+  /*
+   * do not show options that are not implemented: 
+   */
+  /*
+   * printf("  -r            open the contact file as read-only\n"); 
+   */
   printf("  -f <file>     specify a contact file to use\n");
   printf("  -v            display rolo version\n");
-  printf("  -V            display rolo version, copyright, and license\n");
+  printf("  -V            display copyright and license\n");
   printf("  -h            this help message\n");
 }
 
@@ -96,10 +99,9 @@ display_version()
 }
 
 static void
-display_long_version()
+display_license()
 {
   printf("rolo - contact management software\n");
-  printf("version %s\n", ROLO_VERSION_STRING);
   printf("Copyright (C) 2003  Andrew Hsu\n");
   printf("\n");
   printf("This program is free software;");
@@ -153,7 +155,7 @@ process_command_line_args(int argc, char *const *argv)
       exit(0);
       break;
     case 'V':
-      display_long_version();
+      display_license();
       exit(0);
       break;
     case 'h':
