@@ -1,64 +1,56 @@
 .\" Process this file with
 .\" groff -man -Tascii rolo.1
 .\"
-.\" $Id: rolo.1,v 1.3 2003/03/30 12:10:23 ahsu Exp $
-.\"
-.TH rolo 1
-.SH NAME
-rolo \- Text-based contact management software
-.SH SYNOPSIS
-.B rolo
-.\" [-r] [-f
-[-f
-.I file
-]
-.br
-.B rolo
--v
-.br
-.B rolo
--V
-.br
-.B rolo
--h
-.SH DESCRIPTION
+.\" $Id: rolo.1,v 1.4 2003/04/03 14:29:52 ahsu Rel $
+.Dd April 26, 2003
+.Os
+.Dt ROLO 1
+.Sh NAME
+.Nm rolo
+.Nd text-based contact management software
+.Sh SYNOPSIS
+.Nm rolo
+.Op Fl r
+.Op Fl f Ar datafile
+.Nm rolo
+.Op Fl v
+.Nm rolo
+.Op Fl V
+.Sh DESCRIPTION
 Rolo keeps track of your contacts and display them to you with a
 text-based menu. Rolo strives to be a well-constructed tool for
 complimenting text-based email programs-such as mutt. It utilizes
 the vCard version 3.0 format for storing its contacts and it
 interfaces with the end-user through a NCurses front-end.
-.SH OPTIONS
-.\" .IP -r
-.\" Open the data file in read-only mode.  This essentially disables
-.\" adding, editing, and deleting contacts.
-.IP -f
-Use the specified
-.I file
-as the data file.
-.IP -v
+.Pp
+The options are as follows:
+.Bl -tag -offset indent -width "-V"
+.It -r
+Open the data file in read-only mode. This essentially disables
+adding, editing, and deleting contacts.
+.It -f
+Use the specified file as the data file.
+.It -v
 Display the version.
-.IP -V
+.It -V
 Display the copyright and license.
-.IP -h
-Display usage information.
-.SH ENVIRONMENT
-.IP HOME
-Full path of the user's home directory.
-.IP ROLO_EDITOR
+.El
+.Sh ENVIRONMENT
+.Bl -tag -width "ROLO_EDITOR"
+.It ROLO_EDITOR
 If ROLO_EDITOR is set, its value is used as the name of the program
-to invoke when displaying contact entries in advanced edit.  If
-ROLO_EDITOR is not set, then EDITOR is used.  If EDITOR is also not
-set, the default value of
-.B vi
-is used.
-.SH FILES
-.IP $HOME/.rolo/rolorc
-User configuration file.
-.IP $HOME/.rolo/contacts.vcf
-The default vCard file where the contacts are stored.
-.SH AUTHOR
-Andrew Hsu <ahsu@users.sf.net>
-.SH "SEE ALSO"
-.\" .BR rolorc (5),
-.\" .BR vcf (5),
-.BR vi (1)
+to invoke when displaying contact entries in advanced edit. If
+ROLO_EDITOR is not set, then EDITOR is used. If EDITOR is also not
+set, the default value of vi is used.
+.Sh FILES
+.Bl -tag -width "~/.rolo/contacts.vcf" -compact
+.It Pa ~/.rolo/rolorc
+Rolo configuration file.
+.It Pa ~/.rolo/contacts.vcf
+Default data file that rolo reads upon startup.
+.Sh SEE ALSO
+.Xr vi 1
+.Sh AUTHORS
+.An "Andrew Hsu" Aq ahsu@users.sf.net
+.Sh BUGS
+The read-only option does not work. The configuration file is not used.
