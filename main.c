@@ -17,7 +17,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  * 
- * $Id: main.c,v 1.1 2003/02/16 06:13:57 ahsu Exp $
+ * $Id: main.c,v 1.2 2003/02/16 17:04:30 ahsu Exp $
  */
 
 #include "vcard.h"
@@ -81,7 +81,8 @@ display_usage(const char *prog_name)
   printf("       %s -V\n", prog_name);
   printf("       %s -h\n", prog_name);
   printf("options:\n");
-  printf("  -r            open the contact file as read-only\n");
+  /* do not show options that are not implemented: */
+  /* printf("  -r            open the contact file as read-only\n"); */
   printf("  -f <file>     specify a contact file to use\n");
   printf("  -v            display rolo version\n");
   printf("  -V            display rolo version, copyright, and license\n");
@@ -128,6 +129,8 @@ display_long_version()
 static void
 set_contacts_file()
 {
+  strncpy(data_path, optarg, PATH_MAX);
+  data_path[PATH_MAX - 1] = '\0';
 }
 
 static void
