@@ -1,5 +1,7 @@
 2003-05-04  Andrew Hsu
 
+* configure.ac: Bumped the version to 010 for the impending release.
+
 * rolo.spec.in: Added mutt_vc_query to the list of binaries to be
 installed.
 * Makefile.am: Added mutt_vc_query to the mix.
