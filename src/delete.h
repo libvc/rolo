@@ -17,13 +17,13 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  *
- * $Id$
+ * $Id: delete.h,v 1.1 2003/03/24 07:42:23 ahsu Exp $
  */
 
 #include <sys/stat.h>
 #include <sys/types.h>
 
-enum delete_commands
+enum delete_entry_results
 { DELETE_SUCCESSFUL, DELETE_ABORTED };
 
 extern int delete_entry (const char *datafile, long pos);
