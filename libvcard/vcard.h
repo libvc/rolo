@@ -16,7 +16,7 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * $Id: vcard.h,v 1.3 2003/02/20 10:59:29 ahsu Exp $
+ * $Id: vcard.h,v 1.4 2003/02/22 08:52:46 ahsu Rel $
  */
 
 #ifndef __VCARD_H
@@ -103,12 +103,5 @@ enum geo_parts { GEO_LATITUDE, GEO_LONGITUDE };
 #define VC_URL                  "URL"
 #define VC_VCARD                "VCARD"
 #define VC_VERSION              "VERSION"
-
-enum datatype_tag {
-  DATATYPE_UNKNOWN,
-  DATATYPE_ANY,
-  DATATYPE_STRING,
-  DATATYPE_VCSTRUCT
-};
 
 #endif                          /* __VCARD_H */
