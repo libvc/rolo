@@ -1,0 +1,33 @@
+* Implement a form-based interface for the user to add and edit
+contacts.
+
+* Create a raw-view display of a contact's vCard entry accessable
+through the view screen or the index screen.
+
+* Create a man page for rolorc(5).
+
+* Add the ability for the user to specify colors of menu bar, text,
+background, highlighted text, etc. in the rolorc file.
+
+* Allow the user to save a contact's public key value to a file.
+
+* Allow the user to save a contact's photograph data to a file.
+
+* Allow the user to save a contact's sound data to a file.
+
+* Implement read-only mode when the user executes rolo with the
+`-r' option.
+
+* Allow user to export a rolo contact to a file (CSV, vCard 3.0,
+vCard 2.1, TSV, html, etc.)
+
+* Allow the user to import a contact from a file (CSV, vCard 3.0,
+TSV, Outlook vCard, Netscape vCard, Evolution vCard, etc.)
+
+* Allow the user to view a photo (implemented by launching an
+external program that can display images--this external program
+could be specified in the rolorc file).
+
+* Add support for displaying non-English characters (like French,
+Spanish, German, etc.).
+
