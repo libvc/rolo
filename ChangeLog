@@ -1,5 +1,7 @@
 2003-05-04  Andrew Hsu
 
+* rolo.spec.in: Added mutt_vc_query to the list of binaries to be
+installed.
 * Makefile.am: Added mutt_vc_query to the mix.
 * configure.ac: Added mutt_vc_query to the mix.
 
