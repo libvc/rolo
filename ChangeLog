@@ -1,5 +1,10 @@
 2003-04-10  Andrew Hsu
 
+* Makefile.am: Check that NEWS file has a version number in it.
+Also added a dist-bzip2 make rule.
+
+2003-04-10  Andrew Hsu
+
 * configure.ac: Bumped the version to 007 for the pending release.
 
 2003-04-04  Andrew Hsu
