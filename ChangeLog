@@ -1,3 +1,8 @@
+2003-04-27  Andrew Hsu
+
+* rolo.spec.in: Added TODO as one of the doc files to include in
+an rpm package.
+
 2003-04-26  Andrew Hsu
 
 * configure.ac: Bumped the version to 009 for the pending release.
