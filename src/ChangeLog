@@ -1,3 +1,35 @@
+2003-03-25  Andrew Hsu
+
+* add.c: New file added.  Moved add_entry function to here.
+* add.h: New file added.  Prototype for add_entry.
+
+* entry.c: New file added.  Moved all the functions dealing with
+entry nodes to here from the index.c file.  This includes the
+sorting, filtering, and manipulation of the entry node structure.
+This file will need to be cleaned up so that the user of this module
+will not have to touch the internals of the entry node structure
+directly.  Perhaps a rename of the `entry node' would also have to
+be performed for the sake of not having it confused with the
+`add_entry' and `delete_entry' functions.
+* entry.h: New file added.  Prototypes and struct definition for
+the `entry node' functions taken from the index.c file.
+
+* main.c: Adding a new entry now checks to see if the add was
+successful so that a screen refresh could be spared if the add was
+aborted.
+
+* edit.c: Moved the add_entry function into its own file.
+* edit.h: Moved the add_entry prototype into its own file.
+
+* index.c: Moved all the functions dealing with the `entry node'
+into its own file: entry.c.
+* index.h: Moved the sorting enum into the entry.h file.
+
+* help.c: Added a comment reminder for a future feature: export.
+
+* Makefile.am: Added the new files add.c, add.h, entry.c, and entry.h
+to the list of source files to compile.
+
 2003-03-24  Andrew Hsu
 
 * delete.c: New file added.  Moved delete_entry function to here.
