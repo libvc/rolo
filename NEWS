@@ -1,3 +1,10 @@
+Rolo 010 (2003-05-04)
+
+* Added a new utility for mutt's `query_command' called `mutt_vc_query'.
+This utility will allow a mutt user to query the email addresses
+in `contacts.vcf' with the `Q' command in mutt.  See the README
+file for how to implement.
+
 Rolo 009 (2003-04-26)
 
 * Preferred telephone number and email addresses are now displayed
