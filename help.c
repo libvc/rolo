@@ -17,7 +17,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  *
- * $Id: help.c,v 1.4 2003/02/20 08:58:46 ahsu Exp $
+ * $Id: help.c,v 1.5 2003/02/22 08:47:35 ahsu Rel $
  */
 
 #include "help.h"
@@ -52,17 +52,17 @@ show_index_help()
 {
   werase(sub);
   wprintw(sub, "q              quit the program\n");
-  wprintw(sub, "<Down>         move to the next item\n");
-  wprintw(sub, "<Up>           move to the previous item\n");
-  wprintw(sub, "<Home>         move to the first item\n");
-  wprintw(sub, "<End>          move to the last item\n");
-  wprintw(sub, "j              move to the next item\n");
-  wprintw(sub, "k              move to the previous item\n");
+  wprintw(sub, "<Down>         move to the next entry\n");
+  wprintw(sub, "<Up>           move to the previous entry\n");
+  wprintw(sub, "g              move to the first entry\n");
+  wprintw(sub, "G              move to the last entry\n");
+  wprintw(sub, "j              move to the next entry\n");
+  wprintw(sub, "k              move to the previous entry\n");
   wprintw(sub,
       "h              show help for key bindings (what you are viewing now)\n");
   wprintw(sub, "<Page Up>      scroll up a page\n");
   wprintw(sub, "<Page Down>    scroll down a page\n");
-  wprintw(sub, "t              tag/un-tag an item\n");
+  wprintw(sub, "t              tag/un-tag an entry\n");
   print_footer("Help for the index screen");
   touchwin(win);
   wrefresh(sub);
@@ -74,12 +74,12 @@ void
 show_view_help()
 {
   werase(sub);
-  wprintw(sub, "<Down>   move to the next item\n");
-  wprintw(sub, "<Up>     move to the previous item\n");
-  wprintw(sub, "<Home>   move to the first item\n");
-  wprintw(sub, "<End>    move to the last item\n");
-  wprintw(sub, "j        move to the next item\n");
-  wprintw(sub, "k        move to the previous item\n");
+  wprintw(sub, "<Down>   move to the next entry\n");
+  wprintw(sub, "<Up>     move to the previous entry\n");
+  wprintw(sub, "g        move to the first entry\n");
+  wprintw(sub, "G        move to the last entry\n");
+  wprintw(sub, "j        move to the next entry\n");
+  wprintw(sub, "k        move to the previous entry\n");
   wprintw(sub,
       "h        show help for key bindings (what you are viewing now)\n");
   print_footer("Help for the view screen");
