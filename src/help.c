@@ -17,7 +17,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  *
- * $Id: help.c,v 1.2 2003/02/28 03:12:50 ahsu Rel $
+ * $Id: help.c,v 1.3 2003/03/05 07:45:55 ahsu Exp $
  */
 
 #include "help.h"
@@ -59,28 +59,28 @@ show_index_help ()
 {
   werase (sub);
   wprintw (sub, "q              quit the program\n");
+  wprintw (sub, "<Home>         move to the first entry\n");
   wprintw (sub, "<Down>         move to the next entry\n");
   wprintw (sub, "<Up>           move to the previous entry\n");
-  wprintw (sub, "g              move to the first entry\n");
-  wprintw (sub, "<Home>         move to the first entry\n");
-  wprintw (sub, "G              move to the last entry\n");
+  wprintw (sub, "<Page Up>      scroll up a page\n");
+  wprintw (sub, "<Page Down>    scroll down a page\n");
   wprintw (sub, "<End>          move to the last entry\n");
+  wprintw (sub, "<Enter>        view the details of an entry\n");
+  wprintw (sub, "g              move to the first entry\n");
   wprintw (sub, "j              move to the next entry\n");
   wprintw (sub, "k              move to the previous entry\n");
-  wprintw (sub,
-           "h              show help for key bindings (what you are viewing now)\n");
-  wprintw (sub, "<Page Up>      scroll up a page\n");
   wprintw (sub, "b              scroll up a page\n");
-  wprintw (sub, "<Page Down>    scroll down a page\n");
   wprintw (sub, "<Space>        scroll down a page\n");
+  wprintw (sub, "G              move to the last entry\n");
   wprintw (sub, "v              view the details of an entry\n");
-  wprintw (sub, "<Enter>        view the details of an entry\n");
-  wprintw (sub, "/              search the index screen\n");
-  wprintw (sub, "s              sort the entries\n");
+  wprintw (sub, "s              sort the entries in ascending order\n");
+/* wprintw (sub, "S              sort the entries in descending order\n"); */
   wprintw (sub, "f              filter the entries\n");
   wprintw (sub, "F              remove the filter\n");
   wprintw (sub, "/              search the index screen\n");
 /* wprintw(sub, "t              tag/un-tag an entry\n"); */
+  wprintw (sub,
+           "h              show help for key bindings (what you are viewing now)\n");
   print_footer ("Help for the index screen");
   touchwin (win);
   wrefresh (sub);
@@ -96,11 +96,11 @@ void
 show_view_help ()
 {
   werase (sub);
+  wprintw (sub, "q        exit to index screen\n");
   wprintw (sub, "<Down>   move to the next entry\n");
   wprintw (sub, "<Up>     move to the previous entry\n");
   wprintw (sub, "j        move to the next entry\n");
   wprintw (sub, "k        move to the previous entry\n");
-  wprintw (sub, "q        exit to index screen\n");
   wprintw (sub,
            "h        show help for key bindings (what you are viewing now)\n");
   print_footer ("Help for the view screen");
