@@ -1,3 +1,7 @@
+2003-04-04  Andrew Hsu
+
+* configure.ac: Bumped version number for 006 release.
+
 2003-04-02  Andrew Hsu
 
 * rolo.spec.in: Added distribution so that it would be grouped
