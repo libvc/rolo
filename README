@@ -15,13 +15,6 @@ menu library that compliments NCurses.  It has been developed and
 tested thoroughly on FreeBSD, but the code was designed to be as
 non-platform specific as possible.
 
-A vCard library was written specifically for rolo using Flex and
-Bison.  The library handles scanning a vCard file, parsing the vCard
-file into a data storage structure, manipulating the data storage
-structure, and writing back to file.  This library will be split
-off in the future as its own separate package which Rolo will require
-as a dependency.
-
 To add a new contact in rolo, type `a' in the index screen.  This
 will pop open your "favorite editor" so you can compose a new vCard
 file by hand.  This may be a little low-level for some people, so
@@ -29,30 +22,13 @@ an example vCard file has been provided in the `test' directory.
 If rolo is installed using an rpm file, the example file can be
 found in: /usr/share/doc/rolo-010/contacts.vcf
 
-A mutt query_command utility is included with the rolo package.
-This utility will allow queries to the data file (defaults to
-~/.rolo/contacts.vcf) from mutt using mutt's query_command (see
-muttrc(5) for more info).  In order to get this to work, you must
-add the following line to your ~/.muttrc file after installing the
-rolo package:
-
-  set query_command="mutt_vc_query '%s'"
-
-And you will then be able to query email addresses when you use the
-`Q' command in mutt.
-
 Directory contents:
 
   doc/ .............. Documentation for Rolo.
 
-  mutt_vc_query/ .... Source code for the mutt query_command utility.
-
   src/ .............. Source code for the rolo user interface.
 
   test/ ............. Test data for rolo.
-
-  vcard/ ............ Source code for the vCard library that was created
-                      specifically for the rolo project.
 
 This software is maintained on SourceForge:
 http://rolo.sf.net/
