@@ -1,5 +1,10 @@
 2003-03-29  Andrew Hsu
 
+* rolo.spec.in: Binary and man pages are now installed in the proper
+directory.
+
+2003-03-29  Andrew Hsu
+
 * Makefile.am: Added doc as one of the directories to go into.
 
 * rolo.spec.in: Added the man page as the file to include when
