@@ -17,7 +17,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  * 
- * $Id: main.c,v 1.7 2003/03/24 07:43:08 ahsu Exp $
+ * $Id: main.c,v 1.8 2003/03/25 11:07:13 ahsu Exp $
  */
 
 #include <vcard.h>
@@ -384,13 +384,10 @@ main (int argc, char *argv[])
               fclose (fp);
               fp = NULL;
 
-              /* FIXME: return val of edit_vcard should show if edit
-                 actually took place.  if it did not take place,
-                 then a refresh could be spared */
-
-              edit_vcard (data_path, pos);
-              refresh_index ();
-
+              if (EDIT_SUCCESSFUL == edit_entry (data_path, pos))
+                {
+                  refresh_index ();
+                }
             }
 
           win_state = WINDOW_INDEX;
