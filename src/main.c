@@ -17,7 +17,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  * 
- * $Id: main.c,v 1.9 2003/03/26 11:20:57 ahsu Exp $
+ * $Id: main.c,v 1.10 2003/03/27 12:48:52 ahsu Rel $
  */
 
 #include <vcard.h>
@@ -49,7 +49,8 @@
 /*** GLOBALS ***/
 
 enum win_states
-{ WINDOW_INDEX, WINDOW_VIEW, WINDOW_EDIT, WINDOW_DELETE, WINDOW_ADD };
+{ WINDOW_INDEX, WINDOW_VIEW, WINDOW_RAW_VIEW, WINDOW_EDIT, WINDOW_DELETE,
+      WINDOW_ADD };
 char data_path[PATH_MAX];
 
 /*** PROTOTYPES ***/
@@ -62,6 +63,30 @@ static void display_usage (const char *prog_name);
 static void display_version ();
 static void set_contacts_file ();
 static void display_license ();
+static char *get_env_editor ();
+
+/***************************************************************************
+ */
+
+static char *
+get_env_editor ()
+{
+  char *editor = NULL;
+
+  editor = getenv ("ROLO_EDITOR");
+
+  if (NULL == editor)
+    {
+      editor = getenv ("EDITOR");
+      if (NULL == editor)
+        {
+          editor = strdup ("vi");
+          return editor;
+        }
+    }
+
+  return strdup (editor);
+}
 
 /***************************************************************************
     This is called upon when the window is resized.
@@ -103,6 +128,7 @@ set_defaults ()
 {
   char default_datafile[PATH_MAX];
   char *home = NULL;
+  char *editor = NULL;
 
   home = getenv ("HOME");
   if (NULL != home)
@@ -159,6 +185,11 @@ set_defaults ()
     }
 
   strcpy (data_path, default_datafile);
+
+  editor = get_env_editor ();
+
+  set_edit_editor (editor);
+  set_add_editor (editor);
 }
 
 /***************************************************************************
@@ -329,6 +360,9 @@ main (int argc, char *argv[])
             case INDEX_COMMAND_VIEW:
               win_state = WINDOW_VIEW;
               break;
+            case INDEX_COMMAND_RAW_VIEW:
+              win_state = WINDOW_RAW_VIEW;
+              break;
             case INDEX_COMMAND_EDIT:
               win_state = WINDOW_EDIT;
               break;
@@ -344,6 +378,40 @@ main (int argc, char *argv[])
             default:
               break;
             }
+
+          break;
+
+        case WINDOW_RAW_VIEW:
+
+      /*-------------------------------------------------
+         view the currently selected item with the pager
+        -------------------------------------------------*/
+
+          it = get_current_item ();
+
+          /* only display if there is an item that is selected */
+          if (NULL == it)
+            {
+              v = NULL;
+            }
+          else
+            {
+              fpos = (fpos_t *) item_userptr (it);
+
+              fp = fopen (data_path, "r");
+              fsetpos (fp, fpos);
+              v = parse_vcard_file (fp);
+              fclose (fp);
+            }
+
+          if (v != NULL)
+            {
+              raw_view (v);
+              delete_vcard (v);
+              v = NULL;
+            }
+
+          win_state = WINDOW_INDEX;
 
           break;
 
