@@ -17,7 +17,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  *
- * $Id: edit.c,v 1.5 2003/02/21 03:34:21 ahsu Rel $
+ * $Id: edit.c,v 1.1 2003/02/24 09:15:32 ahsu Exp $
  */
 
 #include "edit.h"
@@ -26,12 +26,17 @@
 
 #define HARD_CODED_HEADER_STR "q:Quit  h:Help"
 
+/*** PROTOTYPES ***/
 static void print_header();
 static void print_footer(const char *fn);
 
+/*** STATIC VARIABLES ***/
 static WINDOW *win = NULL;
 static WINDOW *sub = NULL;
 static void (*display_help) (void);
+
+/* ------------------------------------------------------------------
+ */
 
 void
 init_edit()
@@ -41,6 +46,9 @@ init_edit()
   keypad(win, TRUE);            /* enable keypad for use of arrow keys */
   print_header();
 }
+
+/* ------------------------------------------------------------------
+ */
 
 static void
 print_header()
@@ -64,6 +72,9 @@ print_header()
   wstandend(win);
   free(header_str);
 }
+
+/* ------------------------------------------------------------------
+ */
 
 static void
 print_footer(const char *fn)
@@ -90,6 +101,9 @@ print_footer(const char *fn)
   free(footer_str);
 }
 
+/* ------------------------------------------------------------------
+ */
+
 void
 edit_vcard(vcard * v)
 {
@@ -101,6 +115,9 @@ edit_vcard(vcard * v)
   wrefresh(sub);
   wrefresh(win);
 }
+
+/* ------------------------------------------------------------------
+ */
 
 int
 process_edit_commands()
@@ -129,6 +146,9 @@ process_edit_commands()
   }
   return command;
 }
+
+/* ------------------------------------------------------------------
+ */
 
 void
 set_edit_help_fcn(void (*fcn) (void))
