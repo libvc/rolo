@@ -17,7 +17,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  * 
- * $Id: main.c,v 1.6 2003/02/20 07:27:13 ahsu Exp $
+ * $Id: main.c,v 1.7 2003/02/20 08:58:01 ahsu Exp $
  */
 
 #include "vcard.h"
@@ -58,7 +58,12 @@ static void
 resize(int sig)
 {
   endwin();
-  exit(0);
+  initscr();
+
+  keypad(stdscr, TRUE);         /* enable keypad for use of arrow keys */
+  nonl();                       /* tell curses not to do NL->CR/NL on output */
+  cbreak();                     /* take input chars immediately */
+  noecho();
 }
 
 static void
@@ -98,12 +103,7 @@ display_usage(const char *prog_name)
   printf("       %s -V\n", prog_name);
   printf("       %s -h\n", prog_name);
   printf("options:\n");
-  /*
-   * do not show options that are not implemented: 
-   */
-  /*
-   * printf("  -r            open the contact file as read-only\n"); 
-   */
+  printf("  -r            open the contact file as read-only\n");
   printf("  -f <file>     specify a contact file to use\n");
   printf("  -v            display version\n");
   printf("  -V            display copyright and license\n");
