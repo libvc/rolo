@@ -1,21 +1,21 @@
-2003-02-28  Andrew Hsu  <ahsu@users.sf.net>
+2003-02-28  Andrew Hsu
 
 * Makefile.am: Added noinst to the library because it is not finalized
 yet.  Added ChangeLog as file to distribute.
 * vc_scan.l: Doc fixes.  Removed unnecessary stuff.
 * vcard.c: Doc fixes.
 
-2003-02-27  Andrew Hsu  <ahsu@users.sf.net>
+2003-02-27  Andrew Hsu
 
 * Makefile.am: Changed stuff to make the compile run smoother.
 * vc_parse.y: Renamed from vcard.y.
 * vc_scan.l: Renamed from vcard.l.  Fixed include typo.
 
-2003-02-26  Andrew Hsu  <ahsu@users.sf.net>
+2003-02-26  Andrew Hsu
 
 * Makefile.am: Creation of file.
 
-2003-02-24  Andrew Hsu  <ahsu@users.sf.net>
+2003-02-24  Andrew Hsu
 
 * vcard.c: Moved file to rolo/vcard directory.
 * vcard.h: Moved file to rolo/vcard directory.
