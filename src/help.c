@@ -17,7 +17,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  *
- * $Id: help.c,v 1.4 2003/03/07 07:19:37 ahsu Rel $
+ * $Id: help.c,v 1.5 2003/03/22 12:20:46 ahsu Rel $
  */
 
 #include "help.h"
@@ -84,6 +84,7 @@ show_index_help ()
   wprintw (sub, "e              edit an entry\n");
   wprintw (sub, "d              delete an entry\n");
 /* wprintw(sub, "t              tag/un-tag an entry\n"); */
+/* wprintw(sub, "x              export an entry\n"); */
   wprintw (sub,
            "h              show help for key bindings (what you are viewing now)\n");
   print_footer ("Help for the index screen");
