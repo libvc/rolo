@@ -17,7 +17,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  * 
- * $Id: main.c,v 1.2 2003/02/27 14:54:07 ahsu Exp $
+ * $Id: main.c,v 1.3 2003/02/27 15:17:59 ahsu Rel $
  */
 
 #include <vcard.h>
@@ -47,180 +47,195 @@
 
 /*** GLOBALS ***/
 
-enum win_states { WINDOW_INDEX, WINDOW_VIEW, WINDOW_EDIT };
+enum win_states
+{ WINDOW_INDEX, WINDOW_VIEW, WINDOW_EDIT };
 char data_path[PATH_MAX];
 
 /*** PROTOTYPES ***/
 
-static void finish(int sig);
-static void resize(int sig);
-static void set_defaults();
-static void process_command_line_args(int argc, char *const *argv);
-static void display_usage(const char *prog_name);
-static void display_version();
-static void set_contacts_file();
-static void display_license();
+static void finish (int sig);
+static void resize (int sig);
+static void set_defaults ();
+static void process_command_line_args (int argc, char *const *argv);
+static void display_usage (const char *prog_name);
+static void display_version ();
+static void set_contacts_file ();
+static void display_license ();
 
-/* ------------------------------------------------------------------
+/***************************************************************************
     This is called upon when the window is resized.
  */
 static void
-resize(int sig)
+resize (int sig)
 {
-  endwin();
-  initscr();
+  finish_index ();
+  endwin ();
+  refresh ();
+  initscr ();
 
-  keypad(stdscr, TRUE);         /* enable keypad for use of arrow keys */
-  nonl();                       /* tell curses not to do NL->CR/NL on output */
-  cbreak();                     /* take input chars immediately */
-  noecho();
+  keypad (stdscr, TRUE);        /* enable keypad for use of arrow keys */
+  nonl ();                      /* tell curses not to do NL->CR/NL on output */
+  cbreak ();                    /* take input chars immediately */
+  noecho ();
+
+  init_index (data_path);
+  display_index ();
+  refresh ();
 }
 
-/* ------------------------------------------------------------------
+/***************************************************************************
     This is called upon when the program is asked to finish.
  */
 static void
-finish(int sig)
+finish (int sig)
 {
-  endwin();
-  exit(0);
+  finish_index ();
+  endwin ();
+  exit (0);
 }
 
-/* ------------------------------------------------------------------
+/***************************************************************************
     Sets the default program startup values.
  */
 static void
-set_defaults()
+set_defaults ()
 {
   char default_datafile[PATH_MAX];
   char *home = NULL;
 
-  home = getenv("HOME");
-  if (NULL != home) {
-    strcpy(default_datafile, home);
-    strncat(default_datafile, "/", 1);
-    strncat(default_datafile, DEFAULT_HOME_ROLO_DIR,
-        strlen(DEFAULT_HOME_ROLO_DIR));
-    strncat(default_datafile, "/", 1);
-    strncat(default_datafile, DEFAULT_FILENAME, strlen(DEFAULT_FILENAME));
-  } else {
-    fprintf(stderr, "unable to deterime home directory");
-    exit(1);
-  }
+  home = getenv ("HOME");
+  if (NULL != home)
+    {
+      strcpy (default_datafile, home);
+      strncat (default_datafile, "/", 1);
+      strncat (default_datafile, DEFAULT_HOME_ROLO_DIR,
+               strlen (DEFAULT_HOME_ROLO_DIR));
+      strncat (default_datafile, "/", 1);
+      strncat (default_datafile, DEFAULT_FILENAME, strlen (DEFAULT_FILENAME));
+    }
+  else
+    {
+      fprintf (stderr, "unable to deterime home directory");
+      exit (1);
+    }
 
-  strcpy(data_path, default_datafile);
+  strcpy (data_path, default_datafile);
 }
 
-/* ------------------------------------------------------------------
+/***************************************************************************
     Ouputs how to use the program.
  */
+
 static void
-display_usage(const char *prog_name)
+display_usage (const char *prog_name)
 {
-  printf("usage: %s [-r] [-f <file>]\n", prog_name);
-  printf("       %s -v\n", prog_name);
-  printf("       %s -V\n", prog_name);
-  printf("       %s -h\n", prog_name);
-  printf("options:\n");
-  printf("  -r            open the contact file as read-only\n");
-  printf("  -f <file>     specify a contact file to use\n");
-  printf("  -v            display version\n");
-  printf("  -V            display copyright and license\n");
-  printf("  -h            this help message\n");
+  printf ("usage: %s [-r] [-f <file>]\n", prog_name);
+  printf ("       %s -v\n", prog_name);
+  printf ("       %s -V\n", prog_name);
+  printf ("       %s -h\n", prog_name);
+  printf ("options:\n");
+  printf ("  -r            open the contact file as read-only\n");
+  printf ("  -f <file>     specify a contact file to use\n");
+  printf ("  -v            display version\n");
+  printf ("  -V            display copyright and license\n");
+  printf ("  -h            this help message\n");
 }
 
-/* ------------------------------------------------------------------
+/***************************************************************************
     Outputs a one-line version statement.
  */
 static void
-display_version()
+display_version ()
 {
-  printf("rolo version %s\n", PACKAGE_VERSION);
+  printf ("rolo version %s\n", PACKAGE_VERSION);
 }
 
-/* ------------------------------------------------------------------
+/***************************************************************************
     Outputs the software license.
  */
+
 static void
-display_license()
+display_license ()
 {
-  printf("rolo - contact management software\n");
-  printf("Copyright (C) 2003  Andrew Hsu\n");
-  printf("\n");
-  printf("This program is free software;");
-  printf(" you can redistribute it and/or modify\n");
-  printf("it under the terms of the");
-  printf(" GNU General Public License as published by\n");
-  printf("the Free Software Foundation;");
-  printf(" either version 2 of the License, or\n");
-  printf("(at your option) any later version.\n");
-  printf("\n");
-  printf("This program is distributed");
-  printf(" in the hope that it will be useful,\n");
-  printf("but WITHOUT ANY WARRANTY;");
-  printf(" without even the implied warranty of\n");
-  printf("MERCHANTABILITY or FITNESS FOR A PARTICULAR");
-  printf(" PURPOSE.  See the\n");
-  printf("GNU General Public License for more details.\n");
-  printf("\n");
-  printf("You should have received a copy of");
-  printf(" the GNU General Public License\n");
-  printf("along with this program;");
-  printf(" if not, write to the Free Software\n");
-  printf("Foundation, Inc., 59 Temple Place, Suite 330,");
-  printf(" Boston, MA  02111-1307  USA\n");
+  printf ("rolo - contact management software\n");
+  printf ("Copyright (C) 2003  Andrew Hsu\n");
+  printf ("\n");
+  printf ("This program is free software;");
+  printf (" you can redistribute it and/or modify\n");
+  printf ("it under the terms of the");
+  printf (" GNU General Public License as published by\n");
+  printf ("the Free Software Foundation;");
+  printf (" either version 2 of the License, or\n");
+  printf ("(at your option) any later version.\n");
+  printf ("\n");
+  printf ("This program is distributed");
+  printf (" in the hope that it will be useful,\n");
+  printf ("but WITHOUT ANY WARRANTY;");
+  printf (" without even the implied warranty of\n");
+  printf ("MERCHANTABILITY or FITNESS FOR A PARTICULAR");
+  printf (" PURPOSE.  See the\n");
+  printf ("GNU General Public License for more details.\n");
+  printf ("\n");
+  printf ("You should have received a copy of");
+  printf (" the GNU General Public License\n");
+  printf ("along with this program;");
+  printf (" if not, write to the Free Software\n");
+  printf ("Foundation, Inc., 59 Temple Place, Suite 330,");
+  printf (" Boston, MA  02111-1307  USA\n");
 }
 
-/* ------------------------------------------------------------------
+/***************************************************************************
     Helper function for setting the contact file.
  */
 static void
-set_contacts_file()
+set_contacts_file ()
 {
-  strncpy(data_path, optarg, PATH_MAX);
+  strncpy (data_path, optarg, PATH_MAX);
   data_path[PATH_MAX - 1] = '\0';
 }
 
-/* ------------------------------------------------------------------
+/***************************************************************************
     Parses the command-line arguments.
  */
+
 static void
-process_command_line_args(int argc, char *const *argv)
+process_command_line_args (int argc, char *const *argv)
 {
   int ch = -1;
 
-  while (-1 != (ch = getopt(argc, argv, "rf:vVh"))) {
-    switch (ch) {
-    case 'r':
-      /*
-       * todo: implement read-only option 
-       */
-      break;
-    case 'f':
-      set_contacts_file();
-      break;
-    case 'v':
-      display_version();
-      exit(0);
-      break;
-    case 'V':
-      display_license();
-      exit(0);
-      break;
-    case 'h':
-    case '?':
-    default:
-      display_usage(argv[0]);
-      exit(0);
+  while (-1 != (ch = getopt (argc, argv, "rf:vVh")))
+    {
+      switch (ch)
+        {
+        case 'r':
+          /* FIXME: implement read-only option */
+          break;
+        case 'f':
+          set_contacts_file ();
+          break;
+        case 'v':
+          display_version ();
+          exit (0);
+          break;
+        case 'V':
+          display_license ();
+          exit (0);
+          break;
+        case 'h':
+        case '?':
+        default:
+          display_usage (argv[0]);
+          exit (0);
+        }
     }
-  }
 }
 
-/* ------------------------------------------------------------------
+/***************************************************************************
     The main function.
  */
+
 int
-main(int argc, char *argv[])
+main (int argc, char *argv[])
 {
   vcard *v = NULL;
   fpos_t *fpos = NULL;
@@ -232,129 +247,148 @@ main(int argc, char *argv[])
   int win_state = WINDOW_INDEX;
   int command = 0;
 
-  set_defaults();
-  process_command_line_args(argc, argv);
+  set_defaults ();
+  process_command_line_args (argc, argv);
   /*
    * process_environment_variables(); 
    * process_configuration_file(); 
    */
 
-  signal(SIGINT, finish);       /* catch interrupt for exiting */
-  signal(SIGWINCH, resize);     /* catch interrupt for resizing */
-  initscr();
+  signal (SIGINT, finish);      /* catch interrupt for exiting */
+  signal (SIGWINCH, resize);    /* catch interrupt for resizing */
+  initscr ();
 
-  keypad(stdscr, TRUE);         /* enable keypad for use of arrow keys */
-  nonl();                       /* tell curses not to do NL->CR/NL on output */
-  cbreak();                     /* take input chars immediately */
-  noecho();
+  keypad (stdscr, TRUE);        /* enable keypad for use of arrow keys */
+  nonl ();                      /* tell curses not to do NL->CR/NL on output */
+  cbreak ();                    /* take input chars immediately */
+  noecho ();
 
-  init_index(data_path);
-  set_index_help_fcn(show_index_help);
-  init_view();
-  set_view_help_fcn(show_view_help);
-  init_edit();
-  set_edit_help_fcn(show_edit_help);
-  init_help();
+  init_index (data_path);
+  set_index_help_fcn (show_index_help);
+  init_view ();
+  set_view_help_fcn (show_view_help);
+  init_edit ();
+  set_edit_help_fcn (show_edit_help);
+  init_help ();
 
-  while (!done) {
-    switch (win_state) {
-    case WINDOW_INDEX:
+  while (!done)
+    {
+      switch (win_state)
+        {
+        case WINDOW_INDEX:
 
       /*-------------------
          display the index
         -------------------*/
 
-      display_index();
-      command = process_index_commands();
+          display_index ();
+          command = process_index_commands ();
 
-      switch (command) {
-      case INDEX_COMMAND_VIEW:
-        win_state = WINDOW_VIEW;
-        break;
-      case INDEX_COMMAND_EDIT:
-        win_state = WINDOW_EDIT;
-        break;
-      case INDEX_COMMAND_QUIT:
-        done = TRUE;
-        break;
-      default:
-        break;
-      }
+          switch (command)
+            {
+            case INDEX_COMMAND_VIEW:
+              win_state = WINDOW_VIEW;
+              break;
+            case INDEX_COMMAND_EDIT:
+              win_state = WINDOW_EDIT;
+              break;
+            case INDEX_COMMAND_QUIT:
+              done = TRUE;
+              break;
+            default:
+              break;
+            }
 
-      break;
+          break;
 
-    case WINDOW_VIEW:
+        case WINDOW_VIEW:
 
       /*----------------------------------
          view the currently selected item
         ----------------------------------*/
 
-      it = get_current_item();
-      fpos = (fpos_t *) item_userptr(it);
+          it = get_current_item ();
 
-      fp = fopen(data_path, "r");
-      fsetpos(fp, fpos);
-      v = parse_vcard_file(fp);
-      fclose(fp);
+          /* only display if there is an item that is selected */
+          if (NULL == it)
+            {
+              v = NULL;
+            }
+          else
+            {
+              fpos = (fpos_t *) item_userptr (it);
 
-      if (v != NULL) {
-        entry_number = get_entry_number(it);
-        view_vcard(entry_number, v);
-        command = process_view_commands();
+              fp = fopen (data_path, "r");
+              fsetpos (fp, fpos);
+              v = parse_vcard_file (fp);
+              fclose (fp);
+            }
 
-        switch (command) {
-        case VIEW_COMMAND_EDIT:
-          win_state = WINDOW_EDIT;
+          if (v != NULL)
+            {
+              entry_number = get_entry_number (it);
+              view_vcard (entry_number, v);
+              command = process_view_commands ();
+
+              switch (command)
+                {
+                case VIEW_COMMAND_EDIT:
+                  win_state = WINDOW_EDIT;
+                  break;
+                case VIEW_COMMAND_INDEX:
+                  win_state = WINDOW_INDEX;
+                  break;
+                case VIEW_COMMAND_PREVIOUS:
+                  select_previous_item ();
+                  win_state = WINDOW_VIEW;
+                  break;
+                case VIEW_COMMAND_NEXT:
+                  select_next_item ();
+                  win_state = WINDOW_VIEW;
+                  break;
+                default:
+                  break;
+                }
+            }
+          else
+            {
+              win_state = WINDOW_INDEX;
+            }
+
+          delete_vcard (v);
+          v = NULL;
+
           break;
-        case VIEW_COMMAND_INDEX:
-          win_state = WINDOW_INDEX;
-          break;
-        case VIEW_COMMAND_PREVIOUS:
-          select_previous_item();
-          win_state = WINDOW_VIEW;
-          break;
-        case VIEW_COMMAND_NEXT:
-          select_next_item();
-          win_state = WINDOW_VIEW;
-          break;
-        default:
-          break;
-        }
-      } else {
-        win_state = WINDOW_INDEX;
-      }
 
-      delete_vcard(v);
-      v = NULL;
-
-      break;
-
-    case WINDOW_EDIT:
+        case WINDOW_EDIT:
 
       /*--------------
          edit a vcard
         --------------*/
 
-      edit_vcard(v);
-      command = process_edit_commands();
+          /* FIXME: checks to perform before calling edit_vcard() */
+          /* FIXME: get the vcard! */
+          edit_vcard (v);
+          command = process_edit_commands ();
 
-      switch (command) {
-      case EDIT_COMMAND_INDEX:
-        win_state = WINDOW_INDEX;
-        break;
-      default:
-        break;
-      }
+          switch (command)
+            {
+            case EDIT_COMMAND_INDEX:
+              win_state = WINDOW_INDEX;
+              break;
+            default:
+              break;
+            }
 
-      break;
+          break;
 
-    default:
-      break;
+        default:
+          break;
 
+        }
     }
-  }
 
-  finish(0);
-  exit(EXIT_SUCCESS);
+  finish (0);
+  exit (EXIT_SUCCESS);
   return (0);
 }
