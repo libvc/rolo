@@ -17,15 +17,17 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA
  *  02111-1307 USA
  *
- *  $Id$
+ *  $Id: index.c,v 1.14 2003/05/20 01:08:52 ahsu Exp $
  */
 
-#include "index.h"
 #include "entry.h"
-#include <vc.h>
-#include <string.h>
-#include <stdlib.h>
+#include "index.h"
+#include "search.h"
+
 #include <assert.h>
+#include <stdlib.h>
+#include <string.h>
+#include <vc.h>
 
 #define MENU_BAR_STRING "q:Quit  v:View  e:Edit  a:Add  d:Delete  h:Help"
 #ifndef CTRL
@@ -36,8 +38,7 @@
 
 static void print_footer (const char *filename, int entries);
 static void print_header ();
-static void search_menu ();
-static ITEM *search_items (const char *search_string);
+static void perform_search ();
 
 static ITEM **get_items (entry_node ** entries, int count);
 static void filter_menu ();
@@ -355,7 +356,7 @@ process_index_commands ()
           menu_driver (menu, REQ_SCR_DPAGE);
           break;
         case '/':
-          search_menu ();
+          perform_search ();
           break;
         case 'a':
           return_command = INDEX_COMMAND_ADD;
@@ -658,7 +659,7 @@ filter_menu ()
  */
 
 static void
-search_menu ()
+perform_search ()
 {
   char search_string[80];
   ITEM *found_item = NULL;
@@ -670,7 +671,7 @@ search_menu ()
   echo ();
   wscanw (win, "%s", search_string);
 
-  found_item = search_items (search_string);
+  found_item = search_menu (menu, search_string);
   if (found_item != NULL)
     {
       /* check if the found item is off the screen */
@@ -686,37 +687,3 @@ search_menu ()
   wclrtoeol (win);
 }
 
-/***************************************************************************
-    Perform the search for an item with a given search string.
- */
-
-static ITEM *
-search_items (const char *search_string)
-{
-  ITEM *result_entry = NULL;
-  int i = 0;
-  ITEM **items = NULL;
-  char *found_string = NULL;
-  bool done = FALSE;
-
-  if (NULL != search_string)
-    {
-      i = item_index (current_item (menu));
-      items = menu_items (menu);
-
-      while (!done && (items[i] != NULL))
-        {
-          found_string = strstr (item_description (items[i]), search_string);
-
-          if (found_string != NULL)
-            {
-              result_entry = items[i];
-              done = TRUE;
-            }
-
-          i++;
-        }
-    }
-
-  return result_entry;
-}
