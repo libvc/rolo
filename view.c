@@ -17,7 +17,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  *
- * $Id$
+ * $Id: view.c,v 1.1 2003/02/16 06:14:21 ahsu Exp $
  */
 
 #include "view.h"
@@ -50,42 +50,94 @@ view_vcard(vcard * v)
 
   werase(sub);
 
+  /****************
+    Identification
+   ****************/
+
   vi = get_vcard_item_by_name(v, VC_FORMATTED_NAME);
   str = get_vcard_item_value(vi);
-  wprintw(sub, "Name       : %s\n", str ? str : "");
+  wprintw(sub, "Name          : %s\n", str ? str : "");
   print_footer(str ? str : "");
 
   vi = get_vcard_item_by_name(v, VC_NICKNAME);
   str = get_vcard_item_value(vi);
-  wprintw(sub, "Nickname   : %s\n", str ? str : "");
-
-  vi = get_vcard_item_by_name(v, VC_TELEPHONE);
-  str = get_vcard_item_value(vi);
-  wprintw(sub, "Telephone  : %s\n", str ? str : "");
-
-  vi = get_vcard_item_by_name(v, VC_TIME_ZONE);
-  str = get_vcard_item_value(vi);
-  wprintw(sub, "Time Zone  : %s\n", str ? str : "");
-
-  vi = get_vcard_item_by_name(v, VC_EMAIL);
-  str = get_vcard_item_value(vi);
-  wprintw(sub, "Email      : %s\n", str ? str : "");
-
-  vi = get_vcard_item_by_name(v, VC_MAILER);
-  str = get_vcard_item_value(vi);
-  wprintw(sub, "Mailer     : %s\n", str ? str : "");
+  wprintw(sub, "Nickname      : %s\n", str ? str : "");
 
   vi = get_vcard_item_by_name(v, VC_BIRTHDAY);
   str = get_vcard_item_value(vi);
-  wprintw(sub, "Birthday   : %s\n", str ? str : "");
+  wprintw(sub, "Birthday      : %s\n", str ? str : "");
 
-  vi = get_vcard_item_by_name(v, VC_REVISION);
+  /*********************
+    Delivery Addressing
+   *********************/
+
+  vi = get_vcard_item_by_name(v, VC_DELIVERY_LABEL);
   str = get_vcard_item_value(vi);
-  wprintw(sub, "Revision   : %s\n", str ? str : "");
+  wprintw(sub, "Address       : %s\n", str ? str : "");
+
+  /*******************************
+    Telecommunications Addressing
+   *******************************/
+
+  vi = get_vcard_item_by_name(v, VC_TELEPHONE);
+  str = get_vcard_item_value(vi);
+  wprintw(sub, "Telephone     : %s\n", str ? str : "");
+
+  vi = get_vcard_item_by_name(v, VC_EMAIL);
+  str = get_vcard_item_value(vi);
+  wprintw(sub, "E-Mail        : %s\n", str ? str : "");
+
+  vi = get_vcard_item_by_name(v, VC_MAILER);
+  str = get_vcard_item_value(vi);
+  wprintw(sub, "E-Mailer      : %s\n", str ? str : "");
+
+  /**************
+    Geographical
+   **************/
+
+  vi = get_vcard_item_by_name(v, VC_TIME_ZONE);
+  str = get_vcard_item_value(vi);
+  wprintw(sub, "Time Zone     : %s\n", str ? str : "");
+
+  /****************
+    Organizational
+   ****************/
+
+  vi = get_vcard_item_by_name(v, VC_TITLE);
+  str = get_vcard_item_value(vi);
+  wprintw(sub, "Title         : %s\n", str ? str : "");
+
+  vi = get_vcard_item_by_name(v, VC_ORGANIZATION);
+  str = get_vcard_item_value(vi);
+  wprintw(sub, "Organization  : %s\n", str ? str : "");
+
+  /*************
+    Explanatory
+   *************/
+
+  vi = get_vcard_item_by_name(v, VC_CATEGORIES);
+  str = get_vcard_item_value(vi);
+  wprintw(sub, "Categories    : %s\n", str ? str : "");
 
   vi = get_vcard_item_by_name(v, VC_NOTE);
   str = get_vcard_item_value(vi);
-  wprintw(sub, "Note       : %s\n", str ? str : "");
+  wprintw(sub, "Note          : %s\n", str ? str : "");
+
+  vi = get_vcard_item_by_name(v, VC_REVISION);
+  str = get_vcard_item_value(vi);
+  wprintw(sub, "Revision      : %s\n", str ? str : "");
+
+  vi = get_vcard_item_by_name(v, VC_URL);
+  str = get_vcard_item_value(vi);
+  wprintw(sub, "URL           : %s\n", str ? str : "");
+
+  /**********
+    Security
+   **********/
+
+  vi = get_vcard_item_by_name(v, VC_CLASS);
+  str = get_vcard_item_value(vi);
+  wprintw(sub, "Class         : %s\n", str ? str : "");
 
   touchwin(win);
   wrefresh(sub);
