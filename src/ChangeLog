@@ -1,6 +1,7 @@
 2003-02-28  Andrew Hsu  <ahsu@users.sf.net>
 
 * Makefile.am: Changed stuff to make the compile run smoother.
+Added ChangeLog as one of the files to distribute.
 * index.c: Doc fixes.
 * view.c: Doc fixes.
 * edit.c: Doc fixes.
