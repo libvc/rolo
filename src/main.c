@@ -17,7 +17,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  * 
- * $Id: main.c,v 1.9 2003/02/24 03:11:25 ahsu Exp $
+ * $Id: main.c,v 1.1 2003/02/24 09:15:34 ahsu Exp $
  */
 
 #include <vcard.h>
@@ -54,6 +54,9 @@ static void display_version();
 static void set_contacts_file();
 static void display_license();
 
+/* ------------------------------------------------------------------
+    This is called upon when the window is resized.
+ */
 static void
 resize(int sig)
 {
@@ -66,6 +69,9 @@ resize(int sig)
   noecho();
 }
 
+/* ------------------------------------------------------------------
+    This is called upon when the program is asked to finish.
+ */
 static void
 finish(int sig)
 {
@@ -73,6 +79,9 @@ finish(int sig)
   exit(0);
 }
 
+/* ------------------------------------------------------------------
+    Sets the default program startup values.
+ */
 static void
 set_defaults()
 {
@@ -95,6 +104,9 @@ set_defaults()
   strcpy(data_path, default_datafile);
 }
 
+/* ------------------------------------------------------------------
+    Ouputs how to use the program.
+ */
 static void
 display_usage(const char *prog_name)
 {
@@ -110,12 +122,18 @@ display_usage(const char *prog_name)
   printf("  -h            this help message\n");
 }
 
+/* ------------------------------------------------------------------
+    Outputs a one-line version statement.
+ */
 static void
 display_version()
 {
   printf("rolo version %s\n", ROLO_VERSION_STRING);
 }
 
+/* ------------------------------------------------------------------
+    Outputs the software license.
+ */
 static void
 display_license()
 {
@@ -146,6 +164,9 @@ display_license()
   printf(" Boston, MA  02111-1307  USA\n");
 }
 
+/* ------------------------------------------------------------------
+    Helper function for setting the contact file.
+ */
 static void
 set_contacts_file()
 {
@@ -153,6 +174,9 @@ set_contacts_file()
   data_path[PATH_MAX - 1] = '\0';
 }
 
+/* ------------------------------------------------------------------
+    Parses the command-line arguments.
+ */
 static void
 process_command_line_args(int argc, char *const *argv)
 {
@@ -185,6 +209,9 @@ process_command_line_args(int argc, char *const *argv)
   }
 }
 
+/* ------------------------------------------------------------------
+    The main function.
+ */
 int
 main(int argc, char *argv[])
 {
