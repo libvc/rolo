@@ -71,6 +71,16 @@ END:VCARD
 
 BEGIN:VCARD
 VERSION:3.0
+N:Chow;Stephen
+FN:Stephen Chow
+EMAIL:stephen@chow.com.hk
+TEL:+852-1234-5678
+TZ:+07:00
+MAILER:Pine 4.0
+END:VCARD
+
+BEGIN:VCARD
+VERSION:3.0
 FN:Mr. Andrew Hsu
 N:Hsu;Andrew;
 EMAIL;TYPE=internet:ahsu@users.sf.net
@@ -93,16 +103,6 @@ N:Kirk;James;T.
 EMAIL:jtk@enterprise.earth.net
 TEL:+123-4567-39492
 BDAY:2133-10-10
-END:VCARD
-
-BEGIN:VCARD
-VERSION:3.0
-N:Chow;Stephen
-FN:Stephen Chow
-EMAIL:stephen@chow.com.hk
-TEL:+852-1234-5678
-TZ:+07:00
-MAILER:Pine 4.0
 END:VCARD
 
 BEGIN:VCARD
@@ -133,6 +133,16 @@ END:VCARD
 
 BEGIN:VCARD
 VERSION:3.0
+N:Reagan;Nancy;;;
+FN:Nancy Reagan
+NICKNAME:The Boss
+EMAIL;TYPE=internet:nancy@reagan.com
+TEL:+1-555-222-1111
+END:VCARD
+
+
+BEGIN:VCARD
+VERSION:3.0
 FN:Mr. Abbot Aikman
 N:Aikman;Abbot;;;
 EMAIL;TYPE=internet:aa@yahoo.com
@@ -153,13 +163,6 @@ EMAIL:alex@winter.com
 TEL:+1-413-545-2911
 X-SHOESIZE:5
 FN:Alex Winter
-END:VCARD
-
-BEGIN:VCARD
-VERSION:3.0
-N:Apharsathchites;Almondiblahtaim;;;
-EMAIL;TYPE=internet:aapharsathchites@apharsathchites-home.co.uk
-TEL:+1-555-111-1111
 END:VCARD
 
 BEGIN:VCARD
@@ -218,22 +221,6 @@ END:VCARD
 
 BEGIN:VCARD
 VERSION:3.0
-N:Homer;Simpson;;;
-EMAIL;TYPE=internet:homer@simpson.com
-TEL:+1-555-999-8888
-END:VCARD
-
-
-BEGIN:VCARD
-VERSION:3.0
-N:Wang;Jen;;;
-EMAIL;TYPE=internet:jw@jen.wang
-TEL:+99-999-999-9999
-END:VCARD
-
-
-BEGIN:VCARD
-VERSION:3.0
 N:Smith;John;;;
 EMAIL;TYPE=internet:jsmith@hotmail.com
 TEL:+1-413-545-1515
@@ -262,15 +249,14 @@ END:VCARD
 
 
 
+
+
 BEGIN:VCARD
 VERSION:3.0
-N:Reagan;Nancy;;;
-FN:Nancy Reagan
-NICKNAME:The Boss
-EMAIL;TYPE=internet:nancy@reagan.com
-TEL:+1-555-222-1111
+N:Apharsathchites;Almondiblahtaim;;;
+EMAIL;TYPE=internet:aapharsathchites@apharsathchites-home.co.uk
+TEL:+1-555-111-1111
 END:VCARD
-
 
 
 
@@ -284,6 +270,7 @@ EMAIL;TYPE=internet:nt@yahoos.com
 TEL:+420-2607-1234-1234
 BDAY:2001-10-10
 END:VCARD
+
 BEGIN:VCARD
 VERSION:3.0
 FN:Ronald McDonald
@@ -292,10 +279,3 @@ EMAIL;TYPE=internet:ron@mcdonald.com
 TEL:+1-422-555-8768
 END:VCARD
 
-BEGIN:VCARD
-VERSION:3.0
-FN:Miss Shishi Wang
-N:Wang;Shishi;;;
-EMAIL;TYPE=internet:ss@ss.wang
-TEL:+2-3-111-222
-END:VCARD
