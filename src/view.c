@@ -17,7 +17,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  *
- * $Id: view.c,v 1.11 2003/04/13 10:39:42 ahsu Exp $
+ * $Id: view.c,v 1.12 2003/04/19 15:50:23 ahsu Rel $
  */
 
 #include "view.h"
@@ -29,12 +29,12 @@
 #include <sys/stat.h>
 #include <sys/types.h>
 
-#define HARD_CODED_HEADER_STR "i:Index  h:Help  1:Ident  2:Geo  3:Tel  4:Org  5:Misc"
-#define TITLE_IDENT "IDENTIFICATION"
-#define TITLE_GEO "GEOGRAPHIC POSITION"
-#define TITLE_TEL "TELECOMMUNICATION"
-#define TITLE_ORG "ORGANIZATION"
-#define TITLE_MISC "MISCELLANEOUS"
+#define MENU_BAR_STRING "i:Index  h:Help  1:Ident  2:Geo  3:Tel  4:Org  5:Misc"
+#define HEADING_IDENT_STRING "IDENTIFICATION"
+#define HEADING_GEO_STRING "GEOGRAPHIC POSITION"
+#define HEADING_TEL_STRING "TELECOMMUNICATION"
+#define HEADING_ORG_STRING "ORGANIZATION"
+#define HEADING_MISC_STRING "MISCELLANEOUS"
 
 /*** PROTOTYPES ***/
 static void print_header ();
@@ -166,11 +166,11 @@ view_ident ()
 
   werase (sub);
 
-  x = (COLS - strlen (TITLE_IDENT)) / 2;
+  x = (COLS - strlen (HEADING_IDENT_STRING)) / 2;
   y = 1;
 
   wattron (sub, A_UNDERLINE);
-  mvwprintw (sub, y, x, TITLE_IDENT);
+  mvwprintw (sub, y, x, HEADING_IDENT_STRING);
   wstandend (sub);
   wmove (sub, 3, 0);
 
@@ -235,11 +235,11 @@ view_geo ()
 
   werase (sub);
 
-  x = (COLS - strlen (TITLE_GEO)) / 2;
+  x = (COLS - strlen (HEADING_GEO_STRING)) / 2;
   y = 1;
 
   wattron (sub, A_UNDERLINE);
-  mvwprintw (sub, y, x, TITLE_GEO);
+  mvwprintw (sub, y, x, HEADING_GEO_STRING);
   wstandend (sub);
   wmove (sub, 3, 0);
 
@@ -314,11 +314,11 @@ view_tel ()
 
   werase (sub);
 
-  x = (COLS - strlen (TITLE_TEL)) / 2;
+  x = (COLS - strlen (HEADING_TEL_STRING)) / 2;
   y = 1;
 
   wattron (sub, A_UNDERLINE);
-  mvwprintw (sub, y, x, TITLE_TEL);
+  mvwprintw (sub, y, x, HEADING_TEL_STRING);
   wstandend (sub);
   wmove (sub, 3, 0);
 
@@ -365,11 +365,11 @@ view_org ()
 
   werase (sub);
 
-  x = (COLS - strlen (TITLE_ORG)) / 2;
+  x = (COLS - strlen (HEADING_ORG_STRING)) / 2;
   y = 1;
 
   wattron (sub, A_UNDERLINE);
-  mvwprintw (sub, y, x, TITLE_ORG);
+  mvwprintw (sub, y, x, HEADING_ORG_STRING);
   wstandend (sub);
   wmove (sub, 3, 0);
 
@@ -437,11 +437,11 @@ view_misc ()
 
   werase (sub);
 
-  x = (COLS - strlen (TITLE_MISC)) / 2;
+  x = (COLS - strlen (HEADING_MISC_STRING)) / 2;
   y = 1;
 
   wattron (sub, A_UNDERLINE);
-  mvwprintw (sub, y, x, TITLE_MISC);
+  mvwprintw (sub, y, x, HEADING_MISC_STRING);
   wstandend (sub);
   wmove (sub, 3, 0);
 
@@ -514,9 +514,9 @@ print_header ()
 
   header_str = (char *) malloc (sizeof (char) * (COLS + 2));
 
-  strncpy (header_str, HARD_CODED_HEADER_STR, COLS);
+  strncpy (header_str, MENU_BAR_STRING, COLS);
 
-  for (i = strlen (HARD_CODED_HEADER_STR); i < COLS; i++)
+  for (i = strlen (MENU_BAR_STRING); i < COLS; i++)
     {
       header_str[i] = ' ';
     }
