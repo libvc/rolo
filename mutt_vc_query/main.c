@@ -17,7 +17,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  * 
- * $Id$
+ * $Id: main.c,v 1.1 2003/05/04 11:42:35 ahsu Rel $
  */
 
 #include <limits.h>
@@ -154,6 +154,7 @@ process_command_line_args (int argc, char *const *argv)
   if (1 != argc)
     {
       fprintf (stderr, "Invalid number of arguments.\n");
+      display_usage (argv[0]);
       exit (1);
     }
 
@@ -201,7 +202,7 @@ main (int argc, char *argv[])
       exit (1);
     }
 
-  printf ("Searching database ...");
+  printf ("Searching database ... ");
   get_results (fp, query_string, &searched, results, &rc);
 
   if (0 == rc)
