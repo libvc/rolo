@@ -1,3 +1,8 @@
+2003-04-13  Andrew Hsu
+
+* view.c: Added ability to use the left and right arrow keys to
+switch between the 5 groups.
+
 2003-04-10  Andrew Hsu
 
 * help.c: Updated the help for the view screen to match the new 5
