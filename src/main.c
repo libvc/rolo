@@ -17,10 +17,11 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  * 
- * $Id: main.c,v 1.6 2003/03/22 11:48:24 ahsu Rel $
+ * $Id: main.c,v 1.7 2003/03/24 07:43:08 ahsu Exp $
  */
 
 #include <vcard.h>
+#include "add.h"
 #include "view.h"
 #include "delete.h"
 #include "edit.h"
@@ -396,11 +397,11 @@ main (int argc, char *argv[])
           break;
 
         case WINDOW_ADD:
-          /* FIXME: return val of add_vcard should show if edit
-             actually took place.  if it did not take place,
-             then a refresh could be spared */
-          add_vcard (data_path);
-          refresh_index ();
+          if (ADD_SUCCESSFUL == add_entry (data_path))
+            {
+              refresh_index ();
+            }
+
           win_state = WINDOW_INDEX;
           break;
         case WINDOW_DELETE:
