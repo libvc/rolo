@@ -1,7 +1,7 @@
 #
-# $Id$
+# $Id: rolo.spec.in,v 1.4 2003/03/31 10:07:09 ahsu Exp $
 #
-Summary: contact management software
+Summary: Text-based contact management software.
 Name: @PACKAGE@
 Version: @VERSION@
 Release: 1
@@ -9,7 +9,8 @@ Source: http://osdn.dl.sourceforge.net/sourceforge/rolo/%{name}-%{version}.tar.g
 License: GPL
 URL: http://rolo.sf.net/
 Packager: Andrew Hsu <ahsu@users.sf.net>
-Vendor: Andrew Hsu <ahsu@users.sf.net>
+Distribution: Red Hat Linux
+Vendor: Andrew Hsu
 Group: Applications/Productivity
 BuildRoot: %{_tmppath}/%{name}-buildroot
 
