@@ -1,3 +1,20 @@
+Rolo 004 (2003-03-23)
+
+* Added `edit' functionality.  Press the `e' key in the index screen
+or the view screen to use.  The editor defined in the environment
+variable EDITOR will be used for editing the entry.
+
+* Users can now add a new entry by pressing the `a' key in the index
+screen.  The editor defined in the environment variable EDITOR will
+be used for creating the new entry.
+
+* Added `delete' functionality.  Press the `d' key in the index
+screen to use.  It will only ask for confirmation once before
+proceeding and there is no way to undo the delete, so be careful.
+
+* And, of course, all these extra features are documented in the
+index help screen which can be reached by pressing the `h' key.
+
 Rolo 003 (2003-03-07)
 
 * Now sorts ascending by family name on startup.
