@@ -1,3 +1,7 @@
+2003-10-04  Andrew Hsu
+
+* configure.ac: Bumped the version to 007 for the pending release.
+
 2003-04-04  Andrew Hsu
 
 * configure.ac: Bumped version number for 006 release.
