@@ -1,5 +1,9 @@
 2003-02-27  Andrew Hsu  <ahsu@users.sf.net>
 
+* configure.ac: Updated for 002 release.
+
+2003-02-27  Andrew Hsu  <ahsu@users.sf.net>
+
 * bootstrap: Renamed file from bootstrap.sh.
 
 * configure.ac: First attempt at an autoconf input file.  Added

@@ -1,5 +1,5 @@
 Rolo - contact management software
-version 001
+Version 002
 
 Copyright (C) 2003  Andrew Hsu
 
@@ -8,7 +8,6 @@ keep track of your contacts and display them to you with a curses
 front end.
 
 Directory contents:
-doc - documentation for rolo.
 src - source code for the rolo user interface.
 test - test data for rolo.
 vcard - source code for libvcard.
@@ -19,4 +18,4 @@ http://rolo.sf.net/
 See the `INSTALL' file for building and installation instructions.
 See the `COPYING' file for copying conditions.
 
-Send bugs, questions, or comments to Andrew Hsu <ahsu@users.sf.net>
+Send bugs, questions, or comments to Andrew Hsu <ahsu@users.sf.net>.

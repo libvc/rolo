@@ -1,11 +1,11 @@
 # Process this file with autoconf to produce a configure script.
 #
-# $Id: configure.ac,v 1.1 2003/02/27 07:29:11 ahsu Exp $
+# $Id: configure.ac,v 1.2 2003/02/27 12:34:03 ahsu Exp $
 #
-AC_INIT(rolo, 001, ahsu@users.sf.net)
-AM_INIT_AUTOMAKE(rolo, 001)
+AC_INIT(rolo, 002, ahsu@users.sf.net)
+AM_INIT_AUTOMAKE(rolo, 002)
 AC_COPYRIGHT([Copyright (C) 2003  Andrew Hsu])
-AC_REVISION($Revision$)
+AC_REVISION($Revision: 1.2 $)
 AC_CONFIG_SRCDIR([src/main.c])
 AM_CONFIG_HEADER([config.h])
 
