@@ -139,6 +139,10 @@ TITLE:Bartender
 EMAIL:moe@moes-tavern.com
 TEL:+1-555-333-4444
 END:VCARD
+
+
+
+
 BEGIN:VCARD
 VERSION:3.0
 N:Reagan;Nancy;;;
@@ -147,6 +151,13 @@ NICKNAME:The Boss
 EMAIL;TYPE=internet:nancy@reagan.com
 TEL:+1-555-222-1111
 END:VCARD
+
+
+
+
+
+
+
 BEGIN:VCARD
 VERSION:3.0
 N:Thomson;Nigel;;;
@@ -168,6 +179,7 @@ N:Wang;Shishi;;;
 EMAIL;TYPE=internet:ss@ss.wang
 TEL:+2-3-111-222
 END:VCARD
+
 BEGIN:VCARD
 VERSION:3.0
 FN:The Rock
@@ -176,6 +188,7 @@ ORG:The Company
 TEL:+1-415-111-2323
 EMAIL:rock@the.com
 END:VCARD
+
 BEGIN:VCARD
 VERSION:3.0
 FN:Tim Howes
