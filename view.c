@@ -17,7 +17,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  *
- * $Id: view.c,v 1.7 2003/02/20 11:02:39 ahsu Exp $
+ * $Id: view.c,v 1.8 2003/02/21 03:34:21 ahsu Exp $
  */
 
 #include "view.h"
@@ -188,6 +188,8 @@ static void
 print_footer(int entry_number, const char *fn)
 {
   char *footer_str = NULL;
+  char *entry_block = NULL;
+  int entry_block_len = 0;
   int i = 0;
 
   footer_str = (char *)malloc(sizeof(char) * (COLS + 2));
@@ -196,9 +198,28 @@ print_footer(int entry_number, const char *fn)
     footer_str[i] = '-';
   }
 
-  /*
-   * ("---[ entry %i: %s ]---\n", entry_number, fn);
-   */
+  if (NULL != fn) {
+    entry_block_len = strlen(fn) + 18 + 3;      /* 3 for entry_number */
+  } else {
+    entry_block_len = 17 + 3;   /* 3 for entry_number */
+  }
+
+  if (entry_block_len <= COLS) {
+    entry_block = (char *)malloc(sizeof(char) * (entry_block_len + 1));
+
+    if (NULL != fn) {
+      sprintf(entry_block, "---[ entry %i: %s ]---", entry_number % 1000, fn);
+    } else {
+      sprintf(entry_block, "---[ entry %i ]---", entry_number % 1000);
+    }
+
+    entry_block_len = strlen(entry_block);
+    for (i = 0; i < entry_block_len; i++) {
+      footer_str[i] = entry_block[i];
+    }
+
+    free(entry_block);
+  }
 
   footer_str[COLS] = '\n';
   footer_str[COLS + 1] = '\0';

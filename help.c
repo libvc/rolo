@@ -17,7 +17,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  *
- * $Id: help.c,v 1.3 2003/02/20 07:27:13 ahsu Exp $
+ * $Id: help.c,v 1.4 2003/02/20 08:58:46 ahsu Exp $
  */
 
 #include "help.h"
@@ -128,12 +128,27 @@ static void
 print_footer(const char *text)
 {
   char *footer_str = NULL;
+  char *help_block = NULL;
+  int help_block_len = 0;
   int i = 0;
 
   footer_str = (char *)malloc(sizeof(char) * (COLS + 2));
 
   for (i = 0; i < COLS; i++) {
     footer_str[i] = '-';
+  }
+
+  if (NULL != text) {
+    help_block_len = strlen(text) + 10;
+    help_block = (char *)malloc(sizeof(char) * (help_block_len + 1));
+
+    sprintf(help_block, "---[ %s ]---", text);
+
+    for (i = 0; i < help_block_len; i++) {
+      footer_str[i] = help_block[i];
+    }
+
+    free(help_block);
   }
 
   footer_str[COLS] = '\n';
