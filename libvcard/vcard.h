@@ -16,7 +16,7 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * $Id: vcard.h,v 1.2 2003/02/18 04:24:58 ahsu Exp $
+ * $Id: vcard.h,v 1.3 2003/02/20 10:59:29 ahsu Exp $
  */
 
 #ifndef __VCARD_H
@@ -75,6 +75,7 @@ enum adr_parts { ADR_PO_BOX, ADR_EXT_ADDRESS, ADR_STREET, ADR_LOCALITY,
   ADR_REGION, ADR_POSTAL_CODE, ADR_COUNTRY
 };
 enum org_parts { ORG_NAME, ORG_UNIT_1, ORG_UNIT_2 };
+enum geo_parts { GEO_LATITUDE, GEO_LONGITUDE };
 
 #define VC_ADDRESS              "ADR"
 #define VC_AGENT                "AGENT"
