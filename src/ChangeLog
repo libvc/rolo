@@ -1,5 +1,13 @@
 2003-04-06  Andrew Hsu
 
+* help.c: Updated the help for the view screen to match the new 5
+groups.
+
+* view.c: Removed 4 of the email and telephone listings because
+these are not implemented yet.
+
+2003-04-06  Andrew Hsu
+
 * view.c: Reorganized the view screen to have 5 sections instead
 of 8.
 
