@@ -17,7 +17,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  *
- * $Id: help.c,v 1.9 2003/04/03 14:40:56 ahsu Rel $
+ * $Id: help.c,v 1.10 2003/04/10 09:20:40 ahsu Rel $
  */
 
 #include "help.h"
@@ -109,6 +109,8 @@ show_view_help ()
   wprintw (sub, "i        exit to index screen\n");
   wprintw (sub, "<Down>   move to the next entry\n");
   wprintw (sub, "<Up>     move to the previous entry\n");
+  wprintw (sub, "<Left>   cycle backwards through the details screen\n");
+  wprintw (sub, "<Right>  cycle forwards through the details screen\n");
   wprintw (sub, "j        move to the next entry\n");
   wprintw (sub, "k        move to the previous entry\n");
   wprintw (sub, "e        edit the entry\n");
