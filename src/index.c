@@ -17,7 +17,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  *
- * $Id: index.c,v 1.9 2003/02/24 03:11:25 ahsu Exp $
+ * $Id: index.c,v 1.1 2003/02/24 09:15:34 ahsu Exp $
  */
 
 #include "index.h"
@@ -41,20 +41,25 @@ static void search_menu();
 static ITEM *search_items(const char *search_string);
 static void set_menu_print_format(char *menu_print_format, int width);
 
+/*** STATIC VARIABLES ***/
 static void (*display_help) (void);
 static MENU *menu = NULL;
 static WINDOW *win = NULL;
 static WINDOW *sub = NULL;
+
+/* ------------------------------------------------------------------
+    Initializes the index window by openning the data file,
+    populating the menu items, and setting up the header and footer.
+ */
 
 void
 init_index(const char *filename)
 {
   ITEM **items = NULL;
   int count = 0;
-  int rows;
-  int cols;
+  int rows = 0;
+  int cols = 0;
   FILE *fp = NULL;
-
 
   fp = fopen(filename, "r");
   if (NULL == fp) {
@@ -81,6 +86,10 @@ init_index(const char *filename)
   post_menu(menu);
 }
 
+/* ------------------------------------------------------------------
+    Cleans up the two-dimensional array of items.  
+ */
+
 void
 free_items(ITEM ** items)
 {
@@ -101,6 +110,12 @@ free_items(ITEM ** items)
 
   free(items);
 }
+
+/* ------------------------------------------------------------------
+    Parses the data file for entries one at a time and with each
+    entry constructs a menu_item to store in a menu_item array and
+    display to the user at a later time.
+ */
 
 ITEM **
 get_items(FILE * fp, int count)
@@ -174,11 +189,17 @@ get_items(FILE * fp, int count)
   return items;
 }
 
+/* ------------------------------------------------------------------
+    Constructs a string containing the name part of a menu_item.
+    Remember: the user of this function must remember to free the
+    returned string at some point.
+ */
+
 static char *
 construct_menu_name(const char *family_name, const char *given_name,
     const char *email, const char *tel)
 {
-  char *menu_name;
+  char *menu_name = NULL;
   char menu_print_format[MENU_PRINT_FORMAT_SIZE];
 
   menu_name = (char *)malloc(sizeof(char) * (COLS - 5 + 1));
@@ -191,6 +212,10 @@ construct_menu_name(const char *family_name, const char *given_name,
   return menu_name;
 }
 
+/* ------------------------------------------------------------------
+    Sets the print format string given a width.
+ */
+
 static void
 set_menu_print_format(char *menu_print_format, int width)
 {
@@ -200,16 +225,24 @@ set_menu_print_format(char *menu_print_format, int width)
   strcpy(menu_print_format, "%-12.12s %-12.12s %-30.30s %-18.18s");
 }
 
+/* ------------------------------------------------------------------
+    Sets up a new menu.
+ */
+
 MENU *
 get_menu(ITEM ** items)
 {
-  MENU *menu;
+  MENU *menu = NULL;
 
   menu = new_menu(items);
   set_menu_format(menu, LINES - 3, 1);  /* LINE rows, 1 column */
 
   return menu;
 }
+
+/* ------------------------------------------------------------------
+    Displays the header for the index window.
+ */
 
 static void
 print_header()
@@ -234,6 +267,11 @@ print_header()
   free(header_str);
 }
 
+/* ------------------------------------------------------------------
+    Displays a footer that will adjust its contents based on the
+    width of the screen.
+ */
+
 static void
 print_footer(const char *filename, int entries)
 {
@@ -247,12 +285,20 @@ print_footer(const char *filename, int entries)
 
   footer_str = (char *)malloc(sizeof(char) * (COLS + 2));
 
+  /* ------------------------------------
+      set a default footer of all dashes
+     ------------------------------------ */
+
   for (i = 0; i < COLS; i++) {
     footer_str[i] = '-';
   }
 
   rolo_block_len = strlen(filename) + 16;
   entries_block_len = 22;
+
+  /* ---------------------------------------------------
+      add the `rolo' block only if there is enough room
+     --------------------------------------------------- */
 
   if (rolo_block_len + entries_block_len <= COLS) {
     rolo_block = (char *)malloc(sizeof(char) * (rolo_block_len + 1));
@@ -264,6 +310,10 @@ print_footer(const char *filename, int entries)
 
     free(rolo_block);
   }
+
+  /* ------------------------------------------------------
+      add the `entries' block only if there is enough room
+     ------------------------------------------------------ */
 
   if (entries_block_len <= COLS) {
     entries_block = (char *)malloc(sizeof(char) * (entries_block_len + 1));
@@ -286,12 +336,20 @@ print_footer(const char *filename, int entries)
   free(footer_str);
 }
 
+/* ------------------------------------------------------------------
+    Display the index to the end-user.
+ */
+
 void
 display_index()
 {
   redrawwin(win);
   wrefresh(win);
 }
+
+/* ------------------------------------------------------------------
+    Handle input from the end-user.
+ */
 
 int
 process_index_commands()
@@ -372,11 +430,17 @@ process_index_commands()
   return return_command;
 }
 
+/* ------------------------------------------------------------------
+ */
+
 void
 select_next_item()
 {
   menu_driver(menu, REQ_NEXT_ITEM);
 }
+
+/* ------------------------------------------------------------------
+ */
 
 void
 select_previous_item()
@@ -384,11 +448,17 @@ select_previous_item()
   menu_driver(menu, REQ_PREV_ITEM);
 }
 
+/* ------------------------------------------------------------------
+ */
+
 ITEM *
 get_current_item()
 {
   return current_item(menu);
 }
+
+/* ------------------------------------------------------------------
+ */
 
 int
 get_entry_number(const ITEM * item)
@@ -396,16 +466,19 @@ get_entry_number(const ITEM * item)
   return (1 + item_index(item));
 }
 
+/* ------------------------------------------------------------------
+ */
+
 void
 set_index_help_fcn(void (*fcn) (void))
 {
   display_help = fcn;
 }
 
-/* ---------------------------------------------------------
-    search for the entered search string in the index
-    index screen.  this will move the cursor and print a
-    status message line at the bottom of the screen.
+/* ------------------------------------------------------------------
+    Search for the entered search string in the index index screen.
+    This will move the cursor and print a status message line at
+    the bottom of the screen.
  */
 
 static void
@@ -431,6 +504,10 @@ search_menu()
   wmove(win, LINES - 1, 0);
   wclrtoeol(win);
 }
+
+/* ------------------------------------------------------------------
+    Perform the search for an item with a given search string.
+ */
 
 static ITEM *
 search_items(const char *search_string)
