@@ -17,7 +17,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  *
- * $Id: help.c,v 1.6 2003/03/25 11:15:45 ahsu Exp $
+ * $Id: help.c,v 1.7 2003/03/26 11:20:20 ahsu Exp $
  */
 
 #include "help.h"
@@ -47,7 +47,7 @@ init_help ()
 {
   win = newwin (0, 0, 0, 0);
   sub = derwin (win, LINES - 3, COLS, 1, 0);
-  scrollok (sub, TRUE);
+  /* scrollok (sub, TRUE); */
   print_header ();
 }
 
@@ -67,8 +67,8 @@ show_index_help ()
   wprintw (sub, "<Page Up>      scroll up a page\n");
   wprintw (sub, "<Page Down>    scroll down a page\n");
   wprintw (sub, "<End>          move to the last entry\n");
-  wprintw (sub, "<Enter>        view the details of an entry\n");
 */
+  wprintw (sub, "<Enter>        view the details of an entry\n");
   wprintw (sub, "g              move to the first entry\n");
   wprintw (sub, "j              move to the next entry\n");
   wprintw (sub, "k              move to the previous entry\n");
@@ -106,6 +106,7 @@ show_view_help ()
 {
   werase (sub);
   wprintw (sub, "q        exit to index screen\n");
+  wprintw (sub, "i        exit to index screen\n");
   wprintw (sub, "<Down>   move to the next entry\n");
   wprintw (sub, "<Up>     move to the previous entry\n");
   wprintw (sub, "j        move to the next entry\n");
@@ -224,17 +225,18 @@ process_help_commands ()
       switch (ch)
         {
         case 'j':
-          wscrl (sub, 1);
+          /* wscrl (sub, 1); */
           wrefresh (sub);
           break;
         case 'k':
-          wscrl (sub, -1);
+          /* wscrl (sub, -1); */
           wrefresh (sub);
           break;
         case 'q':
           done = TRUE;
           break;
         default:
+          done = TRUE;
           break;
         }
     }
