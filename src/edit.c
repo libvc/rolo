@@ -17,7 +17,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  *
- * $Id: edit.c,v 1.4 2003/03/23 08:04:54 ahsu Exp $
+ * $Id: edit.c,v 1.5 2003/03/24 07:43:29 ahsu Exp $
  */
 
 #include "edit.h"
@@ -34,8 +34,6 @@
 static void print_header ();
 static void print_footer (const char *fn);
 static char *basename (const char *path);
-static void append_to_datafile (const char *datafile,
-                                const char *new_entry_filename);
 static void update_datafile (const char *datafile, long pos,
                              const char *new_entry_filename);
 
@@ -110,140 +108,6 @@ update_datafile (const char *datafile, long pos,
       fprintf (stderr, "error with rename...\n");
       perror ("rolo");
     }
-}
-
-/***************************************************************************
- */
-
-static void
-append_to_datafile (const char *datafile, const char *new_entry_filename)
-{
-  FILE *tfp = NULL;
-  FILE *dfp = NULL;
-  FILE *efp = NULL;
-  char tmp_datafile[PATH_MAX];
-  int ch = 0;
-  int rc = 0;
-  vcard *v = NULL;
-
-  strcpy (tmp_datafile, datafile);
-  strcat (tmp_datafile, ".tmp");
-  dfp = fopen (datafile, "r");
-  tfp = fopen (tmp_datafile, "w");
-
-  efp = fopen (new_entry_filename, "r");
-  v = parse_vcard_file (efp);
-  fclose (efp);                 /* entry file no longer needed */
-
-  /* copy the datafile into the temp datafile */
-  ch = getc (dfp);
-  while (ch != EOF)
-    {
-      putc (ch, tfp);
-      ch = getc (dfp);
-    }
-
-  fclose (dfp);                 /* datafile no longer needed */
-
-  /* copy the new entry into the temp file */
-  putc ('\n', tfp);
-  fprintf_vcard (tfp, v);
-
-  fclose (tfp);                 /* temp file no longer needed */
-
-  /* replace the datafile with the temp datafile */
-  rename (tmp_datafile, datafile);
-
-  if (-1 == rc)
-    {
-      fprintf (stderr, "error with rename...\n");
-      perror ("rolo");
-    }
-}
-
-/***************************************************************************
- */
-
-void
-add_vcard (const char *datafile)
-{
-  FILE *fp = NULL;
-  char filename[PATH_MAX];
-  char *editor = NULL;
-  char *editor_basename = NULL;
-  pid_t process_id = 0;
-  int status = 0;
-  struct stat sb;
-  time_t modified_time = 0;
-  vcard *v = NULL;
-
-  /* open a temp file for editing */
-  tmpnam (filename);
-  fp = fopen (filename, "w");
-  fprintf (fp, "BEGIN:VCARD\n");
-  fprintf (fp, "VERSION:3.0\n");
-  fprintf (fp, "FN:\n");
-  fprintf (fp, "N:;\n");
-  fprintf (fp, "END:VCARD\n");
-  fclose (fp);
-  fp = NULL;
-
-  /* record when the file has been modified */
-  stat (filename, &sb);
-  modified_time = sb.st_mtime;
-
-  /*-------------------------
-     setup the editor to use
-    -------------------------*/
-  editor = getenv ("EDITOR");
-  if (NULL == editor)
-    {
-      editor = strdup ("vi");
-      editor_basename = strdup ("vi");
-    }
-  else
-    {
-      editor_basename = basename (editor);
-    }
-
-  endwin ();
-
-  process_id = fork ();
-  if (process_id < 0)
-    {
-      /* could not fork... check errno */
-    }
-  else if (0 == process_id)
-    {
-      /* child is running */
-
-      /* replace process image with the editor */
-      execlp (editor, editor_basename, filename, NULL);
-      _exit (2);                /* execlp failed */
-    }
-  else
-    {
-      /* parent is running */
-      waitpid (process_id, &status, 0);
-    }
-
-  /* check if the temp file has been modified */
-  stat (filename, &sb);
-  if (modified_time != sb.st_mtime)
-    {
-      /* need to change the datafile */
-      append_to_datafile (datafile, filename);
-    }
-
-  remove (filename);
-
-  /* put everything back to normal */
-  refresh ();
-  initscr ();
-  keypad (stdscr, TRUE);        /* enable keypad for use of arrow keys */
-  nonl ();                      /* tell curses not to do NL->CR/NL on output */
-  cbreak ();                    /* take input chars immediately */
-  noecho ();
 }
 
 /***************************************************************************
