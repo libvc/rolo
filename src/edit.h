@@ -17,7 +17,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  *
- * $Id: edit.h,v 1.2 2003/03/22 11:57:56 ahsu Rel $
+ * $Id: edit.h,v 1.3 2003/03/24 07:43:55 ahsu Exp $
  */
 
 #include <vcard.h>
@@ -30,4 +30,3 @@ extern void init_edit ();
 extern void edit_vcard (const char *datafile, long pos);
 extern int process_edit_commands ();
 extern void set_edit_help_fcn (void (*fcn) (void));
-extern void add_vcard (const char *datafile);
