@@ -17,7 +17,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  *
- * $Id: help.c,v 1.3 2003/03/05 07:45:55 ahsu Exp $
+ * $Id: help.c,v 1.4 2003/03/07 07:19:37 ahsu Rel $
  */
 
 #include "help.h"
@@ -59,6 +59,7 @@ show_index_help ()
 {
   werase (sub);
   wprintw (sub, "q              quit the program\n");
+/*
   wprintw (sub, "<Home>         move to the first entry\n");
   wprintw (sub, "<Down>         move to the next entry\n");
   wprintw (sub, "<Up>           move to the previous entry\n");
@@ -66,6 +67,7 @@ show_index_help ()
   wprintw (sub, "<Page Down>    scroll down a page\n");
   wprintw (sub, "<End>          move to the last entry\n");
   wprintw (sub, "<Enter>        view the details of an entry\n");
+*/
   wprintw (sub, "g              move to the first entry\n");
   wprintw (sub, "j              move to the next entry\n");
   wprintw (sub, "k              move to the previous entry\n");
@@ -78,6 +80,9 @@ show_index_help ()
   wprintw (sub, "f              filter the entries\n");
   wprintw (sub, "F              remove the filter\n");
   wprintw (sub, "/              search the index screen\n");
+  wprintw (sub, "a              add a new entry\n");
+  wprintw (sub, "e              edit an entry\n");
+  wprintw (sub, "d              delete an entry\n");
 /* wprintw(sub, "t              tag/un-tag an entry\n"); */
   wprintw (sub,
            "h              show help for key bindings (what you are viewing now)\n");
@@ -101,6 +106,7 @@ show_view_help ()
   wprintw (sub, "<Up>     move to the previous entry\n");
   wprintw (sub, "j        move to the next entry\n");
   wprintw (sub, "k        move to the previous entry\n");
+  wprintw (sub, "e        edit the entry\n");
   wprintw (sub,
            "h        show help for key bindings (what you are viewing now)\n");
   print_footer ("Help for the view screen");
