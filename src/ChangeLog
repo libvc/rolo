@@ -1,3 +1,8 @@
+2003-03-27  Andrew Hsu
+
+* main.c: At startup, rolo will now create the default datafile and
+datafile directory if it does not already exist.
+
 2003-03-26  Andrew Hsu
 
 * add.h: Renamed enum to something proper.
