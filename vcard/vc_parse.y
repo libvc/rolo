@@ -16,7 +16,7 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * $Id: vc_parse.y,v 1.1 2003/02/27 08:04:18 ahsu Rel $
+ * $Id: vc_parse.y,v 1.2 2003/03/22 11:41:01 ahsu Rel $
  */
 
 %{
@@ -24,17 +24,16 @@
 #include "vcard.h"
 #include <stdlib.h>
 #include <stdio.h>
-#include <string.h>
 
 #define YYSTYPE char*
 
 extern FILE *yyin;
 
-extern int yylex();
-void yyerror( char *s );
+extern int yylex ();
+void yyerror (char *s);
 
-static vcard *current_vcard;
-static vcard_item *current_vi;
+static vcard_component *current_vcard;
+static vcard_component *current_vc;
 
 %}
 
@@ -68,10 +67,10 @@ filler        : filler '\n'
               | '\n'
               ;
 
-first_line    : TOK_BEGIN_VCARD '\n' { current_vcard = create_vcard(); }
+first_line    : TOK_BEGIN_VCARD '\n' { current_vcard = vc_new (); }
               | TOK_GROUP '.' TOK_BEGIN_VCARD '\n' {
-                   current_vcard = create_vcard();
-                   set_vcard_group(current_vcard, $1); }
+                  current_vcard = vc_new ();
+                  vc_set_group (current_vcard, $1); }
               ;
 
 end_line      : TOK_END_VCARD '\n'
@@ -83,7 +82,7 @@ contentlines  : contentlines group_contentline
               ;
 
 group_contentline  : TOK_GROUP '.'
-                     contentline { set_vcard_item_group(current_vi, $1); }
+                     contentline { vc_set_group (current_vc, $1); }
                    | contentline
                    ;
 
@@ -91,36 +90,44 @@ contentline   : name params ':' value '\n'
               | name ':' value '\n' 
               ;
 
-name          : TOK_NAME { current_vi = insert_vcard_item(current_vcard, $1); }
+name          : TOK_NAME {
+                  current_vc = vc_append_with_name (current_vcard, $1); }
+
               ;
 
 params        : ';' param
               | params ';' param
               ;
 
-param         : TOK_PARAM { insert_vcard_item_param(current_vi, $1); }
+param         : TOK_PARAM {
+                  vcard_component_param *tmp_vc_param = NULL;
+                  tmp_vc_param = vc_param_new ();
+                  vc_param_set_str (tmp_vc_param, $1);
+                  vc_add_param (current_vc, tmp_vc_param); }
+
               ;
 
-value         : TOK_VALUE { set_vcard_item_value(current_vi, $1); }
+value         : TOK_VALUE { vc_set_value (current_vc, $1); }
               ;
 
 %%
 
-void yyerror(char *s)
+void
+yyerror (char *s)
 {
 }
 
-vcard *parse_vcard_file(FILE *fp)
+vcard_component *
+parse_vcard_file (FILE * fp)
 {
-  vcard *v = NULL;
+  vcard_component *v = NULL;
 
   yyin = fp;
-  
-  if(0 == yyparse())
-    v = current_vcard;
-  else
-    v = NULL;
+
+  if (0 == yyparse ())
+    {
+      v = current_vcard;
+    }
 
   return v;
 }
-
