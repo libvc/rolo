@@ -1,3 +1,21 @@
+Rolo 006 (2003-04-04)
+
+* The view screen is now split-up into 8 screens for grouping the
+contact entry into managable viewing sections.  More vCard properties
+have been added to the view screen as a result of this grouping
+format--entries such as longitude and latitude.  The grouping format
+is based on the sections described in the RFC 2426 specifications
+for vCard version 3.0.
+
+* VCard entries are now read from file with the vCard lines in the
+order that they appear.  This eliminates the funny problem of having
+the vcard lines displayed in the reverse order that they appear in
+the contacts.vcf file when editing.
+
+* A man page has been created for rolo(1).
+
+* Updated the view help screen to match the functionality implemented.
+
 Rolo 005 (2003-03-29)
 
 * A datafile is created upon the startup of rolo if it does not
