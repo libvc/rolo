@@ -17,7 +17,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  *
- * $Id: help.c,v 1.5 2003/02/22 08:47:35 ahsu Rel $
+ * $Id: help.c,v 1.6 2003/02/22 10:37:26 ahsu Exp $
  */
 
 #include "help.h"
@@ -61,8 +61,13 @@ show_index_help()
   wprintw(sub,
       "h              show help for key bindings (what you are viewing now)\n");
   wprintw(sub, "<Page Up>      scroll up a page\n");
+  wprintw(sub, "b              scroll up a page\n");
   wprintw(sub, "<Page Down>    scroll down a page\n");
+  wprintw(sub, "<Space>        scroll down a page\n");
   wprintw(sub, "t              tag/un-tag an entry\n");
+  wprintw(sub, "v              view the details of an entry\n");
+  wprintw(sub, "<Enter>        view the details of an entry\n");
+  wprintw(sub, "/              search the index screen\n");
   print_footer("Help for the index screen");
   touchwin(win);
   wrefresh(sub);
@@ -76,10 +81,9 @@ show_view_help()
   werase(sub);
   wprintw(sub, "<Down>   move to the next entry\n");
   wprintw(sub, "<Up>     move to the previous entry\n");
-  wprintw(sub, "g        move to the first entry\n");
-  wprintw(sub, "G        move to the last entry\n");
   wprintw(sub, "j        move to the next entry\n");
   wprintw(sub, "k        move to the previous entry\n");
+  wprintw(sub, "q        exit to index screen\n");
   wprintw(sub,
       "h        show help for key bindings (what you are viewing now)\n");
   print_footer("Help for the view screen");
