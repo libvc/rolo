@@ -17,7 +17,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  *
- * $Id: index.c,v 1.10 2003/04/03 14:52:22 ahsu Rel $
+ * $Id: index.c,v 1.11 2003/04/25 01:33:13 ahsu Rel $
  */
 
 #include "index.h"
@@ -673,7 +673,11 @@ search_menu ()
   found_item = search_items (search_string);
   if (found_item != NULL)
     {
-      set_current_item (menu, found_item);
+      /* check if the found item is off the screen */
+      if (E_BAD_ARGUMENT == set_current_item (menu, found_item))
+        {
+          set_top_row (menu, item_index (found_item));
+        }
     }
 
   cbreak ();
@@ -695,20 +699,23 @@ search_items (const char *search_string)
   char *found_string = NULL;
   bool done = FALSE;
 
-  i = item_index (current_item (menu));
-  items = menu_items (menu);
-
-  while (!done && (items[i] != NULL))
+  if (NULL != search_string)
     {
-      found_string = strstr (item_description (items[i]), search_string);
+      i = item_index (current_item (menu));
+      items = menu_items (menu);
 
-      if (found_string != NULL)
+      while (!done && (items[i] != NULL))
         {
-          result_entry = items[i];
-          done = TRUE;
-        }
+          found_string = strstr (item_description (items[i]), search_string);
 
-      i++;
+          if (found_string != NULL)
+            {
+              result_entry = items[i];
+              done = TRUE;
+            }
+
+          i++;
+        }
     }
 
   return result_entry;
