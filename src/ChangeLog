@@ -1,5 +1,7 @@
 2003-03-07  Andrew Hsu
 
+* main.c: Uses config.h define to print version.
+
 * help.c: Cleaned up the help screens.
 
 2003-03-06  Andrew Hsu
