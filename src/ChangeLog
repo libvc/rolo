@@ -1,3 +1,19 @@
+2003-03-26  Andrew Hsu
+
+* add.h: Renamed enum to something proper.
+
+* delete.h: Renamed enum to something proper.
+
+* edit.c: Renamed edit_vcard function to edit_entry.  Had edit_entry
+function return a status value.
+* edit.h: Renamed enum to something proper.  Changed prototype for
+the edit function.
+
+* help.c: Began to implement help screen scrolling functionality.
+
+* main.c: The screen will now be refreshed depending on the return
+value of edit_entry.
+
 2003-03-25  Andrew Hsu
 
 * add.c: New file added.  Moved add_entry function to here.
