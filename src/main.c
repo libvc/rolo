@@ -17,7 +17,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  * 
- * $Id: main.c,v 1.8 2003/03/25 11:07:13 ahsu Exp $
+ * $Id: main.c,v 1.9 2003/03/26 11:20:57 ahsu Exp $
  */
 
 #include <vcard.h>
@@ -27,6 +27,7 @@
 #include "edit.h"
 #include "index.h"
 #include "help.h"
+#include <errno.h>
 #include <limits.h>
 #include <stdio.h>
 #include <string.h>
@@ -35,6 +36,8 @@
 #include <stdlib.h>
 #include <menu.h>
 #include <assert.h>
+#include <sys/types.h>
+#include <sys/stat.h>
 
 #if HAVE_CONFIG_H
 #  include "config.h"
@@ -104,12 +107,50 @@ set_defaults ()
   home = getenv ("HOME");
   if (NULL != home)
     {
+      int result = 1;
+      struct stat sb;
+
       strcpy (default_datafile, home);
+      result = stat (default_datafile, &sb);
+      if (-1 == result)
+        {
+          fprintf (stderr, "home directory unavailable\n");
+          exit (1);
+        }
+
       strncat (default_datafile, "/", 1);
       strncat (default_datafile, DEFAULT_HOME_ROLO_DIR,
                strlen (DEFAULT_HOME_ROLO_DIR));
+      result = stat (default_datafile, &sb);
+      if (-1 == result)
+        {
+          if (ENOENT == errno)
+            {
+              mkdir (default_datafile, S_IRWXU);
+            }
+          else
+            {
+              exit (1);
+            }
+        }
+
       strncat (default_datafile, "/", 1);
       strncat (default_datafile, DEFAULT_FILENAME, strlen (DEFAULT_FILENAME));
+      result = stat (default_datafile, &sb);
+      if (-1 == result)
+        {
+          if (ENOENT == errno)
+            {
+              FILE *fp;
+
+              fp = fopen (default_datafile, "w");
+              fclose (fp);
+            }
+          else
+            {
+              exit (1);
+            }
+        }
     }
   else
     {
