@@ -17,7 +17,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  *
- * $Id$
+ * $Id: add.c,v 1.1 2003/03/25 10:59:10 ahsu Rel $
  */
 
 #include "add.h"
@@ -32,6 +32,10 @@
 
 static void append_to_datafile (const char *datafile,
                                 const char *new_entry_filename);
+static char *basename (const char *path);
+
+static const char *editor = NULL;
+static const char *editor_basename = NULL;
 
 /***************************************************************************
  */
@@ -90,8 +94,6 @@ add_entry (const char *datafile)
 {
   FILE *fp = NULL;
   char filename[PATH_MAX];
-  char *editor = NULL;
-  char *editor_basename = NULL;
   pid_t process_id = 0;
   int status = 0;
   struct stat sb;
@@ -112,20 +114,6 @@ add_entry (const char *datafile)
   /* record when the file has been modified */
   stat (filename, &sb);
   modified_time = sb.st_mtime;
-
-  /*-------------------------
-     setup the editor to use
-    -------------------------*/
-  editor = (char *) getenv ("EDITOR");
-  if (NULL == editor)
-    {
-      editor = strdup ("vi");
-      editor_basename = strdup ("vi");
-    }
-  else
-    {
-      editor_basename = (char *) basename (editor);
-    }
 
   endwin ();
 
@@ -172,4 +160,37 @@ add_entry (const char *datafile)
   noecho ();
 
   return ret_val;
+}
+
+/***************************************************************************
+ */
+
+void
+set_add_editor (const char *str)
+{
+  editor = str;
+  editor_basename = basename (editor);
+}
+
+/***************************************************************************
+ */
+
+static char *
+basename (const char *path)
+{
+  char *beginning = NULL;
+  char *retval = NULL;
+
+  beginning = strrchr (path, '/');
+
+  if (NULL == beginning)
+    {
+      retval = strdup (path);
+    }
+  else
+    {
+      retval = strdup (beginning);
+    }
+
+  return retval;
 }
