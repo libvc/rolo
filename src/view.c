@@ -17,7 +17,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  *
- * $Id: view.c,v 1.8 2003/04/03 14:57:09 ahsu Rel $
+ * $Id: view.c,v 1.9 2003/04/06 09:22:58 ahsu Exp $
  */
 
 #include "view.h"
@@ -266,20 +266,12 @@ view_tel ()
   vi = get_vcard_item_by_name (g_v, VC_TELEPHONE);
   val = get_vcard_item_value (vi);
   wprintw (sub, "Telephone #1  : %s\n", val ? val : "");
-  wprintw (sub, "Telephone #2  : %s\n", val ? val : "");
-  wprintw (sub, "Telephone #3  : %s\n", val ? val : "");
-  wprintw (sub, "Telephone #4  : %s\n", val ? val : "");
-  wprintw (sub, "Telephone #5  : %s\n", val ? val : "");
 
   wprintw (sub, "\n");
 
   vi = get_vcard_item_by_name (g_v, VC_EMAIL);
   val = get_vcard_item_value (vi);
   wprintw (sub, "Email Address #1  : %s\n", val ? val : "");
-  wprintw (sub, "Email Address #2  : %s\n", val ? val : "");
-  wprintw (sub, "Email Address #3  : %s\n", val ? val : "");
-  wprintw (sub, "Email Address #4  : %s\n", val ? val : "");
-  wprintw (sub, "Email Address #5  : %s\n", val ? val : "");
 
   wprintw (sub, "\n");
 
