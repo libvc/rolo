@@ -17,10 +17,11 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  *
- * $Id: add.h,v 1.1 2003/03/25 10:59:41 ahsu Exp $
+ * $Id: add.h,v 1.2 2003/03/26 11:18:40 ahsu Rel $
  */
 
 enum add_entry_results
 { ADD_SUCCESSFUL, ADD_ABORTED };
 
 extern int add_entry (const char *datafile);
+extern void set_add_editor (const char *str);
