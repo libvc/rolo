@@ -17,7 +17,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  *
- * $Id: index.c,v 1.4 2003/02/20 08:58:46 ahsu Exp $
+ * $Id: index.c,v 1.5 2003/02/20 10:06:32 ahsu Exp $
  */
 
 #include "index.h"
@@ -56,8 +56,8 @@ init_index(const char *filename)
 
   fp = fopen(filename, "r");
   if (NULL == fp) {
-    fprintf(stderr, "unable to open file: %s\n", filename);
     endwin();                   /* exit gracefully */
+    fprintf(stderr, "unable to open file: %s\n", filename);
     exit(1);
   }
 
