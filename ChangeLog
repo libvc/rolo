@@ -1,3 +1,8 @@
+2003-03-29  Andrew Hsu
+
+* configure.ac: Incremented the version to 005 for the pending
+release.
+
 2003-03-23  Andrew Hsu
 
 * configure.ac: Incremented version number for new release.
