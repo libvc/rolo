@@ -1,3 +1,21 @@
+2003-04-20  Andrew Hsu
+
+* main.c: Adjustments for the new libvcard API.
+
+* add.c: Adjustments for the new libvcard API.
+
+* delete.c: Adjustments for the new libvcard API.
+
+* edit.c: Adjustments for the new libvcard API.
+
+* entry.c: Adjustments for the new libvcard API.
+
+* view.h: Adjustments for the new libvcard API.
+
+* view.c: Adjustments for the new libvcard API.  Also added more
+telephone numbers and email addresses to the telecommunication
+display screen.
+
 2003-04-13  Andrew Hsu
 
 * view.c: Added ability to use the left and right arrow keys to
