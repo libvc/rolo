@@ -1,6 +1,2 @@
-*.swp
 .deps
-Makefile
-Makefile.in
 rolo
-*core
