@@ -17,11 +17,15 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  *
- * $Id: view.c,v 1.1 2003/02/16 06:14:21 ahsu Exp $
+ * $Id: view.c,v 1.2 2003/02/18 04:27:04 ahsu Exp $
  */
 
 #include "view.h"
 #include <assert.h>
+#include <stdlib.h>
+#include <string.h>
+
+#define HARD_CODED_HEADER_STR "q:Quit  e:Edit  j:Next  k:Prev  h:Help"
 
 /*** GLOBALS ***/
 
@@ -147,10 +151,24 @@ view_vcard(vcard * v)
 static void
 print_header()
 {
+  char *header_str = NULL;
+  int i = 0;
+
+  header_str = (char *)malloc(sizeof(char) * (COLS + 2));
+
+  strncpy(header_str, HARD_CODED_HEADER_STR, COLS);
+
+  for (i = strlen(HARD_CODED_HEADER_STR); i < COLS; i++) {
+    header_str[i] = ' ';
+  }
+
+  header_str[COLS] = '\n';
+  header_str[COLS + 1] = '\0';
+
   wattron(win, A_REVERSE);
-  wprintw(win,
-      "q:Quit  e:Edit  j:Next  k:Prev  h:Help                                       \n");
+  wprintw(win, header_str);
   wstandend(win);
+  free(header_str);
 }
 
 static void
