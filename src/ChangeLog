@@ -1,17 +1,18 @@
-2003-03-05  Andrew Hsu  <ahsu@users.sf.net>
+2003-03-05  Andrew Hsu
 
-* index.c: Lots of changes!  Added sort and filter functionality.
-Also replaced lots of usage of COLS with proper calls to getmaxyx().
-Had to introduce a few more static global variables to work around
-the problem of refreshing a display after a filter is applied.  The
-cleanup of the memory is well taken care of (I think).  The toughest
-part was moving the intern data structure (pre-ITEM data structure)
-to a linked list and then stuffing the linked list into an array
-for sorting.  But it works and it is implemented well and I'm happy.
-There still needs to be a cleanup of the static globals, as mentioned
-earlier, which will most likely amount to an interface change on
-the main.c side as well.  Sorting still needs to be completed on
-all other fields (see FIXME comments).
+* index.c: Lots of changes!  Added sort and filter functionality
+(filter functionality is here thanks to the recommendation by Tony
+Granberg).  Also replaced lots of usage of COLS with proper calls
+to getmaxyx().  Had to introduce a few more static global variables
+to work around the problem of refreshing a display after a filter
+is applied.  The cleanup of the memory is well taken care of (I
+think).  The toughest part was moving the intern data structure
+(pre-ITEM data structure) to a linked list and then stuffing the
+linked list into an array for sorting.  But it works and it is
+implemented well and I'm happy.  There still needs to be a cleanup
+of the static globals, as mentioned earlier, which will most likely
+amount to an interface change on the main.c side as well.  Sorting
+still needs to be completed on all other fields (see FIXME comments).
 * index.h: Removed some completely unnecessary prototypes and also
 added new ones for the new work performed to add sort and filter
 functionality to the index.  New enum for sorting as well.
@@ -23,13 +24,13 @@ window is resized to less than 80 cols wide).  Added a check for
 whether get_current_item() returns a valid item before trying to
 view the entry (stops rolo from core dumping).
 
-2003-03-03  Andrew Hsu  <ahsu@users.sf.net>
+2003-03-03  Andrew Hsu
 
 * index.c: First attempt at adding sort capabilities for the index.
 This will have to be redone because the entry numbers are not sorted.
 * index.h: Prototype and enum for sort function.
 
-2003-02-28  Andrew Hsu  <ahsu@users.sf.net>
+2003-02-28  Andrew Hsu
 
 * Makefile.am: Changed stuff to make the compile run smoother.
 Added ChangeLog as one of the files to distribute.
@@ -38,16 +39,16 @@ Added ChangeLog as one of the files to distribute.
 * edit.c: Doc fixes.
 * help.c: Doc fixes.
 
-2003-02-27  Andrew Hsu  <ahsu@users.sf.net>
+2003-02-27  Andrew Hsu
 
 * Makefile.am: Added includes and needed libraries.
 * main.c: Doc fixes.  Included `config.h'.
 
-2003-02-26  Andrew Hsu  <ahsu@users.sf.net>
+2003-02-26  Andrew Hsu
 
 * Makefile.am: Creation of file.
 
-2003-02-24  Andrew Hsu  <ahsu@users.sf.net>
+2003-02-24  Andrew Hsu
 
 * main.c: Moved the file to rolo/src directory.
 * index.c: Moved the file to rolo/src directory.
