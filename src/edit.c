@@ -17,7 +17,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  *
- * $Id: edit.c,v 1.8 2003/04/03 14:50:20 ahsu Rel $
+ * $Id: edit.c,v 1.9 2003/04/19 15:46:34 ahsu Rel $
  */
 
 #include "edit.h"
@@ -28,7 +28,7 @@
 #include <sys/types.h>
 #include <unistd.h>
 
-#define HARD_CODED_HEADER_STR "q:Quit  h:Help"
+#define MENU_BAR_STRING "q:Quit  h:Help"
 
 /*** PROTOTYPES ***/
 static void print_header ();
@@ -136,9 +136,9 @@ print_header ()
 
   header_str = (char *) malloc (sizeof (char) * (COLS + 2));
 
-  strncpy (header_str, HARD_CODED_HEADER_STR, COLS);
+  strncpy (header_str, MENU_BAR_STRING, COLS);
 
-  for (i = strlen (HARD_CODED_HEADER_STR); i < COLS; i++)
+  for (i = strlen (MENU_BAR_STRING); i < COLS; i++)
     {
       header_str[i] = ' ';
     }
