@@ -1,3 +1,8 @@
+2003-05-04  Andrew Hsu
+
+* Makefile.am: Added mutt_vc_query to the mix.
+* configure.ac: Added mutt_vc_query to the mix.
+
 2003-04-28  Andrew Hsu
 
 * bootstrap: Removed this file because the `autoreconf' program can

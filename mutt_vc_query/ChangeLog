@@ -1,5 +1,7 @@
 2003-05-04  Andrew Hsu
 
+* Makefile.am: Removed ChangeLog for now until things are sorted.
+
 * main.c: Initial commit.
 * result.c: Initial commit.
 * result.h: Initial commit.
