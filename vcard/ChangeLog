@@ -1,3 +1,8 @@
+2003-04-04  Andrew Hsu
+
+* vcard.c: The insert_vcard_item now preserves the order of the
+items inserted.
+
 2003-04-02  Andrew Hsu
 
 * vcard.h: Added a few defines that were missing and prettied the
