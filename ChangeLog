@@ -1,3 +1,15 @@
-2003-02-22  Andrew Hsu  <ahsu@users.sf.net>
+2003-02-27  Andrew Hsu  <ahsu@users.sf.net>
 
-* Initial release.
+* bootstrap: Renamed file from bootstrap.sh.
+
+* configure.ac: First attempt at an autoconf input file.  Added
+lots of stuff to make the compile run smoother.
+
+* Makefile.am: Added doc directory to the make.  Decided to remove
+the doc file because man is not ready for dist yet.  Forced some
+other stuff to be included in a dist.
+
+2003-02-26  Andrew Hsu  <ahsu@users.sf.net>
+
+* Makefile.am: First attempt at an automake input file.
+
