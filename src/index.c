@@ -17,7 +17,7 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA
  *  02111-1307 USA
  *
- *  $Id: index.c,v 1.14 2003/05/20 01:08:52 ahsu Exp $
+ *  $Id: index.c,v 1.15 2003/05/20 04:59:33 ahsu Exp $
  */
 
 #include "entry.h"
@@ -45,6 +45,7 @@ static void filter_menu ();
 static void unfilter_menu ();
 static void sort_ascending (int sort_by);
 static void sort_descending (int sort_by);
+static void scroll_to_result (ITEM * found_item);
 
 /*** STATIC VARIABLES ***/
 
@@ -672,14 +673,7 @@ perform_search ()
   wscanw (win, "%s", search_string);
 
   found_item = search_menu (menu, search_string);
-  if (found_item != NULL)
-    {
-      /* check if the found item is off the screen */
-      if (E_BAD_ARGUMENT == set_current_item (menu, found_item))
-        {
-          set_top_row (menu, item_index (found_item));
-        }
-    }
+  scroll_to_result(found_item);
 
   cbreak ();
   noecho ();
@@ -687,3 +681,28 @@ perform_search ()
   wclrtoeol (win);
 }
 
+/***************************************************************************
+ */
+
+static void
+scroll_to_result (ITEM * found_item)
+{
+  if (NULL != found_item)
+    {
+      int current_index = -1;
+      int found_index = -1;
+      int direction = -1;
+
+      current_index = item_index (current_item (menu));
+      found_index = item_index (found_item);
+
+      direction = found_index > current_index ? REQ_SCR_DPAGE : REQ_SCR_UPAGE;
+
+      while (FALSE == item_visible (found_item))
+        {
+          menu_driver (menu, direction);
+        }
+
+      set_current_item (menu, found_item);
+    }
+}
