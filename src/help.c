@@ -17,7 +17,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  *
- * $Id: help.c,v 1.7 2003/02/24 01:04:32 ahsu Exp $
+ * $Id: help.c,v 1.1 2003/02/24 09:15:34 ahsu Exp $
  */
 
 #include "help.h"
@@ -27,8 +27,6 @@
 
 #define HARD_CODED_HEADER_STR "Press any key to exit this screen"
 
-/*** GLOBALS ***/
-
 enum help_window { HELP_INDEX, HELP_VIEW, HELP_EDIT };
 
 /*** PROTOTYPES ***/
@@ -36,8 +34,12 @@ static void print_header();
 static void print_footer(const char *text);
 static void process_help_commands();
 
+/*** STATIC VARIABLES ***/
 static WINDOW *win = NULL;
 static WINDOW *sub = NULL;
+
+/* ------------------------------------------------------------------
+ */
 
 void
 init_help()
@@ -46,6 +48,9 @@ init_help()
   sub = derwin(win, LINES - 3, COLS, 1, 0);
   print_header();
 }
+
+/* ------------------------------------------------------------------
+ */
 
 void
 show_index_help()
@@ -75,6 +80,9 @@ show_index_help()
   process_help_commands();
 }
 
+/* ------------------------------------------------------------------
+ */
+
 void
 show_view_help()
 {
@@ -93,6 +101,9 @@ show_view_help()
   process_help_commands();
 }
 
+/* ------------------------------------------------------------------
+ */
+
 void
 show_edit_help()
 {
@@ -104,6 +115,9 @@ show_edit_help()
   wrefresh(win);
   process_help_commands();
 }
+
+/* ------------------------------------------------------------------
+ */
 
 static void
 print_header()
@@ -127,6 +141,9 @@ print_header()
   wstandend(win);
   free(header_str);
 }
+
+/* ------------------------------------------------------------------
+ */
 
 static void
 print_footer(const char *text)
@@ -163,6 +180,9 @@ print_footer(const char *text)
   wstandend(win);
   free(footer_str);
 }
+
+/* ------------------------------------------------------------------
+ */
 
 static void
 process_help_commands()
