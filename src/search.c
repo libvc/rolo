@@ -17,7 +17,7 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA
  *  02111-1307 USA
  *
- *  $Id: search.c,v 1.2 2003/05/21 00:01:00 ahsu Exp $
+ *  $Id: search.c,v 1.3 2003/05/21 01:37:24 ahsu Exp $
  */
 
 #include "search.h"
@@ -75,31 +75,42 @@ strstr_nocase (const char *haystack, const char *needle)
 ITEM *
 search_menu (MENU * menu, const char *search_string)
 {
-  ITEM *result_entry = NULL;
-  int i = 0;
-  ITEM **items = NULL;
-  int found_string = 0;
-  bool done = FALSE;
+  ITEM *result_item = NULL;
 
   if (NULL != search_string)
     {
-      i = item_index (current_item (menu));
+      int i = -1;
+      int current_index = -1;
+      int count = -1;
+      ITEM **items = NULL;
+      int found = 0;
+      bool done = FALSE;
+
+      current_index = item_index (current_item (menu));
+      count = item_count (menu);
       items = menu_items (menu);
 
-      while (!done && (NULL != items[i]))
+      /* start search from the item immediately after the current item */
+      for (i = current_index + 1; i < count && !found; i++)
         {
-          found_string =
-              strstr_nocase (item_description (items[i]), search_string);
+          found = strstr_nocase (item_description (items[i]), search_string);
+        }
 
-          if (1 == found_string)
+      if (!found)
+        {
+          /* start search from the beginning (i.e. wrap around) */
+          for (i = 0; i <= current_index && !found; i++)
             {
-              result_entry = items[i];
-              done = TRUE;
+              found =
+                  strstr_nocase (item_description (items[i]), search_string);
             }
+        }
 
-          i++;
+      if (found)
+        {
+          result_item = items[i - 1];
         }
     }
 
-  return result_entry;
+  return result_item;
 }
