@@ -22,6 +22,13 @@ structure, and writing back to file.  This library will be split
 off in the future as its own separate package which Rolo will require
 as a dependency.
 
+To add a new contact in rolo, type `a' in the index screen.  This
+will pop open your "favorite editor" so you can compose a new vCard
+file by hand.  This may be a little low-level for some people, so
+an example vCard file has been provided in the `test' directory.
+If rolo is installed using an rpm file, the example file can be
+found in: /usr/share/doc/rolo-005/contacts.vcf
+
 Directory contents:
 src - source code for the rolo user interface.
 test - test data for rolo.
