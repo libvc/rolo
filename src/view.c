@@ -17,7 +17,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  *
- * $Id: view.c,v 1.7 2003/04/02 11:29:24 ahsu Exp $
+ * $Id: view.c,v 1.8 2003/04/03 14:57:09 ahsu Rel $
  */
 
 #include "view.h"
@@ -29,25 +29,25 @@
 #include <sys/stat.h>
 #include <sys/types.h>
 
-#define HARD_CODED_HEADER_STR "i:Index  h:Help  1:Ident  2:Adr  3:Tel  4:Geo  5:Org  6:Info  7:Sec  8:Extra"
+#define HARD_CODED_HEADER_STR "i:Index  h:Help  1:Ident  2:Geo  3:Tel  4:Org  5:Misc"
+#define TITLE_IDENT "IDENTIFICATION"
+#define TITLE_GEO "GEOGRAPHIC POSITION"
+#define TITLE_TEL "TELECOMMUNICATION"
+#define TITLE_ORG "ORGANIZATION"
+#define TITLE_MISC "MISCELLANEOUS"
 
 /*** PROTOTYPES ***/
 static void print_header ();
 static void print_footer (int entry_number, const char *fn);
 static void view_ident ();
-static void view_adr ();
-static void view_tel ();
 static void view_geo ();
+static void view_tel ();
 static void view_org ();
-static void view_info ();
-static void view_sec ();
-static void view_extra ();
+static void view_misc ();
 static char *basename (const char *path);
 
 enum view_mode
-{ VIEW_IDENT = 1, VIEW_ADR, VIEW_TEL, VIEW_GEO, VIEW_ORG, VIEW_INFO, VIEW_SEC,
-  VIEW_EXTRA
-};
+{ VIEW_IDENT = 1, VIEW_GEO, VIEW_TEL, VIEW_ORG, VIEW_MISC };
 
 /*** STATIC VARIABLES ***/
 static WINDOW *win = NULL;
@@ -100,52 +100,62 @@ static void
 view_ident ()
 {
   vcard_item *vi = NULL;
-  char *str = NULL;
   char *val = NULL;
+  int x = 0;
+  int y = 0;
 
   g_mode = VIEW_IDENT;
 
   werase (sub);
 
-  wprintw (sub, "\n");
-  wattron (sub, A_UNDERLINE);
-  wprintw (sub, "IDENTIFICATION\n");
-  wstandend (sub);
-  wprintw (sub, "\n");
+  x = (COLS - strlen (TITLE_IDENT)) / 2;
+  y = 1;
 
-  vi = get_vcard_item_by_name (g_v, VC_NAME);
+  wattron (sub, A_UNDERLINE);
+  mvwprintw (sub, y, x, TITLE_IDENT);
+  wstandend (sub);
+  wmove (sub, 3, 0);
+
+  vi = get_vcard_item_by_name (g_v, VC_FORMATTED_NAME);
   val = get_vcard_item_value (vi);
-  str = get_val_struct_part (val, N_FAMILY);
-  wprintw (sub, "Family Name         : %s\n", str ? str : "");
-  free (str);
-  str = get_val_struct_part (val, N_GIVEN);
-  wprintw (sub, "Given Name          : %s\n", str ? str : "");
-  free (str);
-  str = get_val_struct_part (val, N_MIDDLE);
-  wprintw (sub, "Additional Names    : %s\n", str ? str : "");
-  free (str);
-  str = get_val_struct_part (val, N_PREFIX);
-  wprintw (sub, "Honorific Prefixes  : %s\n", str ? str : "");
-  free (str);
-  str = get_val_struct_part (val, N_SUFFIX);
-  wprintw (sub, "Honorific Suffixes  : %s\n", str ? str : "");
-  free (str);
+  wprintw (sub, "Name         : %s\n", val ? val : "");
 
   vi = get_vcard_item_by_name (g_v, VC_NICKNAME);
-  str = get_vcard_item_value (vi);
-  wprintw (sub, "Nickname            : %s\n", str ? str : "");
-
-  wprintw (sub, "\n");
+  val = get_vcard_item_value (vi);
+  wprintw (sub, "Nickname     : %s\n", val ? val : "");
 
   vi = get_vcard_item_by_name (g_v, VC_BIRTHDAY);
-  str = get_vcard_item_value (vi);
-  wprintw (sub, "Birthday  : %s\n", str ? str : "");
+  val = get_vcard_item_value (vi);
+  wprintw (sub, "Birthday     : %s\n", val ? val : "");
 
   wprintw (sub, "\n");
 
+  vi = get_vcard_item_by_name (g_v, VC_URL);
+  val = get_vcard_item_value (vi);
+  wprintw (sub, "URL    : %s\n", val ? val : "");
+
   vi = get_vcard_item_by_name (g_v, VC_PHOTO);
-  str = get_vcard_item_value (vi);
-  wprintw (sub, "Photograph  : %s\n", str ? str : "");
+  val = get_vcard_item_value (vi);
+  wprintw (sub, "Photo  : %s\n", val ? val : "");
+
+  vi = get_vcard_item_by_name (g_v, VC_SOUND);
+  val = get_vcard_item_value (vi);
+  wprintw (sub, "Sound  : %s\n", val ? val : "");
+
+  wprintw (sub, "\n");
+
+  vi = get_vcard_item_by_name (g_v, VC_CATEGORIES);
+  val = get_vcard_item_value (vi);
+  wprintw (sub, "Categories  : %s\n", val ? val : "");
+
+  vi = get_vcard_item_by_name (g_v, VC_REVISION);
+  val = get_vcard_item_value (vi);
+  wprintw (sub, "Revision    : %s\n", val ? val : "");
+
+  vi = get_vcard_item_by_name (g_v, VC_NOTE);
+  val = get_vcard_item_value (vi);
+  wprintw (sub, "Note        : %s\n", val ? val : "");
+
   touchwin (win);
   wrefresh (sub);
   wrefresh (win);
@@ -155,20 +165,42 @@ view_ident ()
  */
 
 static void
-view_adr ()
+view_geo ()
 {
   vcard_item *vi = NULL;
   char *str = NULL;
   char *val = NULL;
+  int x = 0;
+  int y = 0;
 
-  g_mode = VIEW_ADR;
+  g_mode = VIEW_GEO;
 
   werase (sub);
 
-  wprintw (sub, "\n");
+  x = (COLS - strlen (TITLE_GEO)) / 2;
+  y = 1;
+
   wattron (sub, A_UNDERLINE);
-  wprintw (sub, "DELIVERY ADDRESS\n");
+  mvwprintw (sub, y, x, TITLE_GEO);
   wstandend (sub);
+  wmove (sub, 3, 0);
+
+  vi = get_vcard_item_by_name (g_v, VC_GEOGRAPHIC_POSITION);
+  val = get_vcard_item_value (vi);
+
+  str = get_val_struct_part (val, GEO_LATITUDE);
+  wprintw (sub, "Latitude   : %s\n", str ? str : "");
+  free (str);
+
+  str = get_val_struct_part (val, GEO_LONGITUDE);
+  wprintw (sub, "Longitude  : %s\n", str ? str : "");
+  free (str);
+
+  wprintw (sub, "\n");
+  vi = get_vcard_item_by_name (g_v, VC_TIME_ZONE);
+  val = get_vcard_item_value (vi);
+  wprintw (sub, "Time Zone  : %s\n", val ? val : "");
+
   wprintw (sub, "\n");
 
   vi = get_vcard_item_by_name (g_v, VC_ADDRESS);
@@ -216,26 +248,38 @@ view_tel ()
 {
   vcard_item *vi = NULL;
   char *val = NULL;
+  int x = 0;
+  int y = 0;
 
   g_mode = VIEW_TEL;
 
   werase (sub);
 
-  wprintw (sub, "\n");
+  x = (COLS - strlen (TITLE_TEL)) / 2;
+  y = 1;
+
   wattron (sub, A_UNDERLINE);
-  wprintw (sub, "TELECOMMUNICATION\n");
+  mvwprintw (sub, y, x, TITLE_TEL);
   wstandend (sub);
-  wprintw (sub, "\n");
+  wmove (sub, 3, 0);
 
   vi = get_vcard_item_by_name (g_v, VC_TELEPHONE);
   val = get_vcard_item_value (vi);
   wprintw (sub, "Telephone #1  : %s\n", val ? val : "");
+  wprintw (sub, "Telephone #2  : %s\n", val ? val : "");
+  wprintw (sub, "Telephone #3  : %s\n", val ? val : "");
+  wprintw (sub, "Telephone #4  : %s\n", val ? val : "");
+  wprintw (sub, "Telephone #5  : %s\n", val ? val : "");
 
   wprintw (sub, "\n");
 
   vi = get_vcard_item_by_name (g_v, VC_EMAIL);
   val = get_vcard_item_value (vi);
   wprintw (sub, "Email Address #1  : %s\n", val ? val : "");
+  wprintw (sub, "Email Address #2  : %s\n", val ? val : "");
+  wprintw (sub, "Email Address #3  : %s\n", val ? val : "");
+  wprintw (sub, "Email Address #4  : %s\n", val ? val : "");
+  wprintw (sub, "Email Address #5  : %s\n", val ? val : "");
 
   wprintw (sub, "\n");
 
@@ -252,62 +296,25 @@ view_tel ()
  */
 
 static void
-view_geo ()
-{
-  vcard_item *vi = NULL;
-  char *str = NULL;
-  char *val = NULL;
-
-  g_mode = VIEW_GEO;
-
-  werase (sub);
-
-  wprintw (sub, "\n");
-  wattron (sub, A_UNDERLINE);
-  wprintw (sub, "GEOGRAPHY\n");
-  wstandend (sub);
-  wprintw (sub, "\n");
-
-  vi = get_vcard_item_by_name (g_v, VC_GEOGRAPHIC_POSITION);
-  val = get_vcard_item_value (vi);
-
-  str = get_val_struct_part (val, GEO_LATITUDE);
-  wprintw (sub, "Latitude   : %s\n", str ? str : "");
-  free (str);
-
-  str = get_val_struct_part (val, GEO_LONGITUDE);
-  wprintw (sub, "Longitude  : %s\n", str ? str : "");
-  free (str);
-
-  wprintw (sub, "\n");
-  vi = get_vcard_item_by_name (g_v, VC_TIME_ZONE);
-  val = get_vcard_item_value (vi);
-  wprintw (sub, "Time Zone  : %s\n", val ? val : "");
-
-  touchwin (win);
-  wrefresh (sub);
-  wrefresh (win);
-}
-
-/***************************************************************************
- */
-
-static void
 view_org ()
 {
   vcard_item *vi = NULL;
   char *str = NULL;
   char *val = NULL;
+  int x = 0;
+  int y = 0;
 
   g_mode = VIEW_ORG;
 
   werase (sub);
 
-  wprintw (sub, "\n");
+  x = (COLS - strlen (TITLE_ORG)) / 2;
+  y = 1;
+
   wattron (sub, A_UNDERLINE);
-  wprintw (sub, "ORGANIZATION\n");
+  mvwprintw (sub, y, x, TITLE_ORG);
   wstandend (sub);
-  wprintw (sub, "\n");
+  wmove (sub, 3, 0);
 
   vi = get_vcard_item_by_name (g_v, VC_TITLE);
   val = get_vcard_item_value (vi);
@@ -348,8 +355,6 @@ view_org ()
   val = get_vcard_item_value (vi);
   wprintw (sub, "Logo  : %s\n", val ? val : "");
 
-  wprintw (sub, "\n");
-
   vi = get_vcard_item_by_name (g_v, VC_AGENT);
   val = get_vcard_item_value (vi);
   wprintw (sub, "Agent  : %s\n", val ? val : "");
@@ -363,115 +368,37 @@ view_org ()
  */
 
 static void
-view_info ()
+view_misc ()
 {
   vcard_item *vi = NULL;
   char *str = NULL;
   char *val = NULL;
+  int x = 0;
+  int y = 0;
 
-  g_mode = VIEW_INFO;
+  g_mode = VIEW_MISC;
 
   werase (sub);
 
-  wprintw (sub, "\n");
+  x = (COLS - strlen (TITLE_MISC)) / 2;
+  y = 1;
+
   wattron (sub, A_UNDERLINE);
-  wprintw (sub, "ADDITIONAL EXPLANATION\n");
+  mvwprintw (sub, y, x, TITLE_MISC);
   wstandend (sub);
-  wprintw (sub, "\n");
-
-  vi = get_vcard_item_by_name (g_v, VC_CATEGORIES);
-  val = get_vcard_item_value (vi);
-  wprintw (sub, "Categories  : %s\n", val ? val : "");
-
-  wprintw (sub, "\n");
-
-  vi = get_vcard_item_by_name (g_v, VC_REVISION);
-  val = get_vcard_item_value (vi);
-  wprintw (sub, "Revision  : %s\n", val ? val : "");
-
-  wprintw (sub, "\n");
-
-  vi = get_vcard_item_by_name (g_v, VC_SOUND);
-  val = get_vcard_item_value (vi);
-  wprintw (sub, "Sound  : %s\n", val ? val : "");
-
-  wprintw (sub, "\n");
-
-  vi = get_vcard_item_by_name (g_v, VC_URL);
-  val = get_vcard_item_value (vi);
-  wprintw (sub, "URL  : %s\n", val ? val : "");
-
-  wprintw (sub, "\n");
+  wmove (sub, 3, 0);
 
   vi = get_vcard_item_by_name (g_v, VC_SORT_STRING);
   val = get_vcard_item_value (vi);
   wprintw (sub, "Sort String  : %s\n", val ? val : "");
 
-  wprintw (sub, "\n");
-
-  vi = get_vcard_item_by_name (g_v, VC_NOTE);
-  val = get_vcard_item_value (vi);
-  wprintw (sub, "Note  : %s\n", val ? val : "");
-
-  touchwin (win);
-  wrefresh (sub);
-  wrefresh (win);
-}
-
-/***************************************************************************
- */
-
-static void
-view_sec ()
-{
-  vcard_item *vi = NULL;
-  char *str = NULL;
-  char *val = NULL;
-
-  g_mode = VIEW_SEC;
-
-  werase (sub);
-
-  wprintw (sub, "\n");
-  wattron (sub, A_UNDERLINE);
-  wprintw (sub, "SECURITY\n");
-  wstandend (sub);
-  wprintw (sub, "\n");
-
   vi = get_vcard_item_by_name (g_v, VC_CLASS);
   val = get_vcard_item_value (vi);
-  wprintw (sub, "Class  : %s\n", val ? val : "");
-
-  wprintw (sub, "\n");
+  wprintw (sub, "Class       : %s\n", val ? val : "");
 
   vi = get_vcard_item_by_name (g_v, VC_KEY);
   val = get_vcard_item_value (vi);
   wprintw (sub, "Public Key  : %s\n", val ? val : "");
-
-  touchwin (win);
-  wrefresh (sub);
-  wrefresh (win);
-}
-
-/***************************************************************************
- */
-
-static void
-view_extra ()
-{
-  vcard_item *vi = NULL;
-  char *str = NULL;
-  char *val = NULL;
-
-  g_mode = VIEW_EXTRA;
-
-  werase (sub);
-
-  wprintw (sub, "\n");
-  wattron (sub, A_UNDERLINE);
-  wprintw (sub, "EXTERNAL\n");
-  wstandend (sub);
-  wprintw (sub, "\n");
 
   touchwin (win);
   wrefresh (sub);
@@ -499,26 +426,17 @@ view_vcard (int entry_number, vcard * v)
     case VIEW_IDENT:
       view_ident ();
       break;
-    case VIEW_ADR:
-      view_adr ();
+    case VIEW_GEO:
+      view_geo ();
       break;
     case VIEW_TEL:
       view_tel ();
       break;
-    case VIEW_GEO:
-      view_geo ();
-      break;
     case VIEW_ORG:
       view_org ();
       break;
-    case VIEW_INFO:
-      view_info ();
-      break;
-    case VIEW_SEC:
-      view_sec ();
-      break;
-    case VIEW_EXTRA:
-      view_extra ();
+    case VIEW_MISC:
+      view_misc ();
       break;
     default:
       break;
@@ -646,25 +564,16 @@ process_view_commands ()
           view_ident ();
           break;
         case '2':
-          view_adr ();
+          view_geo ();
           break;
         case '3':
           view_tel ();
           break;
         case '4':
-          view_geo ();
-          break;
-        case '5':
           view_org ();
           break;
-        case '6':
-          view_info ();
-          break;
-        case '7':
-          view_sec ();
-          break;
-        case '8':
-          view_extra ();
+        case '5':
+          view_misc ();
           break;
         case KEY_DOWN:
         case 'j':
