@@ -17,7 +17,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  *
- * $Id: edit.c,v 1.3 2003/02/20 07:27:13 ahsu Exp $
+ * $Id: edit.c,v 1.4 2003/02/20 08:58:46 ahsu Exp $
  */
 
 #include "edit.h"
@@ -38,6 +38,7 @@ init_edit()
 {
   win = newwin(0, 0, 0, 0);
   sub = derwin(win, LINES - 3, COLS, 1, 0);
+  keypad(win, TRUE);            /* enable keypad for use of arrow keys */
   print_header();
 }
 

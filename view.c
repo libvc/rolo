@@ -17,7 +17,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  *
- * $Id: view.c,v 1.6 2003/02/20 08:58:46 ahsu Exp $
+ * $Id: view.c,v 1.7 2003/02/20 11:02:39 ahsu Exp $
  */
 
 #include "view.h"
@@ -44,6 +44,7 @@ init_view()
   win = newwin(0, 0, 0, 0);
   sub = derwin(win, LINES - 3, COLS, 1, 0);
   print_header();
+  keypad(win, TRUE);            /* enable keypad for use of arrow keys */
 }
 
 void
