@@ -17,7 +17,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  *
- * $Id: index.c,v 1.3 2003/02/20 07:27:13 ahsu Exp $
+ * $Id: index.c,v 1.4 2003/02/20 08:58:46 ahsu Exp $
  */
 
 #include "index.h"
@@ -27,6 +27,9 @@
 #include <assert.h>
 
 #define HARD_CODED_HEADER_STR "q:Quit  v:View  h:Help"
+#ifndef CTRL
+#define CTRL(x)         ((x) & 0x1f)
+#endif
 
 /*** PROTOTYPES ***/
 static char *construct_menu_name(const char *family_name,
@@ -258,22 +261,24 @@ process_index_commands()
   int ch = 0;
 
   while (!done) {
-    ch = getch();
+    ch = wgetch(win);
 
     switch (ch) {
     case KEY_HOME:
+    case 'g':
       menu_driver(menu, REQ_FIRST_ITEM);
       break;
     case KEY_END:
+    case 'G':
       menu_driver(menu, REQ_LAST_ITEM);
       break;
     case KEY_NPAGE:
     case ' ':
-      menu_driver(menu, REQ_SCR_UPAGE);
+      menu_driver(menu, REQ_SCR_DPAGE);
       break;
     case KEY_PPAGE:
     case 'b':
-      menu_driver(menu, REQ_SCR_DPAGE);
+      menu_driver(menu, REQ_SCR_UPAGE);
       break;
     case KEY_DOWN:
     case 'j':
