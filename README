@@ -30,9 +30,13 @@ If rolo is installed using an rpm file, the example file can be
 found in: /usr/share/doc/rolo-007/contacts.vcf
 
 Directory contents:
-src - source code for the rolo user interface.
-test - test data for rolo.
-vcard - source code for libvcard.
+
+  src/ ........ Source code for the rolo user interface.
+
+  test/ ....... Test data for rolo.
+
+  vcard/ ...... Source code for the vCard library that was created
+                specifically for the rolo project.
 
 This software is maintained on SourceForge:
 http://rolo.sf.net/
