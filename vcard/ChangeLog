@@ -1,5 +1,11 @@
 2003-04-20  Andrew Hsu
 
+* vcard.c: Fixed vc_get_next_by_name so that it starts its search
+after the given vcard_component.  It'll make it easier for the user
+programmer to use this function because then the user programmer
+will not need to acquire the next vcard_component manually before
+calling the vc_get_next_by_name function again.
+
 * vcard.h: Big changes.  Revamped the entire API.  Now there are
 only two typedefs that the user programmer needs to know about:
 vcard_component and vcard_component_param.  No more iterators.
