@@ -1,4 +1,4 @@
-2003-10-04  Andrew Hsu
+2003-04-10  Andrew Hsu
 
 * vcard.c: Replaced all structs with their respective typedef
 counterparts.
