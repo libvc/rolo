@@ -16,7 +16,7 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * $Id: vcard.c,v 1.6 2003/04/19 14:57:45 ahsu Exp $
+ * $Id: vcard.c,v 1.7 2003/04/19 15:39:33 ahsu Rel $
  */
 
 
@@ -207,6 +207,119 @@ vc_append_with_name (vcard_component * vc, char *name)
     }
 
   return new_vc;
+}
+
+/***************************************************************************
+    Checks the parameters of the given vcard_component to see if
+    there exists a parameter name `TYPE' with a value of `pref'.
+    Returns a value of 1 if found, else 0.
+ */
+
+int
+vc_is_preferred (vcard_component * vc)
+{
+  int ret_val = 0;
+
+  if (NULL != vc)
+    {
+      vcard_component_param *vc_param = NULL;
+      char *value = NULL;
+      int done = 0;
+
+      for (vc_param = vc_param_get_by_name (vc->param, "TYPE");
+           (NULL != vc_param) && (!done);
+           vc_param = vc_param_get_next_by_name (vc_param, "TYPE"))
+        {
+          value = vc_param_get_value (vc_param);
+
+          if (NULL != value)
+            {
+              if (0 == strcmp (value, "pref"))
+                {
+                  ret_val = 1;
+                  done = 1;
+                }
+            }
+        }
+    }
+
+  return ret_val;
+}
+
+/***************************************************************************
+    Returns the pointer to the name of the preferred telephone
+    number of the given vcard.  This is done by checking for `TYPE'
+    parameters with a value of `pref'.  If no such parameter is
+    found, then the first vcard_component with the name `TEL' will
+    be returned.  Returns NULL if none found.  Users of this function
+    must not modify the contents to which the returned pointer
+    points to.
+
+    FIXME: lots of duplicate code with vc_get_preferred_email
+ */
+
+char *
+vc_get_preferred_tel (vcard_component * v)
+{
+  char *tel = NULL;
+  int done = 0;
+  vcard_component *vc = NULL;
+
+  vc = vc_get_next_by_name (v, VC_TELEPHONE);
+  tel = vc_get_value (vc);
+
+  if (!vc_is_preferred (vc))
+    {
+      while ((NULL != vc) && (!done))
+        {
+          vc = vc_get_next_by_name (vc, VC_TELEPHONE);
+          if (vc_is_preferred (vc))
+            {
+              tel = vc_get_value (vc);
+              done = 1;
+            }
+        }
+    }
+
+  return tel;
+}
+
+/***************************************************************************
+    Returns the pointer to the name of the preferred email number
+    of the given vcard.  This is done by checking for `TYPE'
+    parameters with a value of `pref'.  If no such parameter is
+    found, then the first vcard_component with the name `EMAIL'
+    will be returned.  Returns NULL if none found.  Users of this
+    function must not modify the contents to which the returned
+    pointer points to.
+
+    FIXME: lots of duplicate code with vc_get_preferred_tel
+ */
+
+char *
+vc_get_preferred_email (vcard_component * v)
+{
+  char *email = NULL;
+  int done = 0;
+  vcard_component *vc = NULL;
+
+  vc = vc_get_next_by_name (v, VC_EMAIL);
+  email = vc_get_value (vc);
+
+  if (!vc_is_preferred (vc))
+    {
+      while ((NULL != vc) && (!done))
+        {
+          vc = vc_get_next_by_name (vc, VC_EMAIL);
+          if (vc_is_preferred (vc))
+            {
+              email = vc_get_value (vc);
+              done = 1;
+            }
+        }
+    }
+
+  return email;
 }
 
 /***************************************************************************
@@ -463,23 +576,20 @@ vc_get_next_by_name (vcard_component * vc, const char *name)
   vcard_component *tmp_vc = NULL;
   int done = 0;
 
-  if (NULL != name)
+  if ((NULL != name) && (NULL != vc))
     {
-      if (NULL != vc)
+      tmp_vc = vc->next;
+      while ((0 == done) && (NULL != tmp_vc))
         {
-          tmp_vc = vc->next;
-          while ((0 == done) && (NULL != tmp_vc))
+          if (NULL != tmp_vc->name)
             {
-              if (NULL != tmp_vc->name)
+              if (0 == strcmp (name, tmp_vc->name))
                 {
-                  if (0 == strcmp (name, tmp_vc->name))
-                    {
-                      result_vc = tmp_vc;
-                      done = 1;
-                    }
+                  result_vc = tmp_vc;
+                  done = 1;
                 }
-              tmp_vc = tmp_vc->next;
             }
+          tmp_vc = tmp_vc->next;
         }
     }
 
@@ -508,6 +618,43 @@ vc_param_get_next (const vcard_component_param * vc_param)
     Searches for a vcard_component_param that matches the given
     name, starting with the given vcard_component_param.  Returns
     NULL if none is found.
+
+    FIXME: lots of code duplicated from vc_param_get_next_by_name
+ */
+
+vcard_component_param *
+vc_param_get_by_name (vcard_component_param * vc_param, const char *name)
+{
+  vcard_component_param *result_vc_param = NULL;
+  vcard_component_param *tmp_vc_param = NULL;
+  int done = 0;
+
+  if ((NULL != name) && (NULL != vc_param))
+    {
+      tmp_vc_param = vc_param;
+      while ((0 == done) && (NULL != tmp_vc_param))
+        {
+          if (NULL != tmp_vc_param->name)
+            {
+              if (0 == strcmp (name, tmp_vc_param->name))
+                {
+                  result_vc_param = tmp_vc_param;
+                  done = 1;
+                }
+            }
+          tmp_vc_param = tmp_vc_param->next;
+        }
+    }
+
+  return result_vc_param;
+}
+
+/***************************************************************************
+    Searches for a vcard_component_param that matches the given
+    name, starting with the one after the given vcard_component_param.
+    Returns NULL if none is found.
+
+    FIXME: lots of code duplicated from vc_param_get_by_name
  */
 
 vcard_component_param *
@@ -517,9 +664,9 @@ vc_param_get_next_by_name (vcard_component_param * vc_param, const char *name)
   vcard_component_param *tmp_vc_param = NULL;
   int done = 0;
 
-  if (NULL != name)
+  if ((NULL != name) && (NULL != vc_param))
     {
-      tmp_vc_param = vc_param;
+      tmp_vc_param = vc_param->next;
       while ((0 == done) && (NULL != tmp_vc_param))
         {
           if (NULL != tmp_vc_param->name)
