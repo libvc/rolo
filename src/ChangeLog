@@ -1,3 +1,8 @@
+2003-04-06  Andrew Hsu
+
+* view.c: Reorganized the view screen to have 5 sections instead
+of 8.
+
 2003-04-04  Andrew Hsu
 
 * add.c: Added set_add_editor so that the editor program can be
