@@ -17,7 +17,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  *
- * $Id: index.c,v 1.5 2003/02/20 10:06:32 ahsu Exp $
+ * $Id: index.c,v 1.6 2003/02/20 21:02:24 ahsu Exp $
  */
 
 #include "index.h"
@@ -27,6 +27,7 @@
 #include <assert.h>
 
 #define HARD_CODED_HEADER_STR "q:Quit  v:View  h:Help"
+#define MENU_PRINT_FORMAT_SIZE 38
 #ifndef CTRL
 #define CTRL(x)         ((x) & 0x1f)
 #endif
@@ -38,6 +39,7 @@ static void print_footer(const char *filename, int entries);
 static void print_header();
 static void search_menu();
 static ITEM *search_items(const char *search_string);
+static void set_menu_print_format(char *menu_print_format, int width);
 
 static void (*display_help) (void);
 static MENU *menu = NULL;
@@ -149,7 +151,7 @@ get_items(FILE * fp, int count)
         -------------------*/
 
     line_number = (char *)malloc(sizeof(char) * 4);
-    sprintf(line_number, "%3i", i + 1);
+    sprintf(line_number, "%3i", (i + 1) % 1000);
     menuline = construct_menu_name(family_name, given_name, email, tel);
     items[i] = new_item(line_number, menuline);
 
@@ -177,14 +179,25 @@ construct_menu_name(const char *family_name, const char *given_name,
     const char *email, const char *tel)
 {
   char *menu_name;
+  char menu_print_format[MENU_PRINT_FORMAT_SIZE];
 
-  menu_name = (char *)malloc(sizeof(char) * 79);
+  menu_name = (char *)malloc(sizeof(char) * (COLS - 5 + 1));
 
-  sprintf(menu_name, "%-10.10s %-10.10s %-30.30s %-17.17s",
+  set_menu_print_format(menu_print_format, COLS);
+  sprintf(menu_name, menu_print_format,
       family_name ? family_name : "",
       given_name ? given_name : "", email ? email : "", tel ? tel : "");
 
   return menu_name;
+}
+
+static void
+set_menu_print_format(char *menu_print_format, int width)
+{
+  /*
+   * 75 characters long -- fits into 80 character wide screen 
+   */
+  strcpy(menu_print_format, "%-12.12s %-12.12s %-30.30s %-18.18s");
 }
 
 MENU *
@@ -225,7 +238,12 @@ static void
 print_footer(const char *filename, int entries)
 {
   char *footer_str = NULL;
+  char *rolo_block = NULL;
+  int rolo_block_len = 0;
+  char *entries_block = NULL;
+  int entries_block_len = 0;
   int i = 0;
+  int j = 0;
 
   footer_str = (char *)malloc(sizeof(char) * (COLS + 2));
 
@@ -233,9 +251,31 @@ print_footer(const char *filename, int entries)
     footer_str[i] = '-';
   }
 
-  /*
-   * ("---[ rolo: %s ]-----[ entries: %i ]---\n", filename, entries);
-   */
+  rolo_block_len = strlen(filename) + 16;
+  entries_block_len = 22;
+
+  if (rolo_block_len + entries_block_len <= COLS) {
+    rolo_block = (char *)malloc(sizeof(char) * (rolo_block_len + 1));
+    sprintf(rolo_block, "---[ rolo: %s ]---", filename);
+
+    for (i = 0; i < rolo_block_len; i++) {
+      footer_str[i] = rolo_block[i];
+    }
+
+    free(rolo_block);
+  }
+
+  if (entries_block_len <= COLS) {
+    entries_block = (char *)malloc(sizeof(char) * (entries_block_len + 1));
+    sprintf(entries_block, "---[ entries: %i ]---", entries % 1000);
+
+    entries_block_len = strlen(entries_block);
+    for (i = COLS - entries_block_len, j = 0; j < entries_block_len; i++, j++) {
+      footer_str[i] = entries_block[j];
+    }
+
+    free(entries_block);
+  }
 
   footer_str[COLS] = '\n';
   footer_str[COLS + 1] = '\0';
