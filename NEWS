@@ -1,3 +1,21 @@
+Rolo 003 (2003-03-07)
+
+* Now sorts ascending by family name on startup.
+
+* Added `sort' functionality to the index screen.  Press the `s'
+key to use.
+
+* Added `filter' functionality to the index screen.  Press the `f'
+key to use.
+
+* Added `remove filter' functionality to the index screen.  Type
+`F' to use.
+
+* And, of course, all these extra features are documented in the
+index help screen which can be reached by pressing the `h' key.
+
+* Can resize to larger dimensions in an xterm window without crashing.
+
 Rolo 002 (2003-02-28)
 
 * The source code is now distributed with a proper `configure'
