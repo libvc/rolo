@@ -17,7 +17,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  *
- * $Id: view.c,v 1.2 2003/02/28 03:03:31 ahsu Rel $
+ * $Id: view.c,v 1.3 2003/03/22 12:17:20 ahsu Rel $
  */
 
 #include "view.h"
@@ -36,7 +36,7 @@ static WINDOW *win = NULL;
 static WINDOW *sub = NULL;
 static void (*display_help) (void);
 
-/* ------------------------------------------------------------------
+/***************************************************************************
     Initialize the view window without displaying it to the
     end-user.
  */
@@ -50,7 +50,7 @@ init_view()
   keypad(win, TRUE);            /* enable keypad for use of arrow keys */
 }
 
-/* ------------------------------------------------------------------
+/***************************************************************************
     Display the given vCard to the end-user.
  */
 
@@ -168,7 +168,7 @@ view_vcard(int entry_number, vcard * v)
   wrefresh(win);
 }
 
-/* ------------------------------------------------------------------
+/***************************************************************************
     Prints the header to the window buffer, but does not display it
     to the end-user.
  */
@@ -196,7 +196,7 @@ print_header()
   free(header_str);
 }
 
-/* ------------------------------------------------------------------
+/***************************************************************************
     Prints the footer to the window buffer, but does not display it
     to the end-user.  The contents of the footer depends on the
     width of the screen.
@@ -256,7 +256,7 @@ print_footer(int entry_number, const char *fn)
   free(footer_str);
 }
 
-/* ------------------------------------------------------------------
+/***************************************************************************
     Handle input from the end-user.
  */
 
@@ -303,7 +303,7 @@ process_view_commands()
   return command;
 }
 
-/* ------------------------------------------------------------------
+/***************************************************************************
  */
 
 void
