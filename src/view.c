@@ -17,7 +17,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  *
- * $Id: view.c,v 1.10 2003/04/10 09:22:21 ahsu Rel $
+ * $Id: view.c,v 1.11 2003/04/13 10:39:42 ahsu Exp $
  */
 
 #include "view.h"
@@ -55,7 +55,7 @@ enum view_modes
 static WINDOW *win = NULL;
 static WINDOW *sub = NULL;
 static void (*display_help) (void);
-static vcard *g_v = NULL;
+static vcard_component *g_v = NULL;
 static int g_mode = 1;
 
 /***************************************************************************
@@ -157,7 +157,7 @@ basename (const char *path)
 static void
 view_ident ()
 {
-  vcard_item *vi = NULL;
+  vcard_component *vc = NULL;
   char *val = NULL;
   int x = 0;
   int y = 0;
@@ -174,44 +174,44 @@ view_ident ()
   wstandend (sub);
   wmove (sub, 3, 0);
 
-  vi = get_vcard_item_by_name (g_v, VC_FORMATTED_NAME);
-  val = get_vcard_item_value (vi);
+  vc = vc_get_next_by_name (g_v, VC_FORMATTED_NAME);
+  val = vc_get_value (vc);
   wprintw (sub, "Name         : %s\n", val ? val : "");
 
-  vi = get_vcard_item_by_name (g_v, VC_NICKNAME);
-  val = get_vcard_item_value (vi);
+  vc = vc_get_next_by_name (g_v, VC_NICKNAME);
+  val = vc_get_value (vc);
   wprintw (sub, "Nickname     : %s\n", val ? val : "");
 
-  vi = get_vcard_item_by_name (g_v, VC_BIRTHDAY);
-  val = get_vcard_item_value (vi);
+  vc = vc_get_next_by_name (g_v, VC_BIRTHDAY);
+  val = vc_get_value (vc);
   wprintw (sub, "Birthday     : %s\n", val ? val : "");
 
   wprintw (sub, "\n");
 
-  vi = get_vcard_item_by_name (g_v, VC_URL);
-  val = get_vcard_item_value (vi);
+  vc = vc_get_next_by_name (g_v, VC_URL);
+  val = vc_get_value (vc);
   wprintw (sub, "URL    : %s\n", val ? val : "");
 
-  vi = get_vcard_item_by_name (g_v, VC_PHOTO);
-  val = get_vcard_item_value (vi);
+  vc = vc_get_next_by_name (g_v, VC_PHOTO);
+  val = vc_get_value (vc);
   wprintw (sub, "Photo  : %s\n", val ? val : "");
 
-  vi = get_vcard_item_by_name (g_v, VC_SOUND);
-  val = get_vcard_item_value (vi);
+  vc = vc_get_next_by_name (g_v, VC_SOUND);
+  val = vc_get_value (vc);
   wprintw (sub, "Sound  : %s\n", val ? val : "");
 
   wprintw (sub, "\n");
 
-  vi = get_vcard_item_by_name (g_v, VC_CATEGORIES);
-  val = get_vcard_item_value (vi);
+  vc = vc_get_next_by_name (g_v, VC_CATEGORIES);
+  val = vc_get_value (vc);
   wprintw (sub, "Categories  : %s\n", val ? val : "");
 
-  vi = get_vcard_item_by_name (g_v, VC_REVISION);
-  val = get_vcard_item_value (vi);
+  vc = vc_get_next_by_name (g_v, VC_REVISION);
+  val = vc_get_value (vc);
   wprintw (sub, "Revision    : %s\n", val ? val : "");
 
-  vi = get_vcard_item_by_name (g_v, VC_NOTE);
-  val = get_vcard_item_value (vi);
+  vc = vc_get_next_by_name (g_v, VC_NOTE);
+  val = vc_get_value (vc);
   wprintw (sub, "Note        : %s\n", val ? val : "");
 
   touchwin (win);
@@ -225,7 +225,7 @@ view_ident ()
 static void
 view_geo ()
 {
-  vcard_item *vi = NULL;
+  vcard_component *vc = NULL;
   char *str = NULL;
   char *val = NULL;
   int x = 0;
@@ -243,8 +243,8 @@ view_geo ()
   wstandend (sub);
   wmove (sub, 3, 0);
 
-  vi = get_vcard_item_by_name (g_v, VC_GEOGRAPHIC_POSITION);
-  val = get_vcard_item_value (vi);
+  vc = vc_get_next_by_name (g_v, VC_GEOGRAPHIC_POSITION);
+  val = vc_get_value (vc);
 
   str = get_val_struct_part (val, GEO_LATITUDE);
   wprintw (sub, "Latitude   : %s\n", str ? str : "");
@@ -255,14 +255,14 @@ view_geo ()
   free (str);
 
   wprintw (sub, "\n");
-  vi = get_vcard_item_by_name (g_v, VC_TIME_ZONE);
-  val = get_vcard_item_value (vi);
+  vc = vc_get_next_by_name (g_v, VC_TIME_ZONE);
+  val = vc_get_value (vc);
   wprintw (sub, "Time Zone  : %s\n", val ? val : "");
 
   wprintw (sub, "\n");
 
-  vi = get_vcard_item_by_name (g_v, VC_ADDRESS);
-  val = get_vcard_item_value (vi);
+  vc = vc_get_next_by_name (g_v, VC_ADDRESS);
+  val = vc_get_value (vc);
 
   str = get_val_struct_part (val, ADR_PO_BOX);
   wprintw (sub, "Post Office Box   : %s\n", str ? str : "");
@@ -304,10 +304,11 @@ view_geo ()
 static void
 view_tel ()
 {
-  vcard_item *vi = NULL;
+  vcard_component *vc = NULL;
   char *val = NULL;
   int x = 0;
   int y = 0;
+  int i = 0;
 
   g_mode = VIEW_TEL;
 
@@ -321,20 +322,26 @@ view_tel ()
   wstandend (sub);
   wmove (sub, 3, 0);
 
-  vi = get_vcard_item_by_name (g_v, VC_TELEPHONE);
-  val = get_vcard_item_value (vi);
-  wprintw (sub, "Telephone #1  : %s\n", val ? val : "");
+  for (i = 1, vc = g_v; i <= 5; i++)
+    {
+      vc = vc_get_next_by_name (vc, VC_TELEPHONE);
+      val = vc_get_value (vc);
+      wprintw (sub, "Telephone #%i  : %s\n", i, val ? val : "");
+    }
 
   wprintw (sub, "\n");
 
-  vi = get_vcard_item_by_name (g_v, VC_EMAIL);
-  val = get_vcard_item_value (vi);
-  wprintw (sub, "Email Address #1  : %s\n", val ? val : "");
+  for (i = 1, vc = g_v; i <= 5; i++)
+    {
+      vc = vc_get_next_by_name (vc, VC_EMAIL);
+      val = vc_get_value (vc);
+      wprintw (sub, "Email Address #%i  : %s\n", i, val ? val : "");
+    }
 
   wprintw (sub, "\n");
 
-  vi = get_vcard_item_by_name (g_v, VC_MAILER);
-  val = get_vcard_item_value (vi);
+  vc = vc_get_next_by_name (g_v, VC_MAILER);
+  val = vc_get_value (vc);
   wprintw (sub, "Email Mailer      : %s\n", val ? val : "");
 
   touchwin (win);
@@ -348,7 +355,7 @@ view_tel ()
 static void
 view_org ()
 {
-  vcard_item *vi = NULL;
+  vcard_component *vc = NULL;
   char *str = NULL;
   char *val = NULL;
   int x = 0;
@@ -366,18 +373,18 @@ view_org ()
   wstandend (sub);
   wmove (sub, 3, 0);
 
-  vi = get_vcard_item_by_name (g_v, VC_TITLE);
-  val = get_vcard_item_value (vi);
+  vc = vc_get_next_by_name (g_v, VC_TITLE);
+  val = vc_get_value (vc);
   wprintw (sub, "Title  : %s\n", val ? val : "");
 
-  vi = get_vcard_item_by_name (g_v, VC_ROLE);
-  val = get_vcard_item_value (vi);
+  vc = vc_get_next_by_name (g_v, VC_ROLE);
+  val = vc_get_value (vc);
   wprintw (sub, "Role   : %s\n", val ? val : "");
 
   wprintw (sub, "\n");
 
-  vi = get_vcard_item_by_name (g_v, VC_ORGANIZATION);
-  val = get_vcard_item_value (vi);
+  vc = vc_get_next_by_name (g_v, VC_ORGANIZATION);
+  val = vc_get_value (vc);
 
   str = get_val_struct_part (val, ORG_NAME);
   wprintw (sub, "Organization Name       : %s\n", str ? str : "");
@@ -401,12 +408,12 @@ view_org ()
 
   wprintw (sub, "\n");
 
-  vi = get_vcard_item_by_name (g_v, VC_LOGO);
-  val = get_vcard_item_value (vi);
+  vc = vc_get_next_by_name (g_v, VC_LOGO);
+  val = vc_get_value (vc);
   wprintw (sub, "Logo  : %s\n", val ? val : "");
 
-  vi = get_vcard_item_by_name (g_v, VC_AGENT);
-  val = get_vcard_item_value (vi);
+  vc = vc_get_next_by_name (g_v, VC_AGENT);
+  val = vc_get_value (vc);
   wprintw (sub, "Agent  : %s\n", val ? val : "");
 
   touchwin (win);
@@ -420,7 +427,7 @@ view_org ()
 static void
 view_misc ()
 {
-  vcard_item *vi = NULL;
+  vcard_component *vc = NULL;
   char *str = NULL;
   char *val = NULL;
   int x = 0;
@@ -438,16 +445,16 @@ view_misc ()
   wstandend (sub);
   wmove (sub, 3, 0);
 
-  vi = get_vcard_item_by_name (g_v, VC_SORT_STRING);
-  val = get_vcard_item_value (vi);
+  vc = vc_get_next_by_name (g_v, VC_SORT_STRING);
+  val = vc_get_value (vc);
   wprintw (sub, "Sort String  : %s\n", val ? val : "");
 
-  vi = get_vcard_item_by_name (g_v, VC_CLASS);
-  val = get_vcard_item_value (vi);
+  vc = vc_get_next_by_name (g_v, VC_CLASS);
+  val = vc_get_value (vc);
   wprintw (sub, "Class       : %s\n", val ? val : "");
 
-  vi = get_vcard_item_by_name (g_v, VC_KEY);
-  val = get_vcard_item_value (vi);
+  vc = vc_get_next_by_name (g_v, VC_KEY);
+  val = vc_get_value (vc);
   wprintw (sub, "Public Key  : %s\n", val ? val : "");
 
   touchwin (win);
@@ -460,16 +467,16 @@ view_misc ()
  */
 
 void
-view_vcard (int entry_number, vcard * v)
+view_vcard (int entry_number, vcard_component * v)
 {
-  vcard_item *vi = NULL;
-  char *str = NULL;
+  vcard_component *vc = NULL;
+  char *val = NULL;
 
   g_v = v;
 
-  vi = get_vcard_item_by_name (g_v, VC_FORMATTED_NAME);
-  str = get_vcard_item_value (vi);
-  print_footer (entry_number, str ? str : "");
+  vc = vc_get_next_by_name (g_v, VC_FORMATTED_NAME);
+  val = vc_get_value (vc);
+  print_footer (entry_number, val ? val : "");
 
   switch (g_mode)
     {
@@ -681,7 +688,7 @@ set_view_help_fcn (void (*fcn) (void))
  */
 
 void
-raw_view (const vcard * v)
+raw_view (const vcard_component * v)
 {
   /* FIXME: have a simple scrolling raw display of the vcard */
 }
