@@ -17,7 +17,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  * 
- * $Id: main.c,v 1.3 2003/02/27 15:17:59 ahsu Rel $
+ * $Id: main.c,v 1.4 2003/03/05 07:45:00 ahsu Exp $
  */
 
 #include <vcard.h>
@@ -147,7 +147,7 @@ display_usage (const char *prog_name)
 static void
 display_version ()
 {
-  printf ("rolo version %s\n", PACKAGE_VERSION);
+  printf ("%s\n", PACKAGE_STRING);
 }
 
 /***************************************************************************
