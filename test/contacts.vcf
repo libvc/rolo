@@ -1,4 +1,137 @@
 BEGIN:VCARD
+FN:Mr. John Q. Public\, Esq.
+N:Public;John;Quinlan;Mr.;Esq.
+NICKNAME:Robbie
+BDAY:1996-04-15
+ADR;TYPE=dom,home,postal,parcel:;;123 Main Street;Any Town;CA;91921-1234
+LABEL;TYPE=dom,home,postal,parcel:Mr.John Q. Public\, Esq.\nMail Drop: TNE QB\n123 Main Street\nAny Town\, CA  91921-1234\nU.S.A.
+TEL;TYPE=work,voice,pref,msg:+1-213-555-1234
+EMAIL;TYPE=internet:jqpublic@xyz.dom1.com
+MAILER:PigeonMail 2.1
+TZ:-05:00
+GEO:37.386013;-122.082932
+TITLE:Director\, Research and Development
+ROLE:Programmer
+LOGO;VALUE=uri:http://www.abc.com/pub/logos/abccorp.jpg
+AGENT;VALUE=uri:CID:JQPUBLIC.part3.960129T083020.xyzMail@host3.com
+ORG:ABC\, Inc.;North American Division;Marketing
+CATEGORIES:TRAVEL AGENT
+NOTE:This fax number is operational 0800 to 1715 EST\, Mon-Fri.
+PRODID:-//ONLINE DIRECTORY//NONSGML Version 1//EN
+REV:1997-11-15
+SOUND;TYPE=BASIC;VALUE=uri:CID:JOHNQPUBLIC.part8.19960229T080000.xyzMail@host1.com
+UID:19950401-080045-40000F192713-0052
+URL:http://www.swbyps.restaurant.french/~chezchic.html
+VERSION:3.0
+CLASS:PUBLIC
+END:VCARD
+
+BEGIN:vCard
+VERSION:3.0
+FN:Frank Dawson
+N:Dawson;Frank
+ORG:Lotus Development Corporation
+ADR;TYPE=WORK,POSTAL,PARCEL:;;6544 Battleford Drive;Raleigh;NC;27613-3502;U.S.A.
+TEL;TYPE=VOICE,MSG,WORK:+1-919-676-9515
+TEL;TYPE=FAX,WORK:+1-919-676-9564
+EMAIL;TYPE=INTERNET,PREF:Frank_Dawson@Lotus.com
+EMAIL;TYPE=INTERNET:fdawson@earthlink.net
+URL:http://home.earthlink.net/~fdawson
+END:vCard
+
+BEGIN:vCard
+VERSION:3.0
+FN:Tim Howes
+N:Howes;Tim
+ORG:Netscape Communications Corp.
+ADR;TYPE=WORK:;;501 E. Middlefield Rd.;Mountain View;CA; 94043;U.S.A.
+TEL;TYPE=VOICE,MSG,WORK:+1-415-937-3419
+TEL;TYPE=FAX,WORK:+1-415-528-4164
+EMAIL;TYPE=INTERNET:howes@netscape.com
+END:vCard
+
+BEGIN:VCARD
+VERSION:3.0
+N:Szyslak;Moe
+FN:Moe Szyslak
+ORG:Moe's Tavern
+TITLE:Manger
+ROLE:Bartender
+EMAIL:moe@moes-tavern.com
+TEL:+1-123-555-4444
+END:VCARD
+
+BEGIN:VCARD
+VERSION:3.0
+FN:Ed Ng
+N:Ng;Ed
+EMAIL:ed@ng.zz
+TEL:+64-9-555-0000
+END:VCARD
+
+BEGIN:VCARD
+VERSION:3.0
+FN:Mr. Andrew Hsu
+N:Hsu;Andrew;
+EMAIL;TYPE=internet:ahsu@users.sf.net
+LABEL:10 Baker Street\nBoston
+TEL:+1-617-492-1111
+END:VCARD
+
+BEGIN:VCARD
+VERSION:3.0
+N:Preston;Bill;S.;Mr.;Esq.
+FN:Bill S. Preston
+EMAIL:bill@san-dimas-high.edu
+TEL:+1-420-555-8765
+TZ:-08:00
+END:VCARD
+
+BEGIN:VCARD
+VERSION:3.0
+N:Kirk;James;T.
+EMAIL:jtk@enterprise.earth.net
+TEL:+123-4567-39492
+BDAY:2133-10-10
+END:VCARD
+
+BEGIN:VCARD
+VERSION:3.0
+N:Chow;Stephen
+FN:Stephen Chow
+EMAIL:stephen@chow.com.hk
+TEL:+852-1234-5678
+TZ:+07:00
+MAILER:Pine 4.0
+END:VCARD
+
+BEGIN:VCARD
+N:Clark;Helen
+FN:Helen Clark
+TEL:+64-4-471-9998
+EMAIL:pm@ministers.govt.nz
+TZ:+12:00
+END:VCARD
+
+BEGIN:VCARD
+VERSION:2.1
+N:Friday;Fred
+EMAIL:ff@uu.nn
+TEL;WORK;VOICE:+1-213-555-1234
+TEL;WORK;FAX:+1-213-555-5678
+END:VCARD
+
+BEGIN:VCARD
+VERSION:2.1
+N:Martin;Stephen
+EMAIL:marty@i.have.no.email.address
+TEL;HOME;VOICE:+1 (210) 555-1357
+TEL;HOME;FAX:+1 (210) 555-0864
+ADR;WORK;PARCEL;POSTAL;DOM:123 Cliff Ave.;Big Town;CA;97531
+END:VCARD
+
+
+BEGIN:VCARD
 VERSION:3.0
 FN:Mr. Abbot Aikman
 N:Aikman;Abbot;;;
@@ -12,6 +145,7 @@ X-SHOESIZE:9
 NICKNAME:Mr. Twix
 BDAY:1980-07-07
 END:VCARD
+
 BEGIN:VCARD
 VERSION:3.0
 N:Winter;Alex;;;
@@ -20,20 +154,14 @@ TEL:+1-413-545-2911
 X-SHOESIZE:5
 FN:Alex Winter
 END:VCARD
+
 BEGIN:VCARD
 VERSION:3.0
 N:Apharsathchites;Almondiblahtaim;;;
 EMAIL;TYPE=internet:aapharsathchites@apharsathchites-home.co.uk
 TEL:+1-555-111-1111
 END:VCARD
-BEGIN:VCARD
-VERSION:3.0
-FN:Mr. Andrew Hsu
-N:Hsu;Andrew;;;
-EMAIL;TYPE=internet:ahsu@andrew.hsu
-LABEL:10 Baker Street\nBoston
-TEL:+1-617-492-1111
-END:VCARD
+
 BEGIN:VCARD
 VERSION:3.0
 N:Bush;Barbara;;;
@@ -48,12 +176,14 @@ N:Doe;Bob;;;
 EMAIL:bd@theinternet.net
 TEL:+22-565-124-6778
 END:VCARD
+
 BEGIN:VCARD
 VERSION:3.0
 FN:Burger King
-FN:Burger King;;;
+N:Burger King
 TEL:+1-284-555-2212
 END:VCARD
+
 BEGIN:VCARD
 VERSION:3.0
 N:Kline;Calvin;;;
@@ -61,6 +191,7 @@ FN:Calvin Kline
 EMAIL;TYPE=internet:underwear@clothingmaker.net
 TEL:+1-333-222-1923
 END:VCARD
+
 BEGIN:VCARD
 VERSION:3.0
 N:Tracy;Richard;;;
@@ -69,14 +200,9 @@ NICKNAME:Guy
 EMAIL;TYPE=internet:dick@watch.com
 TEL:+1-555-222-0001
 END:VCARD
-BEGIN:VCARD
-VERSION:3.0
-FN:Frank Dawson
-ORG:Lotus Development Corporation
-TEL:+1-919-676-9515
-EMAIL:Frank_Dawson@Lotus.com
-URL:http://home.earthllink.net/~fdawson
-END:VCARD
+
+
+
 BEGIN:VCARD
 VERSION:3.0
 FN:Fred Flintstone
@@ -89,25 +215,23 @@ NOTE:He wears no shoes.
 X-SHOESIZE:12
 NICKNAME:Fred
 END:VCARD
+
 BEGIN:VCARD
 VERSION:3.0
 N:Homer;Simpson;;;
 EMAIL;TYPE=internet:homer@simpson.com
 TEL:+1-555-999-8888
 END:VCARD
-BEGIN:VCARD
-VERSION:3.0
-N:Kirk;James;T.;;
-EMAIL:jtk@enterprise.earth.net
-TEL:+123-4567-39492
-BDAY:2133-10-10
-END:VCARD
+
+
 BEGIN:VCARD
 VERSION:3.0
 N:Wang;Jen;;;
 EMAIL;TYPE=internet:jw@jen.wang
 TEL:+99-999-999-9999
 END:VCARD
+
+
 BEGIN:VCARD
 VERSION:3.0
 N:Smith;John;;;
@@ -115,6 +239,7 @@ EMAIL;TYPE=internet:jsmith@hotmail.com
 TEL:+1-413-545-1515
 X-SHOESIZE:9
 END:VCARD
+
 BEGIN:VCARD
 VERSION:3.0
 N:Frog;Kermit;D.;;
@@ -123,6 +248,7 @@ TITLE:Entertainer
 EMAIL:frog@legs.com
 TEL:+1-555-222-9284
 END:VCARD
+
 BEGIN:VCARD
 VERSION:3.0
 N:Roe;Louis;;;
@@ -131,14 +257,6 @@ NICKNAME:Lou
 EMAIL:lou@evergreen.com
 TEL:+7-2-342-112
 BDAY:1980-09-09
-END:VCARD
-BEGIN:VCARD
-VERSION:3.0
-N:Moe;Moe;;;
-FN:Moe Moe
-TITLE:Bartender
-EMAIL:moe@moes-tavern.com
-TEL:+1-555-333-4444
 END:VCARD
 
 
@@ -173,27 +291,11 @@ N:McDonald;Ronald;;;
 EMAIL;TYPE=internet:ron@mcdonald.com
 TEL:+1-422-555-8768
 END:VCARD
+
 BEGIN:VCARD
 VERSION:3.0
 FN:Miss Shishi Wang
 N:Wang;Shishi;;;
 EMAIL;TYPE=internet:ss@ss.wang
 TEL:+2-3-111-222
-END:VCARD
-
-BEGIN:VCARD
-VERSION:3.0
-FN:The Rock
-N:Rock;The;;;
-ORG:The Company
-TEL:+1-415-111-2323
-EMAIL:rock@the.com
-END:VCARD
-
-BEGIN:VCARD
-VERSION:3.0
-FN:Tim Howes
-ORG:Netscape Communications Corp.
-TEL:+1-415-937-3419
-EMAIL:howes@netscape.com
 END:VCARD
