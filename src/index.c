@@ -17,7 +17,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  *
- * $Id: index.c,v 1.1 2003/02/24 09:15:34 ahsu Exp $
+ * $Id: index.c,v 1.2 2003/02/28 02:51:17 ahsu Rel $
  */
 
 #include "index.h"
@@ -40,12 +40,48 @@ static void print_header();
 static void search_menu();
 static ITEM *search_items(const char *search_string);
 static void set_menu_print_format(char *menu_print_format, int width);
+static int compare_by_family_name(ITEM **item_a, ITEM **item_b);
 
 /*** STATIC VARIABLES ***/
 static void (*display_help) (void);
 static MENU *menu = NULL;
 static WINDOW *win = NULL;
 static WINDOW *sub = NULL;
+
+/* ------------------------------------------------------------------
+ */
+
+static int
+compare_by_family_name(ITEM **item_a, ITEM **item_b)
+{
+  int ret_val = 0;
+
+  ret_val = strcmp(item_description(*item_a), item_description(*item_b));
+  
+  return ret_val;
+}
+
+/* ------------------------------------------------------------------
+ */
+
+void
+sort_items(ITEM ** items, int count, int sort_by)
+{
+  switch(sort_by)
+  {
+    case SORT_MENU_BY_FAMILY_NAME:
+      qsort(items, count, sizeof(ITEM *), compare_by_family_name);
+    break;
+    case SORT_MENU_BY_GIVEN_NAME:
+    break;
+    case SORT_MENU_BY_EMAIL:
+    break;
+    case SORT_MENU_BY_TEL:
+    break;
+    default:
+    break;
+  }
+}
 
 /* ------------------------------------------------------------------
     Initializes the index window by openning the data file,
@@ -72,6 +108,7 @@ init_index(const char *filename)
   rewind(fp);
   items = get_items(fp, count);
   fclose(fp);
+  sort_items(items, count, SORT_MENU_BY_FAMILY_NAME);
   menu = get_menu(items);
 
   win = stdscr;

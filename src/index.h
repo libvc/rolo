@@ -17,7 +17,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  *
- * $Id: index.h,v 1.3 2003/02/20 08:58:46 ahsu Rel $
+ * $Id: index.h,v 1.1 2003/02/24 09:15:34 ahsu Rel $
  */
 
 #include <menu.h>
@@ -26,9 +26,14 @@ enum index_commands { INDEX_COMMAND_VIEW, INDEX_COMMAND_EDIT,
   INDEX_COMMAND_QUIT
 };
 
+enum sort_menu { SORT_MENU_BY_FAMILY_NAME, SORT_MENU_BY_GIVEN_NAME,
+  SORT_MENU_BY_EMAIL, SORT_MENU_BY_TEL
+};
+
 /*** PROTOTYPES ***/
 
 extern void init_index(const char *dirpath);
+extern void sort_items(ITEM **items, int count, int sort_by);
 extern ITEM **get_items(FILE * fp, int count);
 extern MENU *get_menu(ITEM ** items);
 extern void display_index();
