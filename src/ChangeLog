@@ -1,5 +1,16 @@
 2003-03-27  Andrew Hsu
 
+* index.c: Reduced the length of a few strings that were unnecessarily
+long.  Fixed a core dump problem when the first contact entry is
+added to a new datafile.
+
+* view.c: Prettied the code and trimmed a string.
+
+* help.c: Removed the attempts at having the help screen scroll.
+Updated index and view help screens.
+
+2003-03-27  Andrew Hsu
+
 * main.c: At startup, rolo will now create the default datafile and
 datafile directory if it does not already exist.
 
