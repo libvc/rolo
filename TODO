@@ -28,6 +28,3 @@ TSV, Outlook vCard, Netscape vCard, Evolution vCard, etc.)
 external program that can display images--this external program
 could be specified in the rolorc file).
 
-* Add support for displaying non-English characters (like French,
-Spanish, German, etc.).
-
