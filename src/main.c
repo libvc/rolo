@@ -182,6 +182,10 @@ set_defaults ()
                 FILE *fp;
 
                 fp = fopen (default_datafile, "w");
+                if (NULL == fp) {
+                  fprintf (stderr, "unable to open file %s\n", default_datafile);
+                  exit (1);
+                }
                 fclose (fp);
               }
             else
