@@ -87,7 +87,7 @@ get_env_editor ()
       editor = getenv ("EDITOR");
       if (NULL == editor)
         {
-          editor = strdup ("vi");
+          editor = strdup ("/usr/bin/editor");
           return editor;
         }
     }
