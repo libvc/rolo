@@ -226,6 +226,8 @@ static void
 view_geo ()
 {
   vc_component *vc = NULL;
+  vc_component_param *vcp = NULL;
+  char *type = NULL;
   char *str = NULL;
   char *val = NULL;
   int x = 0;
@@ -261,38 +263,46 @@ view_geo ()
 
   wprintw (sub, "\n");
 
-  vc = vc_get_next_by_name (g_v, VC_ADDRESS);
-  val = vc_get_value (vc);
+  vc = g_v;
+  while (vc = vc_get_next_by_name (vc, VC_ADDRESS)) {
 
-  str = get_val_struct_part (val, ADR_PO_BOX);
-  wprintw (sub, "Post Office Box   : %s\n", str ? str : "");
-  free (str);
+    vcp = vc ? vc_param_get_by_name (vc_get_param (vc), "type") : NULL;
+    type = vcp ? vc_param_get_value (vcp) : NULL;
+    wprintw (sub, type ? "[%s]\n" : "%s", type ? type : "");
 
-  str = get_val_struct_part (val, ADR_EXT_ADDRESS);
-  wprintw (sub, "Extended Address  : %s\n", str ? str : "");
-  free (str);
+    val = vc_get_value (vc);
 
-  str = get_val_struct_part (val, ADR_STREET);
-  wprintw (sub, "Street Address    : %s\n", str ? str : "");
-  free (str);
+    str = get_val_struct_part (val, ADR_PO_BOX);
+    wprintw (sub, "Post Office Box   : %s\n", str ? str : "");
+    free (str);
 
-  str = get_val_struct_part (val, ADR_LOCALITY);
-  wprintw (sub, "Locality          : %s\n", str ? str : "");
-  free (str);
+    str = get_val_struct_part (val, ADR_EXT_ADDRESS);
+    wprintw (sub, "Extended Address  : %s\n", str ? str : "");
+    free (str);
 
-  str = get_val_struct_part (val, ADR_REGION);
-  wprintw (sub, "Region            : %s\n", str ? str : "");
-  free (str);
+    str = get_val_struct_part (val, ADR_STREET);
+    wprintw (sub, "Street Address    : %s\n", str ? str : "");
+    free (str);
 
-  str = get_val_struct_part (val, ADR_POSTAL_CODE);
-  wprintw (sub, "Postal Code       : %s\n", str ? str : "");
-  free (str);
+    str = get_val_struct_part (val, ADR_LOCALITY);
+    wprintw (sub, "Locality          : %s\n", str ? str : "");
+    free (str);
 
-  str = get_val_struct_part (val, ADR_COUNTRY);
-  wprintw (sub, "Country           : %s\n", str ? str : "");
-  free (str);
+    str = get_val_struct_part (val, ADR_REGION);
+    wprintw (sub, "Region            : %s\n", str ? str : "");
+    free (str);
 
-  wprintw (sub, "\n");
+    str = get_val_struct_part (val, ADR_POSTAL_CODE);
+    wprintw (sub, "Postal Code       : %s\n", str ? str : "");
+    free (str);
+
+    str = get_val_struct_part (val, ADR_COUNTRY);
+    wprintw (sub, "Country           : %s\n", str ? str : "");
+    free (str);
+
+    wprintw (sub, "\n");
+  }
+
   touchwin (win);
   wrefresh (sub);
   wrefresh (win);
