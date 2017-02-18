@@ -210,9 +210,12 @@ view_ident ()
   val = vc_get_value (vc);
   wprintw (sub, "Revision    : %s\n", val ? val : "");
 
-  vc = vc_get_next_by_name (g_v, VC_NOTE);
-  val = vc_get_value (vc);
-  wprintw (sub, "Note        : %s\n", val ? val : "");
+  vc = g_v;
+  do {
+    vc = vc_get_next_by_name (vc, VC_NOTE);
+    val = vc_get_value (vc);
+    wprintw (sub, "Note        : %s\n", val ? val : "");
+  } while (val);
 
   touchwin (win);
   wrefresh (sub);
