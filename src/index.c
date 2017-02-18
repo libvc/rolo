@@ -616,7 +616,8 @@ refresh_index ()
 
   items = menu_items (menu);
   current_index = current_index >= count ? count : current_index;
-  set_current_item (menu, items[current_index]);
+  if (items != NULL)
+    set_current_item (menu, items[current_index]);
 }
 
 /***************************************************************************
