@@ -38,6 +38,7 @@
 #include <assert.h>
 #include <sys/types.h>
 #include <sys/stat.h>
+#include <locale.h>
 
 #if HAVE_CONFIG_H
 #include "config.h"
@@ -339,6 +340,7 @@ main (int argc, char *argv[])
 
   signal (SIGINT, finish);      /* catch interrupt for exiting */
   signal (SIGWINCH, resize);    /* catch interrupt for resizing */
+  setlocale (LC_ALL, "");
   initscr ();
 
   keypad (stdscr, TRUE);        /* enable keypad for use of arrow keys */
