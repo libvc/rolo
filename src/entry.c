@@ -23,6 +23,7 @@
 #include "entry.h"
 #include <ncurses.h>
 #include <string.h>
+#include <stdlib.h>
 #include <vc.h>
 #include <glib.h>
 #include <unac.h>
