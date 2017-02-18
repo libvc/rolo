@@ -19,6 +19,10 @@ AC_CHECK_LIB(menuw, new_menu)
 AC_CHECK_LIB(formw, new_form)
 CFLAGS="$CFLAGS -I/usr/include/ncursesw/"
 
+# Glib settings
+LIBS="$LIBS $(pkg-config glib-2.0 --libs)"
+CFLAGS="$CFLAGS $(pkg-config glib-2.0 --cflags)"
+
 # Checks for header files.
 AC_HEADER_STDC
 

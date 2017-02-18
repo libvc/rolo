@@ -24,8 +24,9 @@
 #include <ncurses.h>
 #include <string.h>
 #include <vc.h>
+#include <glib.h>
 
-#define MENU_PRINT_FORMAT_SIZE 38
+#define MENU_PRINT_FORMAT_SIZE 80
 
 static int cmp_tel (const char *desc_a, const char *desc_b);
 static int cmp_email (const char *desc_a, const char *desc_b);
@@ -37,7 +38,9 @@ static int cmp_desc_by_family_n (const void *a, const void *b);
 static char *construct_menu_name (const char *family_name,
                                   const char *given_name, const char *email,
                                   const char *tel);
-static void set_menu_print_format (char *menu_print_format, int width);
+static void set_menu_print_format (char *menu_print_format,
+				   const char* fn, const char* gn,
+				   const char* em);
 
 /***************************************************************************
  */
@@ -451,9 +454,10 @@ construct_menu_name (const char *family_name, const char *given_name,
   /* FIXME: get the y and x vals from arguments passed to this function 
      so that this module will not need to rely on ncurses.h */
   getmaxyx (stdscr, y, x);
-  menu_name = (char *) malloc (sizeof (char) * (x - 5 + 1));
+  /* Allow enough room for UTF-8 characters */
+  menu_name = (char *) malloc (sizeof (char) * 2 * x);
 
-  set_menu_print_format (menu_print_format, x);
+  set_menu_print_format (menu_print_format, family_name, given_name, email);
   sprintf (menu_name, menu_print_format,
            family_name ? family_name : "",
            given_name ? given_name : "", email ? email : "", tel ? tel : "");
@@ -466,8 +470,23 @@ construct_menu_name (const char *family_name, const char *given_name,
  */
 
 static void
-set_menu_print_format (char *menu_print_format, int width)
+set_menu_print_format (char *menu_print_format,
+		       const char* fn, const char* gn, const char* em)
 {
+  int fn_len, gn_len, em_len;
+  fn_len = gn_len = 12;
+  em_len = 30;
+  if (fn)
+      fn_len += strlen (fn) - g_utf8_strlen (fn, -1);
+  if (gn)
+      gn_len += strlen (gn) - g_utf8_strlen (gn, -1);
+  if (em)
+      em_len += strlen (em) - g_utf8_strlen (em, -1);
+
+  snprintf (menu_print_format, MENU_PRINT_FORMAT_SIZE,
+	    "%%-%d.%ds %%-%d.%ds %%-%d.%ds %%-18.18s",
+	    fn_len, fn_len, gn_len, gn_len, em_len, em_len);
+
   /* 75 characters long -- fits into 80 character wide screen */
-  strcpy (menu_print_format, "%-12.12s %-12.12s %-30.30s %-18.18s");
+  /* strcpy (menu_print_format, "%-12.12s %-12.12s %-30.30s %-18.18s"); */
 }
