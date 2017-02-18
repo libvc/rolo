@@ -305,10 +305,14 @@ static void
 view_tel ()
 {
   vc_component *vc = NULL;
+  vc_component_param *vcp = NULL;
   char *val = NULL;
+  char *type = NULL;
+  char fmt [80];
+  char tmp [80];
   int x = 0;
   int y = 0;
-  int i = 0;
+  int len = -1;
 
   g_mode = VIEW_TEL;
 
@@ -322,20 +326,53 @@ view_tel ()
   wstandend (sub);
   wmove (sub, 3, 0);
 
-  for (i = 1, vc = g_v; i <= 5; i++)
+  len = -1;
+  vc = g_v;
+  while (vc = vc_get_next_by_name (vc, VC_TELEPHONE))
+   {
+      vcp = vc ? vc_param_get_by_name (vc_get_param (vc), "type") : NULL;
+      if (vcp)
+        {
+           type = vc_param_get_value (vcp);
+           if ((len < 0) | (len < strlen (type)))
+             len = strlen (type) + 2;  /* take parentheses into account */
+        }
+   }
+
+  vc = g_v;
+  while (vc = vc_get_next_by_name (vc, VC_TELEPHONE))
     {
-      vc = vc_get_next_by_name (vc, VC_TELEPHONE);
-      val = vc_get_value (vc);
-      wprintw (sub, "Telephone #%i  : %s\n", i, val ? val : "");
+      vcp = vc ? vc_param_get_by_name (vc_get_param (vc), "type") : NULL;
+      type = vcp ? vc_param_get_value (vcp) : NULL;
+      val = vc ? vc_get_value (vc) : NULL;
+      snprintf (fmt, 79, "Telephone %%%ds : %%s\n", len);
+      snprintf (tmp, 79, type ? "(%s)" : "", type);
+      wprintw (sub, fmt, tmp, val ? val : "");
     }
 
   wprintw (sub, "\n");
 
-  for (i = 1, vc = g_v; i <= 5; i++)
+  len = -1;
+  vc = g_v;
+  while (vc = vc_get_next_by_name (vc, VC_EMAIL))
     {
-      vc = vc_get_next_by_name (vc, VC_EMAIL);
-      val = vc_get_value (vc);
-      wprintw (sub, "Email Address #%i  : %s\n", i, val ? val : "");
+      vcp = vc ? vc_param_get_by_name (vc_get_param (vc), "type") : NULL;
+      if (vcp) {
+        type = vc_param_get_value (vcp);
+        if ((len < 0) | (len < strlen (type)))
+          len = strlen (type) + 2;  /* take parentheses into account */
+      }
+    }
+
+  vc = g_v;
+  while (vc = vc_get_next_by_name (vc, VC_EMAIL))
+    {
+      vcp = vc ? vc_param_get_by_name (vc_get_param (vc), "type") : NULL;
+      type = vcp ? vc_param_get_value (vcp) : NULL;
+      val = vc ? vc_get_value (vc) : NULL;
+      snprintf (fmt, 79, "Email Address %%%ds : %%s\n", len);
+      snprintf (tmp, 79, type ? "(%s)" : "", type);
+      wprintw (sub, fmt, tmp, val ? val : "");
     }
 
   wprintw (sub, "\n");
