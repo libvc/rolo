@@ -141,61 +141,63 @@ set_defaults ()
   char *home = NULL;
   char *editor = NULL;
 
-  home = getenv ("HOME");
-  if (NULL != home)
-    {
-      int result = 1;
-      struct stat sb;
+  if (strlen (data_path) == 0) {
+    home = getenv ("HOME");
+    if (NULL != home)
+      {
+        int result = 1;
+        struct stat sb;
 
-      strcpy (default_datafile, home);
-      result = stat (default_datafile, &sb);
-      if (-1 == result)
-        {
-          fprintf (stderr, "home directory unavailable\n");
-          exit (1);
-        }
+        strcpy (default_datafile, home);
+        result = stat (default_datafile, &sb);
+        if (-1 == result)
+          {
+            fprintf (stderr, "home directory unavailable\n");
+            exit (1);
+          }
 
-      strncat (default_datafile, "/", 1);
-      strncat (default_datafile, DEFAULT_HOME_ROLO_DIR,
-               strlen (DEFAULT_HOME_ROLO_DIR));
-      result = stat (default_datafile, &sb);
-      if (-1 == result)
-        {
-          if (ENOENT == errno)
-            {
-              mkdir (default_datafile, S_IRWXU);
-            }
-          else
-            {
-              exit (1);
-            }
-        }
+        strncat (default_datafile, "/", 1);
+        strncat (default_datafile, DEFAULT_HOME_ROLO_DIR,
+                 strlen (DEFAULT_HOME_ROLO_DIR));
+        result = stat (default_datafile, &sb);
+        if (-1 == result)
+          {
+            if (ENOENT == errno)
+              {
+                mkdir (default_datafile, S_IRWXU);
+              }
+            else
+              {
+                exit (1);
+              }
+          }
 
-      strncat (default_datafile, "/", 1);
-      strncat (default_datafile, DEFAULT_FILENAME, strlen (DEFAULT_FILENAME));
-      result = stat (default_datafile, &sb);
-      if (-1 == result)
-        {
-          if (ENOENT == errno)
-            {
-              FILE *fp;
+        strncat (default_datafile, "/", 1);
+        strncat (default_datafile, DEFAULT_FILENAME, strlen (DEFAULT_FILENAME));
+        result = stat (default_datafile, &sb);
+        if (-1 == result)
+          {
+            if (ENOENT == errno)
+              {
+                FILE *fp;
 
-              fp = fopen (default_datafile, "w");
-              fclose (fp);
-            }
-          else
-            {
-              exit (1);
-            }
-        }
-    }
-  else
-    {
-      fprintf (stderr, "unable to deterime home directory");
-      exit (1);
-    }
+                fp = fopen (default_datafile, "w");
+                fclose (fp);
+              }
+            else
+              {
+                exit (1);
+              }
+          }
+      }
+    else
+      {
+        fprintf (stderr, "unable to deterime home directory");
+        exit (1);
+      }
 
-  strcpy (data_path, default_datafile);
+    strcpy (data_path, default_datafile);
+  }
 
   editor = get_env_editor ();
 
@@ -286,6 +288,8 @@ process_command_line_args (int argc, char *const *argv)
 {
   int ch = -1;
 
+  data_path [0] = '\0';
+
   while (-1 != (ch = getopt (argc, argv, "rf:vVh")))
     {
       switch (ch)
@@ -331,8 +335,8 @@ main (int argc, char *argv[])
   int win_state = WINDOW_INDEX;
   int command = 0;
 
-  set_defaults ();
   process_command_line_args (argc, argv);
+  set_defaults ();
   /*
    * process_environment_variables(); 
    * process_configuration_file(); 
