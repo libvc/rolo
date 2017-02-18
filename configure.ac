@@ -22,6 +22,10 @@ CFLAGS="$CFLAGS -I/usr/include/ncursesw/"
 LIBS="$LIBS $(pkg-config glib-2.0 --libs)"
 CFLAGS="$CFLAGS $(pkg-config glib-2.0 --cflags)"
 
+# Libunac settings
+LIBS="$LIBS $(pkg-config unac --libs)"
+CFLAGS="$CFLAGS $(pkg-config unac --cflags)"
+
 # Checks for header files.
 AC_HEADER_STDC
 

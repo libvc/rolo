@@ -25,6 +25,7 @@
 #include <string.h>
 #include <vc.h>
 #include <glib.h>
+#include <unac.h>
 
 #define MENU_PRINT_FORMAT_SIZE 80
 
@@ -175,14 +176,42 @@ cmp_desc_by_given_n (const void *a, const void *b)
   entry_node **ena = NULL;
   entry_node **enb = NULL;
 
+  char* ena_desc = NULL;
+  char* enb_desc = NULL;
+  char* pure_a = NULL;
+  char* pure_b = NULL;
+  size_t length[1] = {0};
+  int a_alloc = 1;
+  int b_alloc = 1;
+
   ena = (entry_node **) a;
   enb = (entry_node **) b;
 
-  ret_val = cmp_given_n ((*ena)->description, (*enb)->description);
+  ena_desc = (*ena)->description;
+  enb_desc = (*enb)->description;
+
+  /* Try to convert the strings from UTF-8 and fall back to the original
+     strings if it fails */
+  if (unac_string ("UTF-8", ena_desc, strlen (ena_desc), &pure_a, length)) {
+    pure_a = ena_desc;
+    a_alloc = 0;
+  }
+
+  if (unac_string ("UTF-8", enb_desc, strlen (enb_desc), &pure_b, length)) {
+    pure_b = enb_desc;
+    b_alloc = 0;
+  }
+
+  ret_val = cmp_given_n (pure_a, pure_b);
   if (0 == ret_val)
     {
-      ret_val = strcmp ((*ena)->description, (*enb)->description);
+      ret_val = strcmp (pure_a, pure_b);
     }
+
+  if (a_alloc)
+    free (pure_a);
+  if (b_alloc)
+    free (pure_b);
 
   return ret_val;
 }
@@ -197,10 +226,38 @@ cmp_desc_by_family_n (const void *a, const void *b)
   entry_node **ena = NULL;
   entry_node **enb = NULL;
 
+  char* ena_desc = NULL;
+  char* enb_desc = NULL;
+  char* pure_a = NULL;
+  char* pure_b = NULL;
+  size_t length[1] = {0};
+  int a_alloc = 1;
+  int b_alloc = 1;
+
   ena = (entry_node **) a;
   enb = (entry_node **) b;
 
-  ret_val = strcmp ((*ena)->description, (*enb)->description);
+  ena_desc = (*ena)->description;
+  enb_desc = (*enb)->description;
+
+  /* Try to convert the strings from UTF-8 and fall back to the original
+     strings if it fails */
+  if (unac_string ("UTF-8", ena_desc, strlen (ena_desc), &pure_a, length)) {
+    pure_a = ena_desc;
+    a_alloc = 0;
+  }
+
+  if (unac_string ("UTF-8", enb_desc, strlen (enb_desc), &pure_b, length)) {
+    pure_b = enb_desc;
+    b_alloc = 0;
+  }
+
+  ret_val = strcmp (pure_a, pure_b);
+
+  if (a_alloc)
+    free (pure_a);
+  if (b_alloc)
+    free (pure_b);
 
   return ret_val;
 }
