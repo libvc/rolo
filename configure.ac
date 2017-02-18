@@ -14,9 +14,10 @@ AC_PROG_CC
 
 # Checks for libraries.
 AC_CHECK_LIB(vc, vc_new)
-AC_CHECK_LIB(ncurses, newwin)
-AC_CHECK_LIB(menu, new_menu)
-AC_CHECK_LIB(form, new_form)
+AC_CHECK_LIB(ncursesw, newwin)
+AC_CHECK_LIB(menuw, new_menu)
+AC_CHECK_LIB(formw, new_form)
+CFLAGS="$CFLAGS -I/usr/include/ncursesw/"
 
 # Checks for header files.
 AC_HEADER_STDC
