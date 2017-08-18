@@ -6,7 +6,6 @@ AM_INIT_AUTOMAKE
 AC_PREREQ(2.59)
 AC_COPYRIGHT([Copyright (C) 2003  Andrew Hsu
 Copyright (C) 2017  Rafael Laboissiere])
-AC_REVISION($Revision: 1.18 $)
 AC_CONFIG_SRCDIR([src/main.c])
 AM_CONFIG_HEADER([config.h])
 
