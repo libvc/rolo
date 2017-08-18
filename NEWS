@@ -1,3 +1,9 @@
+Rolo 013 (2017-08-18)
+
+* Do not install the (inexistent) file rfc2426.txt
+
+* Minor tweaks in configure.ac
+
 Rolo 012 (2017-02-18)
 
 * The sources now are maintained at GitHub
