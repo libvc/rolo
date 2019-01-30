@@ -13,8 +13,3 @@ Original read me file provided in README.
     make
     make install
 
-Note: if making changes, use
-
-    git update-index --assume-unchanged INSTALL
-
-to avoid automatic changes to INSTALL making it into the Git history.
