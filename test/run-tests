@@ -1,0 +1,70 @@
+#/bin/sh
+
+# rolo - contact management software
+# Copyright (C) 2019  Rafael Laboissière
+
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+### Redirect standard error into stadard output
+exec 2>&1
+
+### Exit immediately if a command exits with a non-zero status
+set -e
+
+### Get the directory of this script (for accessing congure.ac and
+### contacts.vcf
+CURDIR=$(dirname $0)
+CONFIGURE_AC=$CURDIR/../configure.ac
+CONTACTS=$CURDIR/contacts.vcf
+
+### Rolo command.  Can be set as an environment variable when
+### launching this script.  Defaults to the compiled version in ../src.
+ROLO=${ROLO:-../src/rolo}
+
+### Test whether the -v option works
+test_rolo_version() {
+    command="$ROLO -v"
+    output="$($command)"
+    prog=$(grep AC_INIT\( $CONFIGURE_AC | cut -d[ -f2 | cut -d] -f1)
+    version=$(grep AC_INIT\( $CONFIGURE_AC | cut -d[ -f3 | cut -d] -f1)
+    assertEquals "$prog $version" "$output"
+}
+
+### Simple test for testing the help screen
+test_rolo_startup_and_help() {
+    echo hqq | TERM=dumb $ROLO -f $CONTACTS > /dev/null
+}
+
+### Test the search and the deletion commands
+test_rolo_search_and_delete() {
+    vcf=$(tempfile)
+    cp $CONTACTS $vcf
+    name=Burger
+    echo "/$namedyq" | TERM=dumb $ROLO -f $vcf > /dev/null
+    assertEquals "" "$(grep $name $vcf || true)"
+    rm -f $vcf
+}
+
+### Test the edit command via $ROLO_EDITOR
+test_rolo_move_and_edit() {
+    vcf=$(tempfile)
+    cp $CONTACTS $vcf
+    name="Alex Winter"
+    output=$(echo Geq | ROLO_EDITOR=cat TERM=dumb $ROLO -f $vcf | grep "$name" || true)
+    assertEquals "FN:$name" "$output"
+    rm -f $vcf
+}
+
+### Launch the unit tests
+. shunit2

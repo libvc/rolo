@@ -1,3 +1,9 @@
+Rolo 014 (2019-01-30)
+
+* Add unit test suite.
+
+* Minor tweaks in configure.ac
+
 Rolo 013 (2017-08-18)
 
 * Do not install the (inexistent) file rfc2426.txt

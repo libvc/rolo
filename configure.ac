@@ -37,5 +37,10 @@ AC_FUNC_MALLOC
 AC_TYPE_SIGNAL
 AC_CHECK_FUNCS([strdup strstr])
 
-AC_CONFIG_FILES([Makefile src/Makefile doc/Makefile])
+AC_CHECK_PROG(HAS_SHUNIT2,shunit2,yes)
+if test x"$HAS_SHUNIT2" != x"yes" ; then
+    AC_MSG_WARN([shunit2 not found. Unit tests will be skipped.])
+fi
+
+AC_CONFIG_FILES([Makefile src/Makefile doc/Makefile test/Makefile])
 AC_OUTPUT

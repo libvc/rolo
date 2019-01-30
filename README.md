@@ -13,3 +13,5 @@ Original read me file provided in README.
     make
     make install
 
+If shunit2 is installed on the system, then the [unit tests](test/run-tests)
+will be exercised.
