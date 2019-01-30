@@ -1,4 +1,4 @@
-!#/bin/sh
+#!/bin/sh
 
 # rolo - contact management software
 # Copyright (C) 2019  Rafael Laboissière
