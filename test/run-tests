@@ -30,7 +30,7 @@ CONTACTS=$CURDIR/contacts.vcf
 
 ### Rolo command.  Can be set as an environment variable when
 ### launching this script.  Defaults to the compiled version in ../src.
-ROLO=${ROLO:-../src/rolo}
+ROLO=${ROLO:-$CURDIR/../src/rolo}
 
 ### Test whether the -v option works
 test_rolo_version() {
