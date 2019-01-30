@@ -1,11 +1,11 @@
 # Process this file with autoconf to produce a configure script.
 # $Id: configure.ac,v 1.18 2004/07/25 12:07:00 ahsu Exp $
 
-AC_INIT([rolo],[013],[rafael@debian.org])
+AC_INIT([rolo],[014],[rafael@debian.org])
 AM_INIT_AUTOMAKE
 AC_PREREQ(2.59)
 AC_COPYRIGHT([Copyright (C) 2003  Andrew Hsu
-Copyright (C) 2017  Rafael Laboissiere])
+Copyright (C) 2017, 2019  Rafael Laboissiere])
 AC_CONFIG_SRCDIR([src/main.c])
 AM_CONFIG_HEADER([config.h])
 
