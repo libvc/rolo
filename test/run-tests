@@ -16,14 +16,14 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-### Redirect standard error into stadard output
+### Redirect standard error into standard output
 exec 2>&1
 
 ### Exit immediately if a command exits with a non-zero status
 set -e
 
-### Get the directory of this script (for accessing congure.ac and
-### contacts.vcf
+### Get the directory of this script (for access to configure.ac and
+### contacts.vcf)
 CURDIR=$(dirname $0)
 CONFIGURE_AC=$CURDIR/../configure.ac
 CONTACTS=$CURDIR/contacts.vcf
@@ -41,12 +41,12 @@ test_rolo_version() {
     assertEquals "$prog $version" "$output"
 }
 
-### Simple test for testing the help screen
+### Simple test for the help screen
 test_rolo_startup_and_help() {
     echo hqq | TERM=dumb $ROLO -f $CONTACTS > /dev/null
 }
 
-### Test the search and the deletion commands
+### Test search and deletion commands
 test_rolo_search_and_delete() {
     vcf=$(tempfile)
     cp $CONTACTS $vcf
