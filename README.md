@@ -6,6 +6,10 @@ which seems abandoned.
 
 Original read me file provided in README.
 
+You may also be interested in [khard](https://github.com/scheibler/khard), an
+"address book for the Linux console" which can read and write vCard files
+stored locally.
+
 ## Compilation
 
     autoreconf -f -i
