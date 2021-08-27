@@ -48,7 +48,7 @@ test_rolo_startup_and_help() {
 
 ### Test search and deletion commands
 test_rolo_search_and_delete() {
-    vcf=$(tempfile)
+    vcf=$(mktemp)
     cp $CONTACTS $vcf
     name=Burger
     echo "/$namedyq" | TERM=dumb $ROLO -f $vcf > /dev/null
@@ -58,7 +58,7 @@ test_rolo_search_and_delete() {
 
 ### Test the edit command via $ROLO_EDITOR
 test_rolo_move_and_edit() {
-    vcf=$(tempfile)
+    vcf=$(mktemp)
     cp $CONTACTS $vcf
     name="Alex Winter"
     output=$(echo Geq | ROLO_EDITOR=cat TERM=dumb $ROLO -f $vcf | grep "$name" || true)
