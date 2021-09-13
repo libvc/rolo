@@ -147,7 +147,7 @@ print_header ()
   header_str[COLS + 1] = '\0';
 
   wattron (win, A_REVERSE);
-  wprintw (win, header_str);
+  wprintw (win, "%s", header_str);
   wstandend (win);
   free (header_str);
 }
@@ -176,7 +176,7 @@ print_footer (const char *fn)
   footer_str[COLS + 1] = '\0';
 
   wattron (win, A_REVERSE);
-  mvwprintw (win, LINES - 2, 0, footer_str);
+  mvwprintw (win, LINES - 2, 0, "%s", footer_str);
   wstandend (win);
   free (footer_str);
 }
