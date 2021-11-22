@@ -247,7 +247,7 @@ display_license ()
 {
   printf ("rolo - contact management software\n");
   printf ("Copyright (C) 2003  Andrew Hsu\n");
-  printf ("Copyright (C) 2017  Rafael Laboissiere\n");
+  printf ("Copyright (C) 2017  Rafael Laboissière\n");
   printf ("\n");
   printf ("This program is free software;");
   printf (" you can redistribute it and/or modify\n");
