@@ -287,7 +287,7 @@ print_footer (const char *filename, int entries)
     }
 
   rolo_block_len = strlen (filename) + 16;
-  entries_block_len = 22;
+  entries_block_len = 23;
 
   /*
    * add the `rolo' block only if there is enough room
