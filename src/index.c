@@ -60,7 +60,7 @@ static WINDOW *sub = NULL;
 static const char *datafile = NULL;
 static char *filter_string = NULL;
 static ITEM **items = NULL;
-static g_sort_by = -1;
+static int g_sort_by = -1;
 
 /***************************************************************************
  */
