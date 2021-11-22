@@ -3,11 +3,11 @@
 
 AC_INIT([rolo],[014],[rafael@debian.org])
 AM_INIT_AUTOMAKE
-AC_PREREQ(2.59)
+AC_PREREQ([2.71])
 AC_COPYRIGHT([Copyright (C) 2003  Andrew Hsu
 Copyright (C) 2017, 2019  Rafael Laboissiere])
 AC_CONFIG_SRCDIR([src/main.c])
-AM_CONFIG_HEADER([config.h])
+AC_CONFIG_HEADERS([config.h])
 
 # Checks for programs.
 AC_PROG_CC
@@ -27,14 +27,13 @@ LIBS="$LIBS $(pkg-config unac --libs)"
 CFLAGS="$CFLAGS $(pkg-config unac --cflags)"
 
 # Checks for header files.
-AC_HEADER_STDC
+AC_CHECK_INCLUDES_DEFAULT
 
 # Checks for typedefs, structures, and compiler characteristics.
 AC_C_CONST
 
 # Checks for library functions.
 AC_FUNC_MALLOC
-AC_TYPE_SIGNAL
 AC_CHECK_FUNCS([strdup strstr])
 
 AC_CHECK_PROG(HAS_SHUNIT2,shunit2,yes)
