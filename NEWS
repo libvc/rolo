@@ -1,3 +1,8 @@
+Rolo 019 (2021-11-22)
+
+* Fix compilation warnings and update to Autoconf 2.71 (no visible
+  changes for users)
+
 Rolo 018 (2021-09-13)
 
 * Also, use format string literals in src/help.c (forgotten in the

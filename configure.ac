@@ -1,7 +1,7 @@
 # Process this file with autoconf to produce a configure script.
 # $Id: configure.ac,v 1.18 2004/07/25 12:07:00 ahsu Exp $
 
-AC_INIT([rolo],[014],[rafael@laboissiere.net])
+AC_INIT([rolo],[019],[rafael@laboissiere.net])
 AM_INIT_AUTOMAKE
 AC_PREREQ([2.71])
 AC_COPYRIGHT([Copyright (C) 2003  Andrew Hsu
