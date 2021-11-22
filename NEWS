@@ -1,3 +1,23 @@
+Rolo 018 (2021-09-13)
+
+* Also, use format string literals in src/help.c (forgotten in the
+  previous releases).
+
+Rolo 017 (2021-09-13)
+
+* Also, use format string literals in src/edit.c (forgotten in release
+  v016)
+
+Rolo 016 (2021-09-12)
+
+* Use format string literals in ncurses functions
+
+* Suggest khard in README.md
+
+Rolo 015 (2021-08-27)
+
+* Use mktemp instead of tempfile in the unit test
+
 Rolo 014 (2019-01-30)
 
 * Add unit test suite.
