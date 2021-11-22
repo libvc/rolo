@@ -27,6 +27,7 @@
 #include <assert.h>
 #include <stdlib.h>
 #include <string.h>
+#include <ctype.h>
 #include <vc.h>
 
 #define MENU_BAR_STRING "q:Quit  v:View  e:Edit  a:Add  d:Delete  h:Help"

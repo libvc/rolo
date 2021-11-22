@@ -27,6 +27,7 @@
 #include <vc.h>
 #include <glib.h>
 #include <unac.h>
+#include <ctype.h>
 
 #define MENU_PRINT_FORMAT_SIZE 80
 

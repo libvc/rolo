@@ -22,9 +22,10 @@
 
 #include "delete.h"
 #include <limits.h>
+#include <string.h>
+#include <ctype.h>
 #include <ncurses.h>
 #include <vc.h>
-#include <string.h>
 
 /***************************************************************************
  */
