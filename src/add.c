@@ -24,6 +24,7 @@
 #include <limits.h>
 #include <ncurses.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include <sys/stat.h>
 #include <sys/types.h>
@@ -93,7 +94,8 @@ int
 add_entry (const char *datafile)
 {
   FILE *fp = NULL;
-  char filename[PATH_MAX];
+  int fd;
+  char filename[PATH_MAX] = "/tmp/rolo-XXXXXX";
   pid_t process_id = 0;
   int status = 0;
   struct stat sb;
@@ -101,8 +103,8 @@ add_entry (const char *datafile)
   int ret_val = -1;
 
   /* open a temp file for editing */
-  tmpnam (filename);
-  fp = fopen (filename, "w");
+  fd = mkstemp (filename);
+  fp = fdopen (fd, "w");
   fprintf (fp, "BEGIN:VCARD\n");
   fprintf (fp, "VERSION:3.0\n");
   fprintf (fp, "FN:\n");

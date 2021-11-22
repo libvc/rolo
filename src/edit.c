@@ -220,7 +220,8 @@ int
 edit_entry (const char *datafile, long pos)
 {
   FILE *fp = NULL;
-  char filename[PATH_MAX];
+  int fd;
+  char filename[PATH_MAX] = "/tmp/rolo-XXXXXX";
   pid_t process_id = 0;
   int status = 0;
   struct stat sb;
@@ -236,8 +237,8 @@ edit_entry (const char *datafile, long pos)
   fp = NULL;
 
   /* open a temp file for editing */
-  tmpnam (filename);
-  fp = fopen (filename, "w");
+  fd = mkstemp (filename);
+  fp = fdopen (fd, "w");
 
   /* dump the entry into the temp file for editing */
   fprintf_vcard (fp, v);
