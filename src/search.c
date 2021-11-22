@@ -23,6 +23,7 @@
 #include "search.h"
 #include <string.h>
 #include <ctype.h>
+#include <stdlib.h>
 
 static int strstr_nocase (const char *haystack, const char *needle);
 static ITEM *search_menu_forwards (MENU * menu);
