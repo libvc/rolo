@@ -19,12 +19,14 @@ AC_CHECK_LIB(menuw, new_menu)
 CFLAGS="$CFLAGS -I/usr/include/ncursesw/"
 
 # Glib settings
-LIBS="$LIBS $(pkg-config glib-2.0 --libs)"
-CFLAGS="$CFLAGS $(pkg-config glib-2.0 --cflags)"
+PKG_CHECK_MODULES([GLIB],[glib-2.0])
 
 # Libunac settings
-LIBS="$LIBS $(pkg-config unac --libs)"
-CFLAGS="$CFLAGS $(pkg-config unac --cflags)"
+PKG_CHECK_MODULES([UNAC],[unac])
+
+# Set LIBS and CFLAGS
+LIBS="$LIBS $GLIB_LIBS $UNAC_LIBS"
+CFLAGS="$CFLAGS $GLIB_CFLAGS $UNAC_CFLAGS"
 
 # Checks for header files.
 AC_CHECK_INCLUDES_DEFAULT
