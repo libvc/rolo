@@ -1,3 +1,8 @@
+Rolo 020 (2024-05-03)
+
+* Ensure cross building, thanks to Helmut Grohne for the patch (no
+  visible changes for users)
+
 Rolo 019 (2021-11-22)
 
 * Fix compilation warnings and update to Autoconf 2.71 (no visible
