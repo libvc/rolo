@@ -1,4 +1,4 @@
-all:
+check:
 	@if [ "$(HAS_SHUNIT2)" = yes ] ; then	\
 	    ./run-tests ; 			\
 	else					\
