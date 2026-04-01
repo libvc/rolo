@@ -27,5 +27,7 @@ systems, the following packages are needed:
     make
     make install
 
+## Unit tests
+
 If shunit2 is installed on the system, then the [unit tests](test/run-tests)
 will be exercised.
