@@ -13,9 +13,9 @@ AC_CONFIG_HEADERS([config.h])
 AC_PROG_CC
 
 # Checks for libraries.
-AC_CHECK_LIB(vc, vc_new)
-AC_CHECK_LIB(ncursesw, newwin)
-AC_CHECK_LIB(menuw, new_menu)
+AC_CHECK_LIB(vc, vc_new, [], [AC_MSG_ERROR([libvc not found])])
+AC_CHECK_LIB(ncursesw, newwin, [], [AC_MSG_ERROR([libncurses not found])])
+AC_CHECK_LIB(menuw, new_menu, [], [AC_MSG_ERROR([libmenuw not found])])
 CFLAGS="$CFLAGS -I/usr/include/ncursesw/"
 
 # Glib settings
