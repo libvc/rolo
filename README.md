@@ -10,6 +10,16 @@ You may also be interested in [khard](https://github.com/scheibler/khard),
 an "address book for the Linux console" which can read and write vCard
 files stored locally.
 
+## Dependencies
+
+Compilation of rolo requires some external libraries. In Debian-based
+systems, the following packages are needed:
+
+- libglib2.0-dev
+- libncurses-dev
+- libunac1-dev
+- libvc-dev
+
 ## Compilation
 
     autoreconf -f -i
