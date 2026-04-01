@@ -156,9 +156,8 @@ set_defaults ()
             exit (1);
           }
 
-        strncat (default_datafile, "/", 1);
-        strncat (default_datafile, DEFAULT_HOME_ROLO_DIR,
-                 strlen (DEFAULT_HOME_ROLO_DIR));
+        strcat (default_datafile, "/");
+        strcat (default_datafile, DEFAULT_HOME_ROLO_DIR);
         result = stat (default_datafile, &sb);
         if (-1 == result)
           {
@@ -172,8 +171,8 @@ set_defaults ()
               }
           }
 
-        strncat (default_datafile, "/", 1);
-        strncat (default_datafile, DEFAULT_FILENAME, strlen (DEFAULT_FILENAME));
+        strcat (default_datafile, "/");
+        strcat (default_datafile, DEFAULT_FILENAME);
         result = stat (default_datafile, &sb);
         if (-1 == result)
           {
