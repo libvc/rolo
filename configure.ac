@@ -3,7 +3,7 @@
 
 AC_INIT([rolo],[020],[rafael@laboissiere.net])
 AM_INIT_AUTOMAKE
-AC_PREREQ([2.71])
+AC_PREREQ([2.72])
 AC_COPYRIGHT([Copyright (C) 2003  Andrew Hsu
 Copyright (C) 2017, 2019, 2021, 2024  Rafael Laboissière])
 AC_CONFIG_SRCDIR([src/main.c])
